@@ -329,9 +329,12 @@
         <button onclick="playHitFM2()">HITFM 广州</button>
         <button onclick="playHitFM3()">HITFM 北京</button>
         <button onclick="playHitFM4()">HITFM 887</button>
-        <button onclick="playAT40()">AT40</button>
+        <button onclick="playHitFM5()">HITFM 云听</button>
         
-    </div>         
+    </div>
+    <div class="player">     
+        <button onclick="playAT40()">AT40</button>
+    </div>             
   <audio id="audio" controls></audio>
   <script>
     const audio = document.getElementById('audio');
@@ -373,10 +376,16 @@
       inputUrl.value = "https://stream.revma.ihrhls.com/zc4802/hls.m3u8";
       play();
     }
+    function playHitFM5() {
+      audio.pause(); // Pause any previously playing audio
+  audio.src = "https://ytlivemp3.radio.cn/131/stream_20662.mp3?type=1&key=d7717b56358b0b997dffc4c01384faad&time=642fbd2c";
+  audio.load(); // Load the new audio source
+  audio.play(); // Play the audio
+    }
   </script>
   
 <article ">
-        <h2 class="title"> 外国电台</h2>
+        <h2 class="title"> 电台</h2>
     </article>
     <select class="station_select" name="src_select" id="src_select">
         <option value='{"src":"http://online.hitfm.ua/HitFM_HD","request":"https://o.tavrmedia.ua/hit","name":"Hit FM"}'>乌克兰Hit FM</option>
