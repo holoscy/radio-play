@@ -281,7 +281,7 @@
         }
 
         function renderItem(data) {
-            var img = data['cover'] ? 'background-image:url(' + data['cover'] + ')' : '';
+            var img = data['cover'] ? 'background-image:url(' + data['cover'] + '); background-size: 100%;' : '';
             var result = document.createElement('li');
             var logo = document.createElement('span');
             var info = document.createElement('span');
