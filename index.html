@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="mystyle.css" rel="stylesheet" type="text/css"/>
    <title>HITFM Player</title>
+  <link rel="shortcut icon" type="image/png" href="icons/hit.png">
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
   
@@ -41,6 +42,8 @@
         ];
         var imagePrefix = './icons/';
         var imageSuffix = '.svg';
+        var favicon = document.querySelectorAll('link[rel="shortcut icon"]');
+    favicon[0].href = imagePrefix + 'hit' + '.png';
         var eventEnabled = false;
         console.log('script. eventEnabled: ', eventEnabled);
         (function() {
