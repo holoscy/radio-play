@@ -310,6 +310,16 @@
 
             return result;
         }
+            function goToWebpage() {
+  // get the selected date
+  const selectedDate = document.getElementById("datePicker").value.replace(/-/g, '');
+
+  // create a URL based on the selected date
+  const url = "http://live.cooltv.top/hitfm.php?list=" + selectedDate;
+
+  // open the URL in a new tab
+  window.open(url, "_blank");
+}
 
 
     </script>
@@ -338,7 +348,11 @@
     <div class="player">     
         <button onclick="playAT40()">AT40</button>
         <button onclick="playZ100()">Z100</button>
-    </div>             
+    </div>
+     <div class="player">
+        <input type="date" id="datePicker">
+        <button onclick="goToWebpage()">查询歌单</button>
+    </div> 
   <audio id="audio" controls></audio>
   <script>
     const audio = document.getElementById('audio');
