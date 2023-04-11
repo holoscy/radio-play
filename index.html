@@ -319,8 +319,16 @@
 
   // open the URL in a new tab
   window.open(url, "_blank");
-}
+} 	    
+       function updateProgramLink() {
+  // get the selected date from the date picker
+  const selectedDate = document.getElementById("datePicker").value;
 
+  // construct the new URL with the selected date
+  const url = `https://www.radio.cn/pc-portal/sanji/passProgram.html?channel_name=662&program_name=undefined&date_checked=${selectedDate}`;
+
+  // redirect the user to the new URL
+    window.location.href = url;
 
     </script>
 </head>
@@ -355,10 +363,12 @@ display: inline-block;margin:auto;height:35px;width: 260px;">
         <h5 class="title">By HitFM😋</h5>
     </article>
     <div class="player">
+     <h5>选择日期</h5>
         <input type="date" id="datePicker" style="border-radius: 4px;
 display: inline-block;height:30px;width: 120px;box-sizing: border-box; margin:auto; cursor: pointer;">
-        <button onclick="goToWebpage()" style="display: inline-block;width:30px;height:45px;border-radius: 8px;margin-right:30%;cursor: pointer;">查 询</button>
-       </div> 
+        <button onclick="goToWebpage()" style="display: inline-block;height:40px;border-radius: 8px;margin:auto;cursor: pointer;">查询歌单</button>
+        <button onclick="updateProgramLink()" style="display: inline-block;height:40px;border-radius: 8px;margin:auto;cursor: pointer;">收听往期节目</button>
+    </div> 
    
 
         
@@ -410,8 +420,8 @@ display: inline-block;height:30px;width: 120px;box-sizing: border-box; margin:au
     }
   </script>
   
-<article ">
-        <h2 class="title"> 电台</h2>
+<article>
+        <h2 class="title"> Hit FM Ukraine</h2>
     </article>
     <select class="station_select" name="src_select" id="src_select">
         <option value='{"src":"http://online.hitfm.ua/HitFM_HD","request":"https://o.tavrmedia.ua/hit","name":"Hit FM"}'>TAVR Hit FM</option>
