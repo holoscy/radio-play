@@ -4,9 +4,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Radio Script</title>
-    <style>body{margin:0;padding:0}body.mobile button{margin:0 auto 0 8px}body.mobile button:first-child{margin:0 7px 0 auto}.app{width:-webkit-calc(100% - 30px);width:calc(100% - 30px);margin:15px auto auto auto;max-width:400px}.preloader{position:fixed;width:100%;height:100%;top:0;left:0;z-index:1;text-align:center;background:#fff;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}.preloader span{display:block;margin:auto;font-size:1.5em}*{font-family:monospace}option{font-family:inherit}.mobile .volume-level,audio{display:none!important}.loading *,.preloader{display:none}.loading div.preloader{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}.control,select{cursor:pointer}button{width:35px;height:35px;display:block;margin-right:15px;background:none center no-repeat buttonface;-webkit-background-size:20px 20px;background-size:20px}.player{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-box-align:stretch;-webkit-align-items:stretch;-ms-flex-align:stretch;align-items:stretch;margin-bottom:15px}.player_title{margin:0 auto 15px auto;text-align:center}.volume-level{display:block;margin:0;-webkit-box-flex:1;-webkit-flex:1;-ms-flex:1;flex:1}.playlist_wrapper{margin-bottom:15px}.playlist_wrapper:last-child{margin-bottom:0}.playlist_title{text-align:center;margin:0 auto 15px auto}.playlist{padding:0;margin:0;list-style:none}.station_select{display:block;width:100%;height:35px;margin:0 auto 15px auto;text-align:center}.playlist_item{margin-bottom:5px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}.playlist_item__logo{display:block;width:35px;height:35px;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;margin-right:15px;background:none center no-repeat buttonface}.playlist_item:last-child{margin-bottom:0}</style>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link href="mystyle.css" rel="stylesheet" type="text/css"/>
+   <title>HITFM Player</title>
+  <link rel="shortcut icon" type="image/png" href="icons/hit.png">
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+  
+    <style>body{margin:0;padding:0}body.mobile button{margin:0 auto 0 8px}body.mobile button:first-child{margin:0 7px 0 auto}.app{width:-webkit-calc(100% - 30px);width:calc(100% - 30px);margin:15px auto auto auto;max-width:400px}.preloader{position:fixed;width:100%;height:100%;top:0;left:0;z-index:1;text-align:center;background:#fff;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}.preloader span{display:block;margin:auto;font-size:1.5em}*{font-family:system-ui, -apple-system, Arial, sans-serif}option{font-family:inherit}.mobile .volume-level,audio{display:none!important}.loading *,.preloader{display:none}.loading div.preloader{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}.control,select{cursor:pointer}button{      font-weight: bold;width:60px;height:45px;display:block;margin-right:15px;background:none center no-repeat buttonface; border-radius: 10px;
+ -webkit-background-size:20px 20px;background-size:20px}.player{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-box-align:stretch;-webkit-align-items:stretch;-ms-flex-align:stretch;align-items:stretch;margin-bottom:15px}.player_title{margin:0 auto 15px auto;text-align:center}.volume-level{display:block;margin:0;-webkit-box-flex:1;-webkit-flex:1;-ms-flex:1;flex:1}.playlist_wrapper{margin-bottom:15px}.playlist_wrapper:last-child{margin-bottom:0}.title{text-align:center;margin:0 auto 15px auto}.playlist_title{text-align:center;margin:0 auto 15px auto}.playlist{padding:0;margin:0;list-style:none}.station_select{display:block;width:100%;height:35px;margin:0 auto 15px auto;text-align:center}.playlist_item{margin-bottom:5px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}.playlist_item__logo{display:block;width:35px;height:35px;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;margin-right:15px;background:none center no-repeat buttonface}.playlist_item:last-child{margin-bottom:0}</style>
     <script>
         window.mobileAndTabletcheck = function() {
             var check = false;
@@ -38,6 +43,8 @@
         ];
         var imagePrefix = './icons/';
         var imageSuffix = '.svg';
+        var favicon = document.querySelectorAll('link[rel="shortcut icon"]');
+    favicon[0].href = imagePrefix + 'hit' + '.png';
         var eventEnabled = false;
         console.log('script. eventEnabled: ', eventEnabled);
         (function() {
@@ -279,7 +286,7 @@
         }
 
         function renderItem(data) {
-            var img = data['cover'] ? 'background-image:url(' + data['cover'] + ')' : '';
+            var img = data['cover'] ? 'background-image:url(' + data['cover'] + '); background-size: 100%;' : '';
             var result = document.createElement('li');
             var logo = document.createElement('span');
             var info = document.createElement('span');
@@ -304,30 +311,138 @@
 
             return result;
         }
+           function goToWebpage() {
+  // get the selected date
+  const selectedDate = document.getElementById("datePicker").value.replace(/-/g, '');
 
+  // create a URL based on the selected date
+  const url = "http://live.cooltv.top/hitfm.php?list=" + selectedDate;
+
+  // open the URL in a new tab
+  window.open(url, "_blank");
+}
+
+	     function updateProgramLink() {
+  // get the selected date from the date picker
+  const selectedDate = document.getElementById("datePicker").value;
+
+  // construct the new URL with the selected date
+  const url = `https://www.radio.cn/pc-portal/sanji/passProgram.html?channel_name=662&program_name=undefined&date_checked=${selectedDate}`;
+
+  // redirect the user to the new URL
+    window.location.href = url;
+}
 
     </script>
 </head>
 <body class="loading">
 <div class="preloader"><span>Loading</span></div>
 <div class="app">
-    <h1 class="player_title">Hit FM</h1>
+    <h1 class="player_title">HIT FM</h1>
     <div class="player">
         <button class="control play-button"></button>
         <button class="control mute-button"></button>
         <input type="range" name="volume-level" class="control volume-level" min="0" max="100" step="1" value="100">
+        
     </div>
+    <div class="player">
+        <input id="inputUrl" type="text" placeholder="WE PLAY ONLY THE HITS" style="border-radius: 4px;
+display: inline-block;margin:auto;height:35px;width: 260px;">
+        
+        <button onclick="play()">播放</button>
+    </div>
+    <div class="player">
+        <button onclick="playHitFM1()">HITFM 源1</button>
+        <button onclick="playHitFM2()">HITFM 广州</button>
+        <button onclick="playHitFM3()">HITFM 北京</button>
+        <button onclick="playHitFM4()">HITFM 887</button>
+    </div>
+    <div class="player">     
+        <button onclick="playAT40()">AT40</button>
+        <button onclick="playZ100()">Z100</button>
+    </div> 
+    <article >
+        <h2 class="title"> HITFM 歌单</h2>
+        <h5 class="title">By HitFM😋</h5>
+    </article>
+    
+    
+    <div class="player">
+     <h5>选择日期</h5>
+        <input type="date" id="datePicker" style="border-radius: 4px;
+display: inline-block;height:30px;width: 120px;box-sizing: border-box; margin:auto; cursor: pointer;">
+        <button onclick="goToWebpage()" style="display: inline-block;height:40px;border-radius: 8px;margin:auto;cursor: pointer;">查询歌单</button>
+        <button onclick="updateProgramLink()" style="display: inline-block;height:40px;border-radius: 8px;margin:auto;cursor: pointer;">收听往期节目</button>
+       </div> 
+    
+
+	<audio controls id="audioPlayer">
+		<source src="" type="audio/mpeg">
+	</audio>
+  <audio id="audio" controls></audio>
+  <script>
+    const audio = document.getElementById('audio');
+    const inputUrl = document.getElementById('inputUrl');
+    
+    function play() {
+      if(Hls.isSupported()) {
+        const hls = new Hls();
+        const url = inputUrl.value;
+        hls.loadSource(url);
+        hls.attachMedia(audio);
+        hls.on(Hls.Events.MANIFEST_PARSED,function() {
+          audio.play();
+        });
+      } else if (audio.canPlayType('application/vnd.apple.mpegurl')) {
+        audio.src = inputUrl.value;
+        audio.addEventListener('loadedmetadata',function() {
+          audio.play();
+        });
+      }
+    }
+    function playHitFM1() {
+      inputUrl.value = "https://liveop.cctv.cn/hls/cctvn/playlist.m3u8";
+      play();
+    }
+    function playHitFM2() {
+      inputUrl.value = "https://satellitepull.cnr.cn/live/wxhitfm/playlist.m3u8";
+      play();
+    }
+    function playHitFM3() {
+      inputUrl.value = "https://satellitepull.cnr.cn/live/wxgjlxyy/playlist.m3u8";
+      play();
+    }
+    function playHitFM4() {
+      inputUrl.value = "https://sk.cri.cn/887.m3u8";
+      play();
+    }
+    function playAT40() {
+      inputUrl.value = "https://stream.revma.ihrhls.com/zc4802/hls.m3u8";
+      play();
+    }
+    
+    function playZ100() {
+      inputUrl.value = "https://stream.revma.ihrhls.com/zc1469/hls.m3u8";
+      play();
+    }
+   
+  </script>
+
+    <article>
+        <h2 class="title"> 电台</h2>
+    </article>
     <select class="station_select" name="src_select" id="src_select">
-        <option value='{"src":"http://online.hitfm.ua/HitFM_HD","request":"https://o.tavrmedia.ua/hit","name":"Hit FM"}'>Hit FM</option>
+        <option value='{"src":"http://online.hitfm.ua/HitFM_HD","request":"https://o.tavrmedia.ua/hit","name":"Hit FM"}'>TAVR Hit FM</option>
         <option value='{"src":"http://online.kissfm.ua/KissFM","request":"https://o.tavrmedia.ua/kiss","name":"KISS FM"}'>KISS FM</option>
     </select>
+     
     <audio id="audio" controls="true" preload="none" src=""></audio>
     <article class="playlist_wrapper">
-        <h2 class="playlist_title">Is playing now</h2>
+        <h3 class="playlist_title"> TAVR is playing now</h3>
         <ul class="playlist current"></ul>
     </article>
     <article class="playlist_wrapper">
-        <h2 class="playlist_title">Was playing previously</h2>
+        <h3 class="playlist_title"> Was playing previously</h3>
         <ul class="playlist previous"></ul>
     </article>
 </div>
