@@ -1,1 +1,12 @@
-<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="volume-mute" class="svg-inline--fa fa-volume-mute fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M215.03 71.05L126.06 160H24c-13.26 0-24 10.74-24 24v144c0 13.25 10.74 24 24 24h102.06l88.97 88.95c15.03 15.03 40.97 4.47 40.97-16.97V88.02c0-21.46-25.96-31.98-40.97-16.97zM461.64 256l45.64-45.64c6.3-6.3 6.3-16.52 0-22.82l-22.82-22.82c-6.3-6.3-16.52-6.3-22.82 0L416 210.36l-45.64-45.64c-6.3-6.3-16.52-6.3-22.82 0l-22.82 22.82c-6.3 6.3-6.3 16.52 0 22.82L370.36 256l-45.63 45.63c-6.3 6.3-6.3 16.52 0 22.82l22.82 22.82c6.3 6.3 16.52 6.3 22.82 0L416 301.64l45.64 45.64c6.3 6.3 16.52 6.3 22.82 0l22.82-22.82c6.3-6.3 6.3-16.52 0-22.82L461.64 256z"></path></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.5.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="图层_1" focusable="false" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	 x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<style type="text/css">
+	.st0{stroke:#E5E5E5;stroke-width:2;stroke-miterlimit:10;}
+</style>
+<path class="st0" d="M215,71.1L126,160H24c-13.3,0-24,10.7-24,24v144c0,13.2,10.7,24,24,24h102.1l89,89c15,15,41,4.5,41-17V88
+	C256,66.6,230,56,215,71.1z M461.6,256l45.6-45.6c6.3-6.3,6.3-16.5,0-22.8l-22.8-22.8c-6.3-6.3-16.5-6.3-22.8,0L416,210.4
+	l-45.6-45.6c-6.3-6.3-16.5-6.3-22.8,0l-22.8,22.8c-6.3,6.3-6.3,16.5,0,22.8l45.6,45.6l-45.6,45.6c-6.3,6.3-6.3,16.5,0,22.8
+	l22.8,22.8c6.3,6.3,16.5,6.3,22.8,0l45.6-45.6l45.6,45.6c6.3,6.3,16.5,6.3,22.8,0l22.8-22.8c6.3-6.3,6.3-16.5,0-22.8L461.6,256z"/>
+</svg>
