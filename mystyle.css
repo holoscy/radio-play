@@ -9,3 +9,38 @@ color: white;
 background: black;
 }
 }
+.row {
+  width: 100%; /* 设置容器的宽度为100% */
+  max-width: 1000px; /* 设置容器的最大宽度，避免过度拉伸 */
+  margin: 0 auto; /* 居中对齐容器 */
+  overflow: hidden; /* 清除浮动 */
+}
+
+.col-md-8 {
+  width: 40%; /* 设置左列的宽度为60% */
+  float: left; /* 设置左列浮动到左侧 */
+}
+
+.col-md-4 {
+  width:40%; /* 设置右列的宽度为40% */
+  float: right; /* 设置右列浮动到右侧 */
+}
+.center-column {
+  width: 5%; /* 设置中央列的宽度为300px */
+  margin-left: 10px; /* 设置中央列的左间距为20px */
+  margin-right: 10px; /* 设置中央列的右间距为20px */
+}
+@media only screen and (min-width: 1600px) {
+  /* 当屏幕尺寸小于等于1200px时应用以下样式 */
+
+  .row {
+    width: 100%; /* 将容器的宽度设置为100% */
+    max-width: none; /* 清除容器的最大宽度 */
+  }
+  .center-column {
+     width:0px}
+  .col-md-8, .col-md-4 {
+    width: 100%; /* 将两列的宽度都设置为100% */
+    float: none; /* 清除浮动 */
+  }
+}
