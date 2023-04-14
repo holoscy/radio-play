@@ -6,6 +6,12 @@ background: white;
 @media (prefers-color-scheme: dark) {
 body {
 color: #CCCCCC;
-background: #181818;
+background: #313238;
 }
+input {
+background: #CCCCCC;
+}
+.my-select {
+background-color:#CCCCCC;
+
 }
