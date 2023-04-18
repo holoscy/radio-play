@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="X-Frame-Options" content="ALLOW-FROM"> 
     <link href="mystyle.css" rel="stylesheet" type="text/css"/>
    <title>HITFM Player</title>
   <link rel="shortcut icon" type="image/png" href="icons/hit.png">
@@ -320,7 +321,14 @@
   // open the URL in a new tab
   window.open(url, "_blank");
 }
-
+          function goToWebpage1() {
+  const url = "https://music.163.com/#/playlist?id=5444852459";
+    window.location.href = url;
+}
+          function goToWebpage2() {
+  const url = "https://space.bilibili.com/1579208/video";
+    window.location.href = url;
+}
 	     function updateProgramLink() {
   // get the selected date from the date picker
   const selectedDate = document.getElementById("datePicker").value;
@@ -332,7 +340,8 @@
     window.location.href = url;
 }
         function gotoURL() {
-        var url = "https://music.ghxi.com/";
+        var keyword = document.getElementById("inputUrl").value;
+        var url = "https://thewind.xyz/?keyword=" + keyword;
         window.open(url, "_blank");
       }
     </script>
@@ -363,6 +372,7 @@ display: inline-block;margin:auto;height:35px;width: 210px;">
         <button onclick="playAT40()" style="width:120px;height:40px;background:url(./icons/at40.png);background-size: 100%;"> </button>
         <button onclick="playZ100()" style="width:120px;height:40px;background:url(./icons/z100.png);background-size: 100%;"> </button>
     </div> 
+    
     <article >
         <h2 class="title"> HITFM 歌单</h2>
        <p class="pa">
@@ -378,9 +388,13 @@ display: inline-block;height:30px;width: 120px;box-sizing: border-box; margin:au
         <button onclick="goToWebpage()" style="width:97px;height:40px;background:url(./icons/lst.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
         <button onclick="updateProgramLink()" style="width:97px;height:40px;background:url(./icons/ls.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
        </div> 
-    
-
-	<audio controls id="audioPlayer">
+       <div class="player">
+       <button onclick="toggleIframe()" style="width:97px;height:40px;background:url(./icons/top10.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
+       <button onclick="goToWebpage1()" style="width:97px;height:40px;background:url(./icons/top20.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
+       <button onclick="goToWebpage2()" style="width:97px;height:40px;background:url(./icons/mv.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
+       </div> 
+       <iframe id="netease" frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=450 ></iframe>	
+     <audio controls id="audioPlayer">
 		<source src="" type="audio/mpeg">
 	</audio>
   <audio id="audio" controls></audio>
@@ -429,7 +443,19 @@ display: inline-block;height:30px;width: 120px;box-sizing: border-box; margin:au
       inputUrl.value = "https://stream.revma.ihrhls.com/zc1469/hls.m3u8";
       play();
     }
-   
+   function toggleIframe() {
+  var iframe = document.getElementById('netease');
+      stopAudio();
+  if (iframe.style.display === 'none') {
+    iframe.style.display = 'block';
+    iframe.src ="https://music.163.com/outchain/player?type=0&id=5444852459&auto=0&height=430";
+  } else {
+    iframe.style.display = 'none';
+  }
+}
+   window.onload = function() {
+    toggleIframe();
+   };
   </script>
 
     <article>
