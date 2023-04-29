@@ -484,11 +484,11 @@ display: inline-block;height:30px;width: 110px;box-sizing: border-box; margin:au
    function toggleIframe() {
   var iframe = document.getElementById('netease');
       stopAudio();
-  if (iframe.style.display === 'none') {
+  if (iframe.style.display !== 'block') {  
     iframe.style.display = 'block';
     iframe.src ="https://music.163.com/outchain/player?type=0&id=6705531149&auto=0&height=430";
   } else {
-    iframe.style.display = 'none';
+    iframe.style.display = 'none';  
   }
 }
    window.onload = function() {
