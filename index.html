@@ -89,7 +89,7 @@
             ];
             imgsArr.forEach(function (i) {
                 var item = document.createElement('img');
-                item['src'] = imagePrefix + i + imageSuffix;
+                item['src'] = imagePrefix + i + imageSuffix;item.loading = 'lazy';
             });
         })();
         const CancelToken = axios.CancelToken;
