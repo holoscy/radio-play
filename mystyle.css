@@ -54,10 +54,6 @@ background: white;
 	transform: scaleX(1);
 }
 
-#netease {
-  display: none;
-}
-
 .preloader {
     height: 90px;
     display: flex;
