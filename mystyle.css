@@ -46,6 +46,7 @@ background: white;
 	font-size: 12px;
 	color: #53BBE7;
 	font-style: oblique;
+	font-weight:bold
 }
 
 .input-boxLine input:focus~.line,
