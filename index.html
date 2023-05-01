@@ -446,6 +446,7 @@ display: inline-block;height:30px;width: 110px;box-sizing: border-box; margin:au
     const gif = document.getElementById('gif');
 
     function play() {
+    document.body.classList.add('loading');
       if(Hls.isSupported()) {
         const hls = new Hls();
         const url = inputUrl.value;
