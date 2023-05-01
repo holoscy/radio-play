@@ -12,7 +12,7 @@
 //# sourceMappingURL=axios.min.js.map</script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>body{margin:0;padding:0}body.mobile button{margin:0 auto 0 8px}body.mobile button:first-child{margin:0 7px 0 auto}.app{width:-webkit-calc(100% - 5px);width:calc(100% - 5px);margin:15px auto auto auto}.preloader{position:fixed;width:100%;height:100%;top:0;left:0;z-index:1;text-align:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}.preloader span{display:flex;}*{font-family:system-ui, -apple-system, Arial, sans-serif}option{font-family:inherit}.mobile .volume-level,audio{display:none!important}.loading *,.preloader{display:none}.loading div.preloader{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}.control,select{cursor:pointer}button{border:none;font-weight: bold;width:50px;height:50px;display:inline-block;margin:auto;background:none center no-repeat;-webkit-background-size:20px 20px;background-size:20px}.player{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-box-align:stretch;-webkit-align-items:stretch;-ms-flex-align:stretch;align-items:stretch;margin-bottom:15px}.player_title{margin:0 auto 15px auto;text-align:center}.volume-level{display:block;margin:0;-webkit-box-flex:1;-webkit-flex:1;-ms-flex:1;flex:1}.playlist_wrapper{margin-bottom:15px}.playlist_wrapper:last-child{margin-bottom:0}.title{text-align:center;margin:0 auto 15px auto}.playlist_title{text-align:center;margin:0 auto 15px auto}.playlist{padding:0;margin:0;list-style:none}.station_select{display:block;width:50%;height:35px;margin:0 auto 15px auto;text-align:center}.playlist_item{margin-bottom:5px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}.playlist_item__logo{display:block;width:35px;height:35px;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;margin-right:15px;background:none center no-repeat buttonface}.playlist_item:last-child{margin-bottom:0} .pa a{ padding:0;margin:0;}.container {
-						display: flex;
+			display: flex;
 			flex-wrap: wrap;
 		}
 		.item {
@@ -393,12 +393,14 @@
     </div>
  <div class="container">
   <div class="item item-left">
-    <div class="player">
-        <input id="inputUrl" type="text" placeholder="WE PLAY ONLY THE HITS" style="border-radius: 4px;
-display: inline-block;margin:auto;height:35px;width: 200px;">
-        <button onclick="play()" style="width:49.5px;height:40px;background:url(./icons/pl.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
-        <button onclick="gotoURL()" style="width:97px;height:40px;background:url(./icons/dl.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
-    </div>
+  <div class="top"  style="display:flex;align-items:center;">
+<div class="input-boxLine" style="display:flex;align-items:center;margin-left:auto;margin-right:0px;">
+	<input id="inputUrl" input type="text" required />
+	<div class="line"></div>
+	<span>WE PLAY ONLY THE HITS</span>
+</div>
+<button onclick="play()" style="width: 50px;height:40px;margin-left:3px;background:url(./icons/pl.png);background-size: 100%;"> </button>
+</div>
     <div class="player">
         <button onclick="playHitFM1()" style="width:120px;height:40px;background:url(./icons/hit1.png);margin:auto;background-size: 100%;"> </button>
         <button onclick="playHitFM2()" style="width:120px;height:40px;background:url(./icons/hit广州.png);margin:auto;background-size: 100%;"> </button>
@@ -426,12 +428,10 @@ display: inline-block;height:30px;width: 110px;box-sizing: border-box; margin:au
         <button onclick="updateProgramLink()" style="width:97px;height:40px;background:url(./icons/ls.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
        </div> 
        <div class="player">
-       <button onclick="toggleIframe()" style="width:97px;height:40px;background:url(./icons/top10.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
        <button onclick="goToWebpage1()" style="width:97px;height:40px;background:url(./icons/top20.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
        <button onclick="goToWebpage2()" style="width:97px;height:40px;background:url(./icons/mv.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
-       </div> 
+       <button onclick="gotoURL()" style="width:97px;height:40px;background:url(./icons/dl.png);background-size: 100%;margin:auto;cursor: pointer;"> </button></div> 
          </div>
-       <iframe id="netease" frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=450 ></iframe>	
      <audio controls id="audioPlayer">
 		<source src="" type="audio/mpeg">
 	</audio>
@@ -493,20 +493,7 @@ display: inline-block;height:30px;width: 110px;box-sizing: border-box; margin:au
       inputUrl.value = "https://stream.revma.ihrhls.com/zc1469/hls.m3u8";
       play();
     }
-   function toggleIframe() {
-   document.body.classList.add('loading');
-  var iframe = document.getElementById('netease');
-      stopAudio();
-  if (iframe.style.display !== 'block') {  
-    iframe.style.display = 'block';
-    iframe.src ="https://music.163.com/outchain/player?type=0&id=6705531149&auto=0&height=430";
-  } else {
-    iframe.style.display = 'none';  
-  }
-}
-   window.onload = function() {
-    toggleIframe();
-   };
+  
   </script>
  	
  	<div class="item item-right">
