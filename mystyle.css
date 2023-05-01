@@ -17,7 +17,7 @@ background: white;
 	border: none;
 	font-size: 10px;
 	border-bottom: 2px solid #53BBE7;
-	color: #afaebd;
+	color: #616161;
         border-radius: 5px;
 }
 
@@ -26,7 +26,7 @@ background: white;
 	bottom: 10px;
 	font-size: 15px;
 	left: 0px;
-	color: #afaebd;
+	color: #616161;
 	pointer-events: none;
 	transition: all 0.3s ease;
 }
