@@ -369,12 +369,29 @@
   // redirect the user to the new URL
     window.location.href = url;
 }
-        function gotoURL() {
-  // 打开新窗口
-  const url = "https://music.ghxi.com/";
-  window.open(url, "_blank");
-  
+            function gotoURL() {
+  // 显示对话框
+  const message = "即将进入 果核音乐，是否复制音乐密码";
+  const shouldCopy = window.confirm(message);
+
+  if (shouldCopy) {
+    // 复制链接并继续
+    const text = "ghyynb";
+    const url = "https://music.ghxi.com/";
+    const dummy = document.createElement("textarea");
+    document.body.appendChild(dummy);
+    dummy.value = text;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+    window.open(url, "_blank");
+  } else {
+    // 直接继续
+    const url = "https://music.ghxi.com/";
+    window.open(url, "_blank");
+  }
 }
+
     </script>
 </head>
 <body class="loading">
@@ -443,7 +460,6 @@ display: inline-block;height:30px;width: 110px;box-sizing: border-box; margin:au
   <script>
     const audio = document.getElementById('audio');
     const inputUrl = document.getElementById('inputUrl');
-    const gif = document.getElementById('gif');
 
     function play() {
     document.body.classList.add('loading');
@@ -463,38 +479,43 @@ display: inline-block;height:30px;width: 110px;box-sizing: border-box; margin:au
       }
     }
 
-    function playHitFM1() {
+       function playHitFM1() {
       document.body.classList.add('loading');
       inputUrl.value = "https://liveop.cctv.cn/hls/cctvn/playlist.m3u8";
+      appTitle.textContent = "HITFM 央视";
       play();
     }
     function playHitFM2() {
       document.body.classList.add('loading');
       inputUrl.value = "https://satellitepull.cnr.cn/live/wxhitfm/playlist.m3u8";
+      appTitle.textContent = "HITFM 广州";
       play();
     }
     function playHitFM3() {
     document.body.classList.add('loading');
       inputUrl.value = "https://satellitepull.cnr.cn/live/wxgjlxyy/playlist.m3u8";
+      appTitle.textContent = "HITFM 北京";
       play();
     }
     function playHitFM4() {
     document.body.classList.add('loading');
       inputUrl.value = "https://sk.cri.cn/887.m3u8";
+      appTitle.textContent = "HITFM 887";
       play();
     }
     function playAT40() {
     document.body.classList.add('loading');
       inputUrl.value = "https://stream.revma.ihrhls.com/zc4802/hls.m3u8";
+      appTitle.textContent = "AT40";
       play();
     }
     
     function playZ100() {
     document.body.classList.add('loading');
       inputUrl.value = "https://stream.revma.ihrhls.com/zc1469/hls.m3u8";
+      appTitle.textContent = "Z100"
       play();
     }
-  
   </script>
  	
  	<div class="item item-right">
