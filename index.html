@@ -359,6 +359,10 @@
   const url = "https://space.bilibili.com/1579208/video";
     window.location.href = url;
 }
+          function goToWebpage3() {
+  const url = "https://music.163.com/#/playlist?id=6659816005";
+    window.location.href = url;
+}
 	     function updateProgramLink() {
   // get the selected date from the date picker
   const selectedDate = document.getElementById("datePicker").value;
@@ -369,9 +373,9 @@
   // redirect the user to the new URL
     window.location.href = url;
 }
-            function gotoURL() {
+      function gotoURL() {
   // 显示对话框
-  const message = "即将进入 果核音乐，是否复制音乐密码";
+  const message = "即将进入 果核音乐。是否复制音乐密码";
   const shouldCopy = window.confirm(message);
 
   if (shouldCopy) {
@@ -436,19 +440,22 @@
        </p>
     </article>
     
-    
-    <div class="player">
-     <h5>选择日期</h5>
-        <input type="date" id="datePicker" style="border-radius: 4px;
-display: inline-block;height:30px;width: 110px;box-sizing: border-box; margin:auto; cursor: pointer;">
-        <button onclick="goToWebpage()" style="width:97px;height:40px;background:url(./icons/lst.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
-        <button onclick="updateProgramLink()" style="width:97px;height:40px;background:url(./icons/ls.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
+    <div class="date" style="display:flex;justify-content:center;align-items:center;margin-bottom:10px;">
+     <label for="datepicker">Date</label>
+<input type="date" name="datepicker" id="datePicker">
+     </div>
+       <div class="player">
+        <button onclick="updateProgramLink()" style="width:102px;height:40px;background:url(./icons/ls.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
+        <button onclick="goToWebpage()" style="width:102px;height:40px;background:url(./icons/lst.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
+        <button onclick="gotoURL()" style="width:102px;height:40px;background:url(./icons/dl.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
        </div> 
        <div class="player">
-       <button onclick="goToWebpage1()" style="width:97px;height:40px;background:url(./icons/top20.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
-       <button onclick="goToWebpage2()" style="width:97px;height:40px;background:url(./icons/mv.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
-       <button onclick="gotoURL()" style="width:97px;height:40px;background:url(./icons/dl.png);background-size: 100%;margin:auto;cursor: pointer;"> </button></div> 
+       <button onclick="goToWebpage1()" style="width:102px;height:40px;background:url(./icons/top20.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
+       <button onclick="goToWebpage2()" style="width:102px;height:40px;background:url(./icons/mv.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
+       <button onclick="goToWebpage3()" style="width:102px;height:40px;background:url(./icons/at4.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
+       </div> 
          </div>
+
      <audio controls id="audioPlayer">
 		<source src="" type="audio/mpeg">
 	</audio>
@@ -458,11 +465,13 @@ display: inline-block;height:30px;width: 110px;box-sizing: border-box; margin:au
 </div>
 
   <script>
+  
     const audio = document.getElementById('audio');
     const inputUrl = document.getElementById('inputUrl');
 
     function play() {
-    document.body.classList.add('loading');
+          document.body.classList.add('loading');
+
       if(Hls.isSupported()) {
         const hls = new Hls();
         const url = inputUrl.value;
@@ -479,7 +488,7 @@ display: inline-block;height:30px;width: 110px;box-sizing: border-box; margin:au
       }
     }
 
-       function playHitFM1() {
+    function playHitFM1() {
       document.body.classList.add('loading');
       inputUrl.value = "https://liveop.cctv.cn/hls/cctvn/playlist.m3u8";
       appTitle.textContent = "HITFM 央视";
@@ -516,6 +525,7 @@ display: inline-block;height:30px;width: 110px;box-sizing: border-box; margin:au
       appTitle.textContent = "Z100"
       play();
     }
+
   </script>
  	
  	<div class="item item-right">
