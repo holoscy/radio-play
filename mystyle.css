@@ -1,8 +1,106 @@
 body {
 color: black;
-background: white;
+ 
+}
+.container {
+			display: flex;
+			flex-wrap: wrap;
+		}
+		.ite {
+			flex: 1 1 100%;
+			padding: 10px;
+			box-sizing: border-box;max-width: 490px !important;
+		}
+		.item-left,  .item-right {
+			flex: 1 1 100%;max-width:450px；box-sizing: border-box;
+		}
+		@media screen and (min-width: 768px) {body{
+		background-image: url(./icons/back-page.svg);
+        background-position: center;
+        background-repeat: repeat;
+        background-size: cover;}
+			.ite {
+				flex: 1;padding: 10px;
+			}
+			.item-left {
+				order: 1;flex: 0 0 40%;margin:15px 3% auto auto;max-width: 450px
+			}
+			.item-center {
+				order: 2;flex: 0 0 5%;
+			}
+			.item-right {
+				order: 3;flex: 0 0 40%;margin:15px auto auto 3%;max-width: 450px
+			}
+			.container {
+				display: flex;
+				flex-wrap: nowrap;
+			}
+			.popup { 
+			position: fixed;
+		    height: 50%;
+            width: 60%;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background-color: #fff;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+			z-index: 1000;
+			display: none;
+		}
+		}
+/* 遮罩层样式 */
+		.overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: rgba(0, 0, 0, 0.6);
+			z-index: 999;
+			display: none;
+		}
+		/* 弹出框样式 */
+		@media screen and (max-width: 767px) {
+    .popup { 
+			position: fixed;
+		    height: 60%;
+            width: 80%;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background-color: #fff;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+			z-index: 1000;
+			display: none;
+		}
+	}
+
+.btn {
+  width: 70px;
+  height: 28px;
+  cursor: pointer;
+  background: white;
+  border-radius: 5px;  
+  outline: none;
+  border-bottom: 2px solid #7878EA ;
+  transition: 1s ease-in-out;
 }
 
+
+.btn:hover {
+  transition: 1s ease-in-out;
+  background: #7878EA;
+}
+
+.btn span {
+  color: black;
+  font-size: 12px;
+  font-weight:bold;
+}
 .input-boxLine {
 	position: relative;
 	width: 60%;
@@ -15,10 +113,10 @@ background: white;
 	width: 100%;
 	height: 100%;
 	border: none;
-	font-size: 10px;
+	font-size: 15px;
 	border-bottom: 2px solid #53BBE7;
 	color: #616161;
-        border-radius: 5px;
+    border-radius: 5px;
 }
 
 .input-boxLine span {
@@ -46,7 +144,7 @@ background: white;
 	font-size: 12px;
 	color: #53BBE7;
 	font-style: oblique;
-	font-weight:bold
+	font-weight:bold;
 }
 
 .input-boxLine input:focus~.line,
@@ -120,23 +218,33 @@ background: white;
   opacity: 0;
 }
 .date input{ border: 1px solid #c4c4c4;
+  border-bottom: 2px solid #7878EA ;
   border-radius: 5px;
   background-color: #fff;
   padding: 3px 5px;
   box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
   width: 30%;}
+ .station_select{display:block;width:50%;height:35px;margin:0 auto 15px auto;text-align:center; border: 1px solid #c4c4c4;
+  border-bottom: 3px solid #7878EA ;
+  border-radius: 5px;
+  }
+ 
 @media (prefers-color-scheme: dark) {
 body {
 color: #CCCCCC;
 background: #313238;
-}
+background-image: none;}
 input {
 background: #CCCCCC;
 }
 .my-select {
 background-color:#CCCCCC;
+
 }
 .date input{
 background-color:#CCCCCC;
-}	
+
+}
+.btn { background: #CCCCCC;}
+.popup {background: #CCCCCC;}
 }
