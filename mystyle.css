@@ -78,28 +78,23 @@ color: black;
 			display: none;
 		}
 	}
-
-.btn {
-  width: 70px;
-  height: 28px;
-  cursor: pointer;
-  background: white;
-  border-radius: 5px;  
-  outline: none;
-  border-bottom: 2px solid #7878EA ;
-  transition: 1s ease-in-out;
-}
-
-
-.btn:hover {
-  transition: 1s ease-in-out;
-  background: #7878EA;
-}
-
-.btn span {
+.pa {
+  display: flex;
+  justify-content: center;}
+.pa a {  font-size: 12px;  font-weight: bold;
+  padding: 0;
+  margin: 0;
   color: black;
-  font-size: 12px;
-  font-weight:bold;
+  background-image: linear-gradient(to bottom, transparent 65%, #7878EA 0);
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  text-decoration: none;
+  transition: background-size .4s ease;
+}
+
+.pa a:hover {
+  background-size: 100% 100%;
+  cursor: pointer;
 }
 .input-boxLine {
 	position: relative;
@@ -246,5 +241,6 @@ background-color:#CCCCCC;
 
 }
 .btn { background: #CCCCCC;}
+.pa a {  color:#CCCCCC;}
 .popup {background: #CCCCCC;}
 }
