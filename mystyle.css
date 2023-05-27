@@ -1,6 +1,5 @@
 body {
 color: black;
- 
 }
 .container {
 			display: flex;
@@ -78,6 +77,51 @@ color: black;
 			display: none;
 		}
 	}
+
+.playBut {display:inline-block; margin-left: -5px;
+    -webkit-transition: all 0.5s ease;
+     
+  .triangle {
+    -webkit-transition: all 0.7s ease-in-out;
+    stroke-dasharray: 240;
+    stroke-dashoffset: 480;
+    stroke: var(--triangle-color, black);
+    transform: translateY(0) 
+   }
+  
+  
+  &:hover {
+    
+    .triangle {
+      stroke-dashoffset: 0;
+      opacity: 1;
+      stroke: #53BBE7;
+      animation: nudge 0.7s ease-in-out;
+      
+      @keyframes nudge{
+        0% {
+          transform: translateX(0)  
+        }
+        30% {
+          transform: translateX(-10px)
+        }
+        50% {
+          transform: translateX(10px)
+        }
+        70% {
+          transform: translateX(-2px)
+        }
+        100% {
+          transform: translateX(0)
+        }
+      }
+    }  
+  }
+}
+
+  
+  
+	
 .pa {
   display: flex;
   justify-content: center;}
@@ -232,15 +276,20 @@ background-image: none;}
 input {
 background: #CCCCCC;
 }
+.control {
+    filter: invert(80%);
+  }
+:root {
+        --triangle-color: #CCCCCC;}
 .my-select {
 background-color:#CCCCCC;
 
 }
 .date input{
 background-color:#CCCCCC;
-
 }
+
 .btn { background: #CCCCCC;}
-.pa a {  color:#CCCCCC;}
+.pa a {color:#CCCCCC;}
 .popup {background: #CCCCCC;}
 }
