@@ -344,27 +344,12 @@
     window.location.href = url;
 }
       function gotoURL() {
-  // 显示对话框
-  const message = "即将进入 果核音乐。是否复制音乐密码";
-  const shouldCopy = window.confirm(message);
 
-  if (shouldCopy) {
-    // 复制链接并继续
-    const text = "ghyynb";
-    const url = "https://music.ghxi.com/";
-    const dummy = document.createElement("textarea");
-    document.body.appendChild(dummy);
-    dummy.value = text;
-    dummy.select();
-    document.execCommand("copy");
-    document.body.removeChild(dummy);
-    window.open(url, "_blank");
-  } else {
     // 直接继续
     const url = "https://music.ghxi.com/";
     window.open(url, "_blank");
   }
-}
+
 
     </script>
 </head>
