@@ -205,7 +205,7 @@ p{color:black}
 .show {
   display: block;
 }
-label[for="myInput"]  {
+label {
         color: black;
     }
 
