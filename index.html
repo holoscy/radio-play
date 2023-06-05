@@ -375,6 +375,14 @@
 <label for="opacity2">透明度</label><input type="range" id="opacity2" min="0" max="1" step="0.1" value="1"><br>
 <label for="bg-color3">网页背景色</label><input type="color" id="bg-color3" value="#ffffff"><br>
 <label for="opacity3">网页透明度</label><input type="range" id="opacity3" min="0" max="1" step="0.1" value="1"><br>
+<label for="bg-position-select">背景图位置</label>
+  <select id="bg-position-select">
+    <option value="top">顶部</option>
+    <option value="center">居中</option>
+    <option value="bottom">底部</option>
+  </select><br>
+  <label for="bg-size-range">背景图缩放</label>
+  <input type="range" id="bg-size-range" min="10" max="100" step="1" value="100"><br>
     <button id="select-online-bg-btn">选择在线图片</button>
     <button id="select-local-bg-btn">选择本地图片</button>
     <button id="clear-bg-btn">清除背景图</button>
@@ -559,7 +567,34 @@ document.addEventListener("DOMContentLoaded", function() {
     // 移除本地存储的背景图数据
     localStorage.removeItem("backgroundImage");
   });
+var bgPositionSelect = document.getElementById("bg-position-select");
+      var bgSizeRange = document.getElementById("bg-size-range");
 
+      // 检查本地存储是否有背景图位置数据
+      if (localStorage.getItem("bgPosition")) {
+        var storedPosition = localStorage.getItem("bgPosition");
+        bgPositionSelect.value = storedPosition;
+        document.body.style.backgroundPosition = storedPosition;
+      }
+
+      // 检查本地存储是否有背景图大小数据
+      if (localStorage.getItem("bgSize")) {
+        var storedSize = localStorage.getItem("bgSize");
+        bgSizeRange.value = storedSize;
+        document.body.style.backgroundSize = storedSize + "%";
+      }
+
+      bgPositionSelect.addEventListener("change", function() {
+        var selectedPosition = bgPositionSelect.value;
+        document.body.style.backgroundPosition = selectedPosition;
+        localStorage.setItem("bgPosition", selectedPosition);
+      });
+
+      bgSizeRange.addEventListener("input", function() {
+        var selectedSize = bgSizeRange.value;
+        document.body.style.backgroundSize = selectedSize + "%";
+        localStorage.setItem("bgSize", selectedSize);
+      });
   // 显示/隐藏弹窗
   var toggleMenuBtn = document.getElementById("toggle-menu-btn");
   var submenuPopup = document.getElementById("submenu-popup");
