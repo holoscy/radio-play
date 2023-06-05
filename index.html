@@ -618,14 +618,21 @@ var bgPositionSelect = document.getElementById("bg-position-select");
 
   // 切换主题模式
   function toggleDarkMode() {
-    if (document.body.classList.contains("dark")) {
-      document.body.classList.remove("dark");
-      localStorage.setItem("themeMode", "default");
-    } else {
-      document.body.classList.add("dark");
-      localStorage.setItem("themeMode", "dark");
-    }
+  var darkModeButton = document.getElementById("darkModeButton");
+
+  if (document.body.classList.contains("dark")) {
+    // 切换为浅色模式
+    document.body.classList.remove("dark");
+    localStorage.setItem("themeMode", "default");
+    darkModeButton.style.background = "url(./icons/light.svg)";
+  } else {
+    // 切换为深色模式
+    document.body.classList.add("dark");
+    localStorage.setItem("themeMode", "dark");
+    darkModeButton.style.background = "url(./icons/dark.svg)";
   }
+    darkModeButton.style.backgroundSize = "100%"; 
+}
 
   // 页面加载时检查主题模式
   checkThemeMode();
