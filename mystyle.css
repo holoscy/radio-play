@@ -19,10 +19,10 @@
   width: 100%;
 		}
 		@media screen and (min-width: 768px) {
-			html{height: 100%;}
-		        body{height: 100%;overflow: hidden;
+		html{height: 100%;}
+		body{height: 100%;overflow: hidden;
 }
-                        .app{height: 100%;}
+            .app{height: 100%;}
 			.ite {
 				flex: 1;padding: 10px;
 			}
@@ -149,7 +149,7 @@ p{color:black}
 	font-size: 12px;
 	color: #53BBE7;
 	font-style: oblique;
-	font-weight:bold;text-shadow: 0 0 3px #616161;
+	font-weight:bold;  text-shadow: 0 0 3px #616161;
 }
 
 .input-boxLine input:focus~.line,
@@ -180,35 +180,46 @@ p{color:black}
   border-radius: 5px;
   }
 
-.submenu {border-radius: 1em;
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-  background-color:white;
-  padding: 5px;width:12em;
-  border: 2px solid black;
-  
+.submenu {
+    border-radius: 1em;
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    background-color:white;
+    padding: 5px;
+    width: 12em;
+    border: 2px solid black;
 }
 
-
-.submenu button {width:7em;
-  display: block;
-  align-items: center;
-  margin-bottom: 5px;
+.submenu .page {
+    display: none;
 }
+
+.submenu .page1 {
+    display: block;
+}
+
+.submenu button {
+    width: 7em;
+    display: block;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
 .menu-container {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 9999;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
 }
 
 .show {
-  display: block;
+    display: block;
 }
+
 .loading::after {
   content: '';
   position: fixed;
@@ -232,7 +243,8 @@ p{color:black}
     opacity: 0;
   }
 }
-label {
+
+label{
         color: black;
     }
 
