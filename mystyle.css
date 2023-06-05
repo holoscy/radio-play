@@ -205,6 +205,29 @@ p{color:black}
 .show {
   display: block;
 }
+.loading::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  animation: loadingAnimation 2s infinite ease-in-out;
+}
+
+@keyframes loadingAnimation {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 label {
         color: black;
     }
