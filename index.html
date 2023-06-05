@@ -566,7 +566,6 @@ document.addEventListener("DOMContentLoaded", function() {
     localStorage.removeItem("backgroundImage");
   });
 var bgPositionSelect = document.getElementById("bg-position-select");
-      var bgSizeRange = document.getElementById("bg-size-range");
 
       // 检查本地存储是否有背景图位置数据
       if (localStorage.getItem("bgPosition")) {
@@ -575,24 +574,12 @@ var bgPositionSelect = document.getElementById("bg-position-select");
         document.body.style.backgroundPosition = storedPosition;
       }
 
-      // 检查本地存储是否有背景图大小数据
-      if (localStorage.getItem("bgSize")) {
-        var storedSize = localStorage.getItem("bgSize");
-        bgSizeRange.value = storedSize;
-        document.body.style.backgroundSize = storedSize + "%";
-      }
-
       bgPositionSelect.addEventListener("change", function() {
         var selectedPosition = bgPositionSelect.value;
         document.body.style.backgroundPosition = selectedPosition;
         localStorage.setItem("bgPosition", selectedPosition);
       });
 
-      bgSizeRange.addEventListener("input", function() {
-        var selectedSize = bgSizeRange.value;
-        document.body.style.backgroundSize = selectedSize + "%";
-        localStorage.setItem("bgSize", selectedSize);
-      });
   // 显示/隐藏弹窗
   var toggleMenuBtn = document.getElementById("toggle-menu-btn");
   var submenuPopup = document.getElementById("submenu-popup");
