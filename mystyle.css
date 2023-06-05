@@ -149,7 +149,7 @@ p{color:black}
 	font-size: 12px;
 	color: #53BBE7;
 	font-style: oblique;
-	font-weight:bold;
+	font-weight:bold;text-shadow: 0 0 3px #616161;
 }
 
 .input-boxLine input:focus~.line,
