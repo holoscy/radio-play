@@ -312,6 +312,27 @@ var img = data['cover'] ? 'background-image:url(' + data['cover'] + '); backgrou
     info.appendChild(separator);
     info.appendChild(song);
     result.appendChild(info);
+   if (data['cur_time']) {
+        // 添加 "cur_time" 信息
+        var curTime = document.createElement('span');
+        curTime.className = 'playlist_item__cur_time';
+        curTime.textContent = data['cur_time'];
+        info.insertBefore(curTime, info.firstChild);  // 插入到info的开头
+
+        // 添加 "ON AIR " 文本
+        var onAirText = document.createElement('span');
+        onAirText.textContent = 'ON AIR (EEST) ';
+        info.insertBefore(onAirText, info.firstChild);  // 插入到info的开头
+    }
+
+    // 添加 "title" 信息
+    if (data['title']) {
+        var title = document.createElement('span');
+        title.className = 'playlist_item__title';
+        title.textContent = data['title'];
+        info.appendChild(title);
+    }
+    
 if (data['video']) {
         var video = document.createElement('a');
         video.className = 'playlist_item__video';
