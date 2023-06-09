@@ -468,7 +468,6 @@ if (data['video']) {
         <h2 class="title">TAVR MEDIA</h2>
     </article>
     <select class="station_select  my-select" name="src_select" id="src_select" >
-        <option value="" disabled selected hidden>Station</option>
         <option value='{"src":"https://online.hitfm.ua/HitFM_HD","request":"https://o.tavrmedia.ua/hit","name":"Hit FM"}'>Hit FM</option>
         <option value='{"src":"https://online.hitfm.ua/HitFM_Best_HD","request":"https://o.tavrmedia.ua/hitb","name":"Hit FM Best"}'>Hit FM Best</option>       
         <option value='{"src":"https://online.hitfm.ua/HitFM_Top_HD","request":"https://o.tavrmedia.ua/hitt","name":"Hit FM Top"}'>Hit FM Top</option>
@@ -487,16 +486,12 @@ if (data['video']) {
     </select>
      
     <audio id="audio" controls="true" preload="none" src=""></audio>
-    <article class="playlist_wrapper" id="playlist_wrapper">
-    <div id="playlist_title_container">
+    <article class="playlist_wrapper">
         <h3 class="playlist_title">TAVR is playing now</h3>
-    </div>
     <ul class="playlist current"></ul>
 </article>
-<article class="playlist_wrapper" id="previous_playlist_wrapper">
-    <div id="previous_playlist_title_container">
+<article class="playlist_wrapper">
         <h3 class="playlist_title">Was playing previously</h3>
-    </div>
     <ul class="playlist previous"></ul>
 </article>
         </div>
@@ -960,22 +955,6 @@ document.getElementById("prev-page-btn").addEventListener("click", function() {
     document.querySelector(".page2").style.display = "none";
     document.querySelector(".page1").style.display = "block";
 });
- var selectElement = document.getElementById("src_select");
-    var playlistTitleContainer = document.getElementById("playlist_title_container");
-    var previousPlaylistTitleContainer = document.getElementById("previous_playlist_title_container");
 
-    selectElement.addEventListener("change", function() {
-        if (selectElement.value === "") {
-            playlistTitleContainer.style.display = "none";
-            previousPlaylistTitleContainer.style.display = "none";
-        } else {
-            playlistTitleContainer.style.display = "block";
-            previousPlaylistTitleContainer.style.display = "block";
-        }
-    });
-
-    // 初始状态下隐藏标题容器
-    playlistTitleContainer.style.display = "none";
-    previousPlaylistTitleContainer.style.display = "none";
   </script>
 </html>
