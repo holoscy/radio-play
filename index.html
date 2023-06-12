@@ -313,17 +313,28 @@ var img = data['cover'] ? 'background-image:url(' + data['cover'] + '); backgrou
     info.appendChild(song);
     result.appendChild(info);
 if (data['cur_time']) {
-        // 添加 "cur_time" 信息
-        var curTime = document.createElement('span');
-        curTime.className = 'playlist_item__cur_time';
-        curTime.textContent = data['cur_time'];
-        info.insertBefore(curTime, info.firstChild);  // 插入到info的开头
+    // 添加 "cur_time" 信息
+    var curTime = document.createElement('span');
+    curTime.className = 'playlist_item__cur_time';
+    curTime.textContent = data['cur_time'];
+    info.insertBefore(curTime, info.firstChild);  // 插入到info的开头
 
-        // 添加 "ON AIR " 文本
-        var onAirText = document.createElement('span');
-        onAirText.textContent = 'ON AIR (EEST) ';
-        info.insertBefore(onAirText, info.firstChild);  // 插入到info的开头
-    }
+    // 添加 "ON AIR " 文本
+    var onAirText = document.createElement('span');
+    onAirText.textContent = 'ON AIR (EEST): ';
+    info.insertBefore(onAirText, info.firstChild);
+} else if (data['cur_end_time']) {
+    // 添加 "cur_end_time" 信息
+    var curEndTime = document.createElement('span');
+    curEndTime.className = 'playlist_item__cur_end_time';
+    curEndTime.textContent = data['cur_end_time'];
+    info.insertBefore(curEndTime, info.firstChild);  
+
+    // 添加 "ON AIR " 文本
+    var onAirText = document.createElement('span');
+    onAirText.textContent = 'ON AIR (EEST) End:';
+    info.insertBefore(onAirText, info.firstChild);  
+}
 
     // 添加 "title" 信息
     if (data['title']) {
