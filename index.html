@@ -336,6 +336,7 @@ if (data['cur_time']) {
     info.insertBefore(onAirText, info.firstChild);  
 }
 
+
     // 添加 "title" 信息
     if (data['title']) {
         var title = document.createElement('span');
@@ -350,6 +351,23 @@ if (data['video']) {
         video.href = 'https://www.youtube.com/watch?v=' + data['video'];
         video.innerHTML = '<img src="./icons/youtube.svg" alt="YouTube Logo">';
          info.appendChild(video);    }
+function removeSymbols(text) {
+  return text.replace(/[^\p{L}\d\s]/gu, ' ');
+}
+  if (data['song'] && data['singer']) {
+  var neteaseLink = document.createElement('a');
+  neteaseLink.className = 'playlist_item__netease';
+  neteaseLink.href = 'https://music.163.com/#/search/m/?s=' + encodeURIComponent(removeSymbols(data['song'] + ' ' + data['singer']));
+  neteaseLink.target = '_blank';
+  neteaseLink.innerHTML = '<img src="./icons/netease.svg" style="width:20px;position: relative;top: 4px;margin-left: 2px" alt="Netease Logo">';
+  info.appendChild(neteaseLink);
+   var spotifyLink = document.createElement('a');
+  spotifyLink.className = 'playlist_item__spotify';
+  spotifyLink.href = 'https://open.spotify.com/search/' + encodeURIComponent(removeSymbols(data['song'] + ' ' + data['singer']));
+  spotifyLink.target = '_blank';
+  spotifyLink.innerHTML = '<img src="./icons/spotify.svg" style="width:17px;position: relative;top: 2px;margin-left: 2px" alt="spotify Logo">';
+  info.appendChild(spotifyLink);
+    }
     return result;
 }
     </script>
@@ -422,6 +440,7 @@ if (data['video']) {
         <label for="opacity3">网页透明度</label><input type="range" id="opacity3" min="0" max="1" step="0.01" value="1">
       
         <button id="next-page-btn">下一页</button>
+        <button id="about-btn">关于</button>
      </div>  
         <div class="page page2">
         <label for="bg-position-select">背景图位置</label>
@@ -439,7 +458,14 @@ if (data['video']) {
         <button onclick="selectBackupFile()">选择备份文件</button>
         <button onclick="restoreLocalStorage()" disabled id="restoreButton">恢复数据</button>
         <button id="prev-page-btn">上一页</button>
-
+    </div>
+     <div class="page about">
+         <p>网易云音乐 搭配脚本使用更佳,<br>网易云,spotify仅为快捷搜索</p><br>
+<a href="https://greasyfork.org/zh-CN/scripts/406054" >1.显示完整歌单</a><br>
+<a href="https://greasyfork.org/zh-CN/scripts/453804" >2.MyFreeMP3扩展
+</a><br>
+<a href="https://greasyfork.org/zh-CN/scripts/33046" >3.直接下载</a><br>
+        <button id="about-btn">关于</button>
     </div>
 </div>
 
@@ -960,12 +986,26 @@ function backupLocalStorage() {
     document.getElementById("next-page-btn").addEventListener("click", function() {
     document.querySelector(".page1").style.display = "none";
     document.querySelector(".page2").style.display = "block";
+    document.querySelector(".about").style.display = "none";
 });
 
 document.getElementById("prev-page-btn").addEventListener("click", function() {
     document.querySelector(".page2").style.display = "none";
     document.querySelector(".page1").style.display = "block";
+    document.querySelector(".about").style.display = "none";
 });
-
+document.getElementById("about-btn").addEventListener("click", function() {
+    if (document.querySelector(".page1").style.display === "block") {
+        document.querySelector(".page1").style.display = "none";
+        document.querySelector(".about").style.display = "block";
+    } else if (document.querySelector(".page2").style.display === "block") {
+        document.querySelector(".page2").style.display = "none";
+        document.querySelector(".about").style.display = "block";
+    }
+});
+document.querySelector(".about").addEventListener("click", function() {
+    document.querySelector(".about").style.display = "none";
+    document.querySelector(".page1").style.display = "block";
+});
   </script>
 </html>
