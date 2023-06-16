@@ -415,9 +415,7 @@ function removeSymbols(text) {
    
     <article>
         <h2 class="title"> HITFM 歌单</h2></article>
-       <p class="pa">
-      <a href="https://tieba.baidu.com/p/8349495389" >By HitFM😋</a>
-       </p> 
+   
 <div class="menu-container">
   <button id="toggle-menu-btn" style="width:20px;height:20px;background:url(./icons/pic.svg);background-size: 100%;"></button>
   <button id="darkModeButton" style="width:20px;height:20px;background:url(./icons/light.svg);background-size: 100%;" onclick="toggleDarkMode()"></button>
@@ -479,8 +477,8 @@ function removeSymbols(text) {
      
      </div>
        <div class="player">
-        <button onclick="updateProgramLink()" style="width:102px;height:40px;background:url(./icons/ls.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
         <button onclick="goToWebpage()" style="width:102px;height:40px;background:url(./icons/lst.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
+        <button onclick="updateProgramLink()" style="width:102px;height:40px;background:url(./icons/ls.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>   
         <button onclick="gotoURL()" style="width:102px;height:40px;background:url(./icons/dl.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
        </div> 
        <div class="player">
@@ -728,14 +726,9 @@ var bgPositionSelect = document.getElementById("bg-position-select");
 });
 
            function goToWebpage() {
-  // get the selected date
-  const selectedDate = document.getElementById("datePicker").value.replace(/-/g, '');
+  const url = "https://space.bilibili.com/1090328045/search/video?keyword=ost"
 
-  // create a URL based on the selected date
-  const url = "http://live.cooltv.top/hitfm.php?list=" + selectedDate;
-
-  // open the URL in a new tab
-  window.open(url, "_blank");
+ window.location.href = url;
 }
           function goToWebpage1() {
   const url = "https://music.163.com/#/playlist?id=6705531149";
@@ -1009,5 +1002,6 @@ document.querySelector(".about").addEventListener("click", function() {
         document.querySelector(".page1").style.display = "block";
     }
 });
+
   </script>
 </html>
