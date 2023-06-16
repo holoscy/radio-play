@@ -460,7 +460,7 @@ function removeSymbols(text) {
         <button id="prev-page-btn">上一页</button>
     </div>
      <div class="page about">
-         <p>网易云音乐 搭配脚本使用更佳,<br>网易云,spotify仅为快捷搜索</p><br>
+         <p>网易云音乐 搭配脚本使用更佳,<br>网易云,spotify仅为PC端快捷搜索</p><br>
 <a href="https://greasyfork.org/zh-CN/scripts/406054" >1.显示完整歌单</a><br>
 <a href="https://greasyfork.org/zh-CN/scripts/453804" >2.MyFreeMP3扩展
 </a><br>
@@ -994,18 +994,20 @@ document.getElementById("prev-page-btn").addEventListener("click", function() {
     document.querySelector(".page1").style.display = "block";
     document.querySelector(".about").style.display = "none";
 });
+
 document.getElementById("about-btn").addEventListener("click", function() {
-    if (document.querySelector(".page1").style.display === "block") {
-        document.querySelector(".page1").style.display = "none";
-        document.querySelector(".about").style.display = "block";
-    } else if (document.querySelector(".page2").style.display === "block") {
-        document.querySelector(".page2").style.display = "none";
-        document.querySelector(".about").style.display = "block";
-    }
+    document.querySelector(".page1").style.display = "none";
+    document.querySelector(".page2").style.display = "none";
+    document.querySelector(".about").style.display = "block";
 });
+
 document.querySelector(".about").addEventListener("click", function() {
     document.querySelector(".about").style.display = "none";
-    document.querySelector(".page1").style.display = "block";
+    if (document.querySelector(".page1").style.display === "none") {
+        document.querySelector(".page2").style.display = "block";
+    } else {
+        document.querySelector(".page1").style.display = "block";
+    }
 });
   </script>
 </html>
