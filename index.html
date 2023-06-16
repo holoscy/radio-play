@@ -365,7 +365,7 @@ function removeSymbols(text) {
   spotifyLink.className = 'playlist_item__spotify';
   spotifyLink.href = 'https://open.spotify.com/search/' + encodeURIComponent(removeSymbols(data['song'] + ' ' + data['singer']));
   spotifyLink.target = '_blank';
-  spotifyLink.innerHTML = '<img src="./icons/spotify.svg" style="width:17px;position: relative;top: 2px;margin-left: 2px" alt="spotify Logo">';
+  spotifyLink.innerHTML = '<img src="./icons/spotify.svg" style="width:16px;position: relative;top: 2px;margin-left: 2px" alt="spotify Logo">';
   info.appendChild(spotifyLink);
     }
     return result;
