@@ -352,8 +352,9 @@ if (data['video']) {
         video.innerHTML = '<img src="./icons/youtube.svg" alt="YouTube Logo">';
          info.appendChild(video);    }
 function removeSymbols(text) {
-  return text.replace(/[^\p{L}\d\s]/gu, ' ');
+  return text.replace(/[^\p{L}\d\s()]/gu, ' ');
 }
+
   if (data['song'] && data['singer']) {
   var neteaseLink = document.createElement('a');
   neteaseLink.className = 'playlist_item__netease';
