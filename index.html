@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,minimum-scale=0.6,maximum-scale=2">
-    <link href="mystyle.css" rel="stylesheet" type="text/css"/>
+    <link href="mystyle.css" rel="stylesheet" type="text/css">
    <title>HITFM Player</title>
   <link rel="shortcut icon" type="image/png" href="icons/hit.png">
   <script type="text/javascript">
@@ -229,6 +229,7 @@
                 playAudio();
             }
             appTitle.textContent = value['name'];
+            document.title = value['name'];
             timerID = setTimeout(function request() {
                 getTrackData(value['request'], currentList, previousList);
                 timerID = setTimeout(request, delay);
@@ -561,30 +562,35 @@ function removeSymbols(text) {
       document.body.classList.add('loading');
       inputUrl.value = "https://liveop.cctv.cn/hls/cctvn/playlist.m3u8";
       appTitle.textContent = "HITFM 央视";
+      document.title = "HITFM 央视";
       play();
     }
     function playHitFM2() {
       document.body.classList.add('loading');
       inputUrl.value = "https://satellitepull.cnr.cn/live/wxhitfm/playlist.m3u8";
       appTitle.textContent = "HITFM 广州";
+      document.title = "HITFM 广州";
       play();
     }
     function playHitFM3() {
     document.body.classList.add('loading');
       inputUrl.value = "https://satellitepull.cnr.cn/live/wxgjlxyy/playlist.m3u8";
       appTitle.textContent = "HITFM 北京";
+      document.title = "HITFM 北京";
       play();
     }
     function playHitFM4() {
     document.body.classList.add('loading');
       inputUrl.value = "https://sk.cri.cn/887.m3u8";
       appTitle.textContent = "HITFM 887";
+      document.title = "HITFM 887";
       play();
     }
     function playAT40() {
     document.body.classList.add('loading');
       inputUrl.value = "https://stream.revma.ihrhls.com/zc4802/hls.m3u8";
       appTitle.textContent = "AT40";
+      document.title = "AT40";
       play();
     }
     
@@ -592,6 +598,7 @@ function removeSymbols(text) {
     document.body.classList.add('loading');
       inputUrl.value = "https://stream.revma.ihrhls.com/zc1469/hls.m3u8";
       appTitle.textContent = "Z100"
+      document.title = "Z100";
       play();
     }
 document.addEventListener("DOMContentLoaded", function() {  
