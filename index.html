@@ -346,14 +346,21 @@ if (data['cur_time']) {
         info.appendChild(title);
     }
     
+function removeSymbols(text) {
+  return text.replace(/[^\p{L}\d\s()]/gu, ' ');
+}    
 if (data['video']) {
         var video = document.createElement('a');
         video.className = 'playlist_item__video';
         video.href = 'https://www.youtube.com/watch?v=' + data['video'];
         video.innerHTML = '<img src="./icons/youtube.svg" alt="YouTube Logo">';
          info.appendChild(video);    }
-function removeSymbols(text) {
-  return text.replace(/[^\p{L}\d\s()]/gu, ' ');
+          else if (data['song'] && data['singer']) { 
+          var youtubeLink = document.createElement('a');
+  youtubeLink.href = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(removeSymbols(data['song'] + ' ' + data['singer']));
+  youtubeLink.target = '_blank';
+  youtubeLink.innerHTML = '<img src="./icons/youtube.svg" style="width:20px;position: relative;top: 4px;margin-left: 10px" alt="YouTube Logo">';
+  info.appendChild(youtubeLink);
 }
 
   if (data['song'] && data['singer']) {
