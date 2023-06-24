@@ -1,4 +1,6 @@
-
+html{display: flex;
+flex-direction: column;
+min-height: 100vh;}
 .container {
 			display: flex;
 			flex-wrap: wrap;
@@ -19,9 +21,6 @@
   width: 100%;
 		}
 		@media screen and (min-width: 768px) {
-		html{height: 100%;}
-		body{height: 100%;overflow: hidden;
-}
             .app{height: 100%;}
 			.ite {
 				flex: 1;padding: 10px;
@@ -237,7 +236,7 @@ p{color:black}
     opacity: 0;
   }
   50% {
-    opacity: 0.5;
+    opacity: 0.3;
   }
   100% {
     opacity: 0;
