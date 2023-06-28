@@ -392,8 +392,8 @@ if (data['video']) {
     </div>
  <div class="container">
   <div class="ite item-left">
-  <div class="top"  style="display:flex;align-items:center;">
- <div style="margin-left:auto;margin-right:1em;"> <a href="https://www.shazam.com/" ><img src="./icons/shazam.svg" style="width:20px" alt="shazam Logo"></a></div>
+  <div class="top"  style="display:flex;align-items:center;">    
+  <div style="margin-left:auto;margin-right:1em;"> <a href="https://www.shazam.com/" ><img src="./icons/shazam.svg" style="width:20px" alt="shazam Logo"></a></div>
 <div class="input-boxLine" style="display:flex;align-items:center;margin-left:0;margin-right:0;">
 	<input id="inputUrl" input type="text" required />
 	<div class="line"></div>
@@ -410,6 +410,7 @@ if (data['video']) {
         </svg>
     </a>
 </button>
+
 
 </div>
     <div class="player">
@@ -480,8 +481,6 @@ if (data['video']) {
 
 </div>
 
-
-    
     <div class="date" style="display:flex;justify-content:center;align-items:center;margin-bottom:10px;">
      <span for="datepicker" >Date</span>
 <input type="date" name="datepicker" id="datePicker"> 
@@ -720,23 +719,82 @@ var bgPositionSelect = document.getElementById("bg-position-select");
   }
 
   // 切换主题模式
-  function toggleDarkMode() {
+var isDarkMode = false;
+
+// 页面加载时检查主题模式
+function checkThemeMode() {
+  var themeMode = localStorage.getItem("themeMode");
+  if (themeMode === "dark") {
+    // 应用深色模式
+    document.body.classList.add("dark");
+    isDarkMode = true;
+      // 设置 --triangle-color 为存储的颜色值
+    var storedColor = localStorage.getItem("triangleColor");
+    document.body.style.setProperty("--triangle-color", storedColor);
+    // 对.control类元素进行反色处理
+    var controlElements = document.querySelectorAll(".control");
+    for (var i = 0; i < controlElements.length; i++) {
+      var controlElement = controlElements[i];
+      controlElement.style.filter = "invert(90%)";
+    }
+    // 对网页中的Shazam图标进行反色处理
+    var shazamIcons = document.querySelectorAll("img[src='./icons/shazam.svg']");
+    for (var i = 0; i < shazamIcons.length; i++) {
+      var shazamIcon = shazamIcons[i];
+      shazamIcon.style.filter = "invert(90%)";
+    }
+  }
+}
+
+function toggleDarkMode() {
   var darkModeButton = document.getElementById("darkModeButton");
 
-  if (document.body.classList.contains("dark")) {
+  if (isDarkMode) {
     // 切换为浅色模式
     document.body.classList.remove("dark");
     localStorage.setItem("themeMode", "default");
     darkModeButton.style.background = "url(./icons/light.svg)";
+  // 设置 --triangle-color 为黑色（可根据需求修改为其他颜色）
+    document.body.style.setProperty("--triangle-color", "black");
+    localStorage.setItem("triangleColor", "black");
+        // 取消.control类元素的反色处理
+    var controlElements = document.querySelectorAll(".control");
+    for (var i = 0; i < controlElements.length; i++) {
+      var controlElement = controlElements[i];
+      controlElement.style.filter = "none";
+    }
+    // 取消网页中的Shazam图标反色处理
+    var shazamIcons = document.querySelectorAll("img[src='./icons/shazam.svg']");
+    for (var i = 0; i < shazamIcons.length; i++) {
+      var shazamIcon = shazamIcons[i];
+      shazamIcon.style.filter = "none";
+    }
+    isDarkMode = false;
   } else {
     // 切换为深色模式
     document.body.classList.add("dark");
     localStorage.setItem("themeMode", "dark");
     darkModeButton.style.background = "url(./icons/dark.svg)";
+  // 设置 --triangle-color 为白色
+    document.body.style.setProperty("--triangle-color", "white");
+    localStorage.setItem("triangleColor", "#E5E5E5");
+    // 对.control类元素进行反色处理
+    var controlElements = document.querySelectorAll(".control");
+    for (var i = 0; i < controlElements.length; i++) {
+      var controlElement = controlElements[i];
+      controlElement.style.filter = "invert(90%)";
+    }
+    // 对网页中的Shazam图标进行反色处理
+    var shazamIcons = document.querySelectorAll("img[src='./icons/shazam.svg']");
+    for (var i = 0; i < shazamIcons.length; i++) {
+      var shazamIcon = shazamIcons[i];
+      shazamIcon.style.filter = "invert(90%)";
+    }
+    isDarkMode = true;
   }
-    darkModeButton.style.backgroundSize = "100%"; 
+  
+  darkModeButton.style.backgroundSize = "100%"; 
 }
-
 
   // 页面加载时检查主题模式
   checkThemeMode();
