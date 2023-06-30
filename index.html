@@ -413,16 +413,16 @@ if (data['video']) {
 
 
 </div>
-    <div class="player">
-        <button onclick="playHitFM1()" style="width:120px;height:40px;background:url(./icons/hit1.png);margin:auto;background-size: 100%;"> </button>
-        <button onclick="playHitFM2()" style="width:120px;height:40px;background:url(./icons/hit广州.png);margin:auto;background-size: 100%;"> </button>
-        <button onclick="playHitFM3()" style="width:120px;height:40px;background:url(./icons/hit北京.png);margin:auto;background-size: 100%;"> </button>  
-    </div>
-    <div class="player">   
-        <button onclick="playHitFM4()"style="width:120px;height:40px;background:url(./icons/hit887.png);margin:auto;background-size: 100%;"> </button>    
-        <button onclick="playAT40()" style="width:120px;height:40px;background:url(./icons/at40.png);margin:auto;background-size: 100%;"> </button>
-        <button onclick="playZ100()" style="width:120px;height:40px;background:url(./icons/z100.png);margin:auto;background-size: 100%;"> </button>
-    </div> 
+   <div class="player">
+    <button class="df-button" onclick="playHitFM1()" style="background-image: url(./icons/hit1.png)"></button>
+    <button class="df-button" onclick="playHitFM2()" style="background-image: url(./icons/hit广州.png)"></button>
+    <button class="df-button" onclick="playHitFM3()" style="background-image: url(./icons/hit北京.png)"></button>  
+</div>
+<div class="player">   
+    <button class="df-button" onclick="playHitFM4()" style="background-image: url(./icons/hit887.png)"></button>    
+    <button class="df-button" onclick="playAT40()" style="background-image: url(./icons/at40.png)"></button>
+    <button class="df-button" onclick="playZ100()" style="background-image: url(./icons/z100.png)"></button>
+</div>
    
     <article>
         <h2 class="title"> HITFM 歌单</h2></article>
@@ -487,14 +487,14 @@ if (data['video']) {
      
      </div>
        <div class="player">
-        <button onclick="goToWebpage()" style="width:102px;height:40px;background:url(./icons/lst.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
-        <button onclick="updateProgramLink()" style="width:102px;height:40px;background:url(./icons/ls.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>   
-        <button onclick="gotoURL()" style="width:102px;height:40px;background:url(./icons/dl.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
+        <button class="link-button" onclick="goToWebpage()" style="background-image: url(./icons/lst.png)"> </button>
+        <button class="link-button" onclick="updateProgramLink()" style="background-image: url(./icons/ls.png)"> </button>   
+        <button class="link-button" onclick="gotoURL()" style="background-image: url(./icons/dl.png)"> </button>
        </div> 
        <div class="player">
-       <button onclick="goToWebpage1()" style="width:102px;height:40px;background:url(./icons/top20.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
-       <button onclick="goToWebpage2()" style="width:102px;height:40px;background:url(./icons/mv.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
-       <button onclick="goToWebpage3()" style="width:102px;height:40px;background:url(./icons/at4.png);background-size: 100%;margin:auto;cursor: pointer;"> </button>
+       <button class="link-button" onclick="goToWebpage1()" style="background-image: url(./icons/top20.png)"> </button>
+       <button class="link-button" onclick="goToWebpage2()" style="background-image: url(./icons/mv.png)"> </button>
+       <button class="link-button" onclick="goToWebpage3()" style="background-image: url(./icons/at4.png)"> </button>
        </div> 
          </div>
 
@@ -547,68 +547,56 @@ if (data['video']) {
     const audio = document.getElementById('audio');
     const inputUrl = document.getElementById('inputUrl');
 
-    function play() {
-          document.body.classList.add('loading');
+   function play(url) {
+  document.body.classList.add('loading');
 
-      if(Hls.isSupported()) {
-        const hls = new Hls();
-        const url = inputUrl.value;
-        hls.loadSource(url);
-        hls.attachMedia(audio);
-        hls.on(Hls.Events.MANIFEST_PARSED,function() {
-          audio.play();
-        });
-      } else if (audio.canPlayType('application/vnd.apple.mpegurl')) {
-        audio.src = inputUrl.value;
-        audio.addEventListener('loadedmetadata',function() {
-          audio.play();
-        });
-      }
-    }
+  if (Hls.isSupported()) {
+    const hls = new Hls();
+    hls.loadSource(url);
+    hls.attachMedia(audio);
+    hls.on(Hls.Events.MANIFEST_PARSED, function () {
+      audio.play();
+    });
+  } else if (audio.canPlayType('application/vnd.apple.mpegurl')) {
+    audio.src = url;
+    audio.addEventListener('loadedmetadata', function () {
+      audio.play();
+    });
+  }
+}
 
-    function playHitFM1() {
-      document.body.classList.add('loading');
-      inputUrl.value = "https://liveop.cctv.cn/hls/cctvn/playlist.m3u8";
-      appTitle.textContent = "HITFM 央视";
-      document.title = "HITFM 央视";
-      play();
-    }
-    function playHitFM2() {
-      document.body.classList.add('loading');
-      inputUrl.value = "https://satellitepull.cnr.cn/live/wxhitfm/playlist.m3u8";
-      appTitle.textContent = "HITFM 广州";
-      document.title = "HITFM 广州";
-      play();
-    }
-    function playHitFM3() {
-    document.body.classList.add('loading');
-      inputUrl.value = "https://satellitepull.cnr.cn/live/wxgjlxyy/playlist.m3u8";
-      appTitle.textContent = "HITFM 北京";
-      document.title = "HITFM 北京";
-      play();
-    }
-    function playHitFM4() {
-    document.body.classList.add('loading');
-      inputUrl.value = "https://sk.cri.cn/887.m3u8";
-      appTitle.textContent = "HITFM 887";
-      document.title = "HITFM 887";
-      play();
-    }
-    function playAT40() {
-    document.body.classList.add('loading');
-      inputUrl.value = "https://stream.revma.ihrhls.com/zc4802/hls.m3u8";
-      appTitle.textContent = "AT40";
-      document.title = "AT40";
-      play();
-    }
-    
-    function playZ100() {
-    document.body.classList.add('loading');
-      inputUrl.value = "https://stream.revma.ihrhls.com/zc1469/hls.m3u8";
-      appTitle.textContent = "Z100"
-      document.title = "Z100";
-      play();
-    }
+function setPlaybackInfo(url, title) {
+  document.body.classList.add('loading');
+  inputUrl.value = url;
+  appTitle.textContent = title;
+  document.title = title;
+  play(url);
+}
+
+function playHitFM1() {
+  setPlaybackInfo("https://liveop.cctv.cn/hls/cctvn/playlist.m3u8", "HITFM 央视");
+}
+
+function playHitFM2() {
+  setPlaybackInfo("https://satellitepull.cnr.cn/live/wxhitfm/playlist.m3u8", "HITFM 广州");
+}
+
+function playHitFM3() {
+  setPlaybackInfo("https://satellitepull.cnr.cn/live/wxgjlxyy/playlist.m3u8", "HITFM 北京");
+}
+
+function playHitFM4() {
+  setPlaybackInfo("https://sk.cri.cn/887.m3u8", "HITFM 887");
+}
+
+function playAT40() {
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4802/hls.m3u8", "AT40");
+}
+
+function playZ100() {
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc1469/hls.m3u8", "Z100");
+}
+
 document.addEventListener("DOMContentLoaded", function() {  
   
   // 检查本地存储是否有背景图数据
