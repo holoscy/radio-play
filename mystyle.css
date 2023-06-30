@@ -28,6 +28,19 @@ body{height:100%;}
 .container {display: flex;flex-wrap: nowrap;}
 }
 
+.df-button {
+    width: 120px;
+    height: 40px;
+    background-size: 100%;
+    margin: auto;    cursor: pointer;
+}
+.link-button {
+    width: 102px;
+    height: 40px;
+    background-size: 100%;
+    margin: auto;    cursor: pointer;
+}
+
 .playBut {display:inline-block;
     -webkit-transition: all 0.5s ease;
      
