@@ -41,47 +41,214 @@ body{height:100%;}
     margin: auto;    cursor: pointer;
 }
 
-.playBut {display:inline-block;
-    -webkit-transition: all 0.5s ease;
-     
-  .triangle {
-    -webkit-transition: all 0.7s ease-in-out;
+.playBut {
+    display: inline-block;
+    transition: all 0.5s ease;
+}
+
+.triangle {
+    transition: all 0.7s ease-in-out;
     stroke-dasharray: 240;
     stroke-dashoffset: 480;
     stroke: var(--triangle-color, black);
-    transform: translateY(0) 
-   }
+    transform: translateY(0);
+}
+
+.playBut:hover .triangle {
+    stroke-dashoffset: 0;
+    opacity: 1;
+    stroke: #a1a1f0;
+    animation: nudge 0.7s ease-in-out;
+}
+
+@keyframes nudge {
+    0% {
+        transform: translateX(0px);
+    }
+    30% {
+        transform: translateX(-10px);
+    }
+    50% {
+        transform: translateX(10px);
+    }
+    70% {
+        transform: translateX(-2px);
+    }
+    100% {
+        transform: translateX(0px);
+    }
+}
+
   
   
-  &:hover {
-    
-    .triangle {
-      stroke-dashoffset: 0;
-      opacity: 1;
-      stroke: #a1a1f0;
-      animation: nudge 0.7s ease-in-out;
-      
-      @keyframes nudge{
-        0% {
-          transform: translateX(0)  
-        }
-        30% {
-          transform: translateX(-10px)
-        }
-        50% {
-          transform: translateX(10px)
-        }
-        70% {
-          transform: translateX(-2px)
-        }
-        100% {
-          transform: translateX(0)
-        }
-      }
-    }  
+p{color:black}	
+.pa {
+  display: flex;
+  justify-content: center;}
+.pa a {  font-size: 12px;  font-weight: bold;
+  padding: 0;
+  margin: 0;
+  color: black;
+  background-image: linear-gradient(to bottom, transparent 65%, #a1a1f0 0);
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  text-decoration: none;
+  transition: background-size .4s ease;
+}
+
+.pa a:hover {
+  background-size: 100% 100%;
+  cursor: pointer;
+}
+.input-boxLine {
+	position: relative;
+	width: 60%;
+	height: 30px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.input-boxLine input {
+	width: 100%;
+	height: 100%;
+	border: none;
+	font-size: 15px;
+	border-bottom: 2px solid #a1a1f0;
+	color: #616161;
+    border-radius: 5px;
+}
+
+.input-boxLine span {
+	position: absolute;
+	bottom: 10px;
+	font-size: 15px;
+	left: 0px;
+	color: #616161;
+	pointer-events: none;
+	transition: all 0.3s ease;
+}
+
+.input-boxLine .line {
+	position: absolute;
+	bottom: -1px;
+	height: 3px;
+	width: 100%;
+	background-color: #a1a1f0;
+	transform: scaleX(0);
+	transition: all 0.3s ease;
+}
+.input-boxLine input:focus~span,
+.input-boxLine input:valid~span {
+	top: -15px;
+	font-size: 12px;
+	color: #a1a1f0;
+	font-style: oblique;
+	font-weight:bold;  text-shadow: 1px 1px 1px #616161;
+}
+
+.input-boxLine input:focus~.line,
+.input-boxLine input:valid~.line {
+	transform: scaleX(1);
+}
+
+
+
+[type="date"] {
+  background:#fff url(./icons/calendar.webp)  97% 50% no-repeat ;
+}
+[type="date"]::-webkit-inner-spin-button {
+  display: none;
+}
+[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+.date input{ border: 1px solid #c4c4c4;
+  border-bottom: 2px solid #a1a1f0 ;
+  border-radius: 5px;
+  background-color: #fff;
+  padding: 3px 5px;
+  box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
+  width: 30%;}
+ .station_select{display:block;width:50%;height:35px;margin:0 auto 15px auto;text-align:center; border: 1px solid #c4c4c4;
+  border-bottom: 3px solid #a1a1f0 ;
+  border-radius: 5px;
+  }
+
+.submenu {
+    border-radius: 1em;
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    background-color:white;
+    padding: 5px;
+    width: 12em;
+    border: 2px solid black;
+}
+
+.submenu .page {
+    display: none;
+}
+
+.submenu .page1 {
+    display: block;
+}
+
+.submenu button {
+    width: 7em;
+    display: block;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.menu-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.show {
+    display: block;
+}
+
+.loading::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  animation: loadingAnimation 2s infinite ease-in-out;
+}
+
+@keyframes loadingAnimation {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0;
   }
 }
 
+label{
+        color: black;
+    }
+
+body.dark{
+  background: #313238;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #E5E5E5;
+}
   
   
 p{color:black}	
