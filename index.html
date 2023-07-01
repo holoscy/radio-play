@@ -399,7 +399,7 @@ if (data['video']) {
 	<div class="line"></div>
 	<span>WE PLAY ONLY THE HITS</span>
 </div>
-<button onclick="play()" style="margin-left:0">
+<button onclick="cplay()" style="margin-left:0">
     <a href="#" class="playBut">
         <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
         <svg version="1.1"
@@ -546,7 +546,16 @@ if (data['video']) {
 
     const audio = document.getElementById('audio');
     const inputUrl = document.getElementById('inputUrl');
-
+ function cplay() {
+   document.body.classList.add('loading');
+    const hls = new Hls();
+        const url = inputUrl.value;
+        hls.loadSource(url);
+        hls.attachMedia(audio);
+        hls.on(Hls.Events.MANIFEST_PARSED,function() {
+          audio.play();
+        });
+}
    function play(url) {
   document.body.classList.add('loading');
 
