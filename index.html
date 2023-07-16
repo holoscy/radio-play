@@ -172,6 +172,7 @@
             document.body.classList.add('loading');
             var srcSelect = document.getElementById('src_select');
             var value = JSON.parse(srcSelect['value']);
+	    appTitle.textContent = value['name'];
             radio.src = value['src'];
             radio.addEventListener('stalled', stalledHandler);
             radio.play();
@@ -228,7 +229,6 @@
                 stopAudio();
                 playAudio();
             }
-            appTitle.textContent = value['name'];
             document.title = value['name'];
             timerID = setTimeout(function request() {
                 getTrackData(value['request'], currentList, previousList);
