@@ -173,6 +173,7 @@
             var srcSelect = document.getElementById('src_select');
             var value = JSON.parse(srcSelect['value']);
 	    appTitle.textContent = value['name'];
+	    document.title = value['name'];
             radio.src = value['src'];
             radio.addEventListener('stalled', stalledHandler);
             radio.play();
@@ -229,7 +230,6 @@
                 stopAudio();
                 playAudio();
             }
-            document.title = value['name'];
             timerID = setTimeout(function request() {
                 getTrackData(value['request'], currentList, previousList);
                 timerID = setTimeout(request, delay);
