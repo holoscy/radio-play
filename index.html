@@ -700,7 +700,20 @@ function updateBackgroundBlur(blurLevel) {
     document.body.style.backdropFilter = `blur(${blurLevel}px)`;
   }
 }
+// 获取select元素
+const selectElement = document.getElementById("src_select");
 
+// 添加事件监听器，当选项被改变时保存选择到本地存储
+selectElement.addEventListener("change", function() {
+    const selectedOptionIndex = selectElement.selectedIndex;
+    localStorage.setItem("selectedOptionIndex", selectedOptionIndex);
+});
+
+// 恢复上次保存的选择（如果有的话）
+const lastSelectedOptionIndex = localStorage.getItem("selectedOptionIndex");
+if (lastSelectedOptionIndex !== null) {
+    selectElement.selectedIndex = lastSelectedOptionIndex;
+}
   // 显示/隐藏弹窗
   var toggleMenuBtn = document.getElementById("toggle-menu-btn");
   var submenuPopup = document.getElementById("submenu-popup");
