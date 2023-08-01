@@ -27,18 +27,45 @@ body{height:100%;min-height: 100vh;}
 .item-right { height: 100%;width: 100%;order: 3;flex: 0 0 40%;margin:15px auto auto 3%;max-width: 450px}
 .container {display: flex;flex-wrap: nowrap;}
 }
-#programName {text-align: center;font-weight: bold; margin-bottom:1em; text-shadow: 1px 1px 1px #afafaf} 
+#programName {text-align: center;font-weight: bold; margin-bottom:1em; text-shadow: 1px 1px 1px #afafaf}
 .df-button {
     width: 120px;
     height: 40px;
     background-size: 100%;
-    margin: auto;    cursor: pointer;
+    margin: auto;    border-radius: 10px;
+    cursor: pointer;    transition: box-shadow 0.5s ease;
+
+}
+.df-button:hover {
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
 }
 .link-button {
     width: 102px;
     height: 40px;
     background-size: 100%;
-    margin: auto;    cursor: pointer;
+    margin: auto;    cursor: pointer; padding: 15px 50px;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+}
+
+.link-button:after {
+  content: '';
+    display: block;
+    position: absolute;
+    top: -36px;
+    left: -100px;
+    background: white;
+    width: 20px;
+    height: 100px;
+    opacity: 20%;
+    transform: rotate(-45deg);
+}
+
+.link-button:hover:after {
+  left: 120%;
+  transition: all 1s cubic-bezier(0.3, 1, 0.2, 1);
+   -webkit-transition: all 1s cubic-bezier(0.3, 1, 0.2, 1);
 }
 
 .playBut {
