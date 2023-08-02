@@ -64,8 +64,8 @@ body{height:100%;min-height: 100vh;}
 
 .link-button:hover:after {
   left: 120%;
-  transition: all 1s cubic-bezier(0.3, 1, 0.2, 1);
-   -webkit-transition: all 1s cubic-bezier(0.3, 1, 0.2, 1);
+  transition: all 1.5s cubic-bezier(0.3, 1, 0.2, 1);
+   -webkit-transition: all 1.5s cubic-bezier(0.3, 1, 0.2, 1);
 }
 
 .playBut {
