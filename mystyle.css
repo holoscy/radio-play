@@ -105,7 +105,10 @@ body{height:100%;min-height: 100vh;}
         transform: translateX(0px);
     }
 }
-
+.playlist_item__video img
+{margin-left: 8px;display:inline-block;background:center no-repeat;  position: relative;width: 20px;top: 4px;}
+.playlist_item__netease img {width: 20px;position: relative;top: 4px;margin-left: 2px;}
+.playlist_item__spotify img {width: 16px;position: relative;top: 2px;margin-left: 2px;}
 p{color:black}	
 .pa {
   display: flex;
@@ -274,4 +277,7 @@ body.dark{
   background-repeat: no-repeat;
   background-size: cover;
   color: #E5E5E5;
+}
+body.dark img {
+  filter: invert(85%);
 }
