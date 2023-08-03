@@ -424,6 +424,11 @@ if (data['video']) {
     <button class="df-button" onclick="playAT40()" style="background-image: url(./icons/at40.png)"></button>
     <button class="df-button" onclick="playZ100()" style="background-image: url(./icons/z100.png)"></button>
 </div>
+<div class="player">   
+    <button class="df-button" onclick="playic()" style="background-image: url(./icons/ic.png)"></button>
+    <button class="df-button" onclick="playip()" style="background-image: url(./icons/ip.png)"></button>    
+    <button class="df-button" onclick="playcf()" style="background-image: url(./icons/cf.png)"></button>
+</div>
      <div id="programName">  ON AIR NOW: Loading...</div>
 
 <div class="menu-container">
@@ -602,6 +607,15 @@ function playAT40() {
 
 function playZ100() {
   setPlaybackInfo("https://stream.revma.ihrhls.com/zc1469/hls.m3u8", "Z100");
+}
+function playic() {
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4418/hls.m3u8", "iHeartCountry");
+}
+function playip() {
+  setPlaybackInfo("https://playerservices.streamtheworld.com/api/livestream-redirect/ACIR31_S01AAC.m3u8", "iHeartRadio Pop");
+}
+function playcf() {
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc6951/hls.m3u8", "iHeartRadio Café");
 }
 
 document.addEventListener("DOMContentLoaded", function() {  
