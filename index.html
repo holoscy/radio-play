@@ -176,6 +176,9 @@
 	        document.title = value['name'];
             radio.src = value['src'];
             radio.addEventListener('stalled', stalledHandler);
+		 if (currentHls) {
+    currentHls.destroy(); // Destroy the previous HLS instance if it exists
+  }
             radio.play();
         };
         function stopAudio() {
