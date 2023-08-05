@@ -28,6 +28,7 @@ body{height:100%;min-height: 100vh;}
 .container {display: flex;flex-wrap: nowrap;}
 }
 #programName {text-align: center;font-weight: bold; margin-bottom:1em; text-shadow: 1px 1px 1px #afafaf}
+#songInfo {text-align: center; margin-bottom:1em; text-shadow: 1px 1px 1px #afafaf}
 .df-button {
     width: 120px;
     height: 40px;
