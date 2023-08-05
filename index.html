@@ -172,8 +172,8 @@
             document.body.classList.add('loading');
             var srcSelect = document.getElementById('src_select');
             var value = JSON.parse(srcSelect['value']);
-	    appTitle.textContent = value['name'];
-	    document.title = value['name'];
+	        appTitle.textContent = value['name'];
+	        document.title = value['name'];
             radio.src = value['src'];
             radio.addEventListener('stalled', stalledHandler);
             radio.play();
@@ -429,8 +429,9 @@ if (data['video']) {
     <button class="df-button" onclick="playip()" style="background-image: url(./icons/ip.png)"></button>    
     <button class="df-button" onclick="playcf()" style="background-image: url(./icons/cf.png)"></button>
 </div>
-     <div id="programName">  ON AIR NOW: Loading...</div>
 
+     <div id="programName">  ON AIR NOW: Loading...</div>
+     <div id="songInfo"></div>
 <div class="menu-container">
   <button id="toggle-menu-btn" style="width:20px;height:20px;background:url(./icons/pic.svg);background-size: 100%;"></button>
   <button id="darkModeButton" style="width:20px;height:20px;background:url(./icons/light.svg);background-size: 100%;" onclick="toggleDarkMode()"></button>
@@ -549,23 +550,51 @@ if (data['video']) {
 
     const audio = document.getElementById('audio');
     const inputUrl = document.getElementById('inputUrl');
- function cplay() {
-   document.body.classList.add('loading');
-    const hls = new Hls();
-        const url = inputUrl.value;
-        hls.loadSource(url);
-        hls.attachMedia(audio);
-        hls.on(Hls.Events.MANIFEST_PARSED,function() {
-          audio.play();
-        });
-}
-   function play(url) {
+ 
+let currentHls = null; // Store the current HLS instance
+
+function play(url) {
   document.body.classList.add('loading');
+
+  const songInfoDiv = document.getElementById('songInfo'); // Get reference to the <div> element
+  songInfoDiv.style.display = 'none'; // Hide the songInfo element by default
+
+  if (currentHls) {
+    currentHls.destroy(); // Destroy the previous HLS instance if it exists
+  }
 
   if (Hls.isSupported()) {
     const hls = new Hls();
+    currentHls = hls; // Store the current HLS instance
+
     hls.loadSource(url);
     hls.attachMedia(audio);
+    hls.on(Hls.Events.FRAG_PARSING_METADATA, function(event, data) {
+      if (data) {
+        console.log("Data", data.frag.title);
+
+        // Check if the data contains "url="
+        if (data.frag.title.includes("url=")) {
+          // Extract title and artist information from the data string
+          const titleMatch = data.frag.title.match(/title="([^"]*)"/);
+          const artistMatch = data.frag.title.match(/artist="([^"]*)"/);
+
+          // Show the songInfo element
+          songInfoDiv.style.display = 'block';
+
+          // Update the song info if title and artist are available
+          if (titleMatch && artistMatch) {
+            const title = titleMatch[1];
+            const artist = artistMatch[1];
+            songInfoDiv.textContent = `${artist}—${title}`;
+          }
+        } else {
+          // If "url=" is not present, display the entire data
+          songInfoDiv.style.display = 'block';
+          songInfoDiv.textContent = data.frag.title;
+        }
+      }
+    });
     hls.on(Hls.Events.MANIFEST_PARSED, function () {
       audio.play();
     });
@@ -575,6 +604,11 @@ if (data['video']) {
       audio.play();
     });
   }
+}
+
+function cplay() {
+        const url = inputUrl.value;
+         play(url);
 }
 
 function setPlaybackInfo(url, title) {
