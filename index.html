@@ -574,8 +574,7 @@ function play(url) {
     hls.attachMedia(audio);
     hls.on(Hls.Events.FRAG_PARSING_METADATA, function(event, data) {
       if (data) {
-        console.log("Data", data.frag.title);
-
+        
         // Check if the data contains "url="
         if (data.frag.title.includes("url=")) {
           // Extract title and artist information from the data string
@@ -586,11 +585,17 @@ function play(url) {
           songInfoDiv.style.display = 'block';
 
           // Update the song info if title and artist are available
-          if (titleMatch && artistMatch) {
-            const title = titleMatch[1];
-            const artist = artistMatch[1];
-            songInfoDiv.textContent = `${artist}—${title}`;
+          let songInfo = "";
+          if (artistMatch && artistMatch[1].trim() !== "") {
+            songInfo += artistMatch[1].trim();
           }
+          if (titleMatch && titleMatch[1].trim() !== "") {
+            if (songInfo !== "") {
+              songInfo += " - ";
+            }
+            songInfo += titleMatch[1].trim();
+          }
+          songInfoDiv.textContent = songInfo;
         } else {
           // If "url=" is not present, display the entire data
           songInfoDiv.style.display = 'block';
