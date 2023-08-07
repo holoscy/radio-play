@@ -596,10 +596,12 @@ function play(url) {
             songInfo += titleMatch[1].trim();
           }
           songInfoDiv.textContent = songInfo;
+          addLinksToSongInfo(songInfo);
         } else {
           // If "url=" is not present, display the entire data
           songInfoDiv.style.display = 'block';
           songInfoDiv.textContent = data.frag.title;
+          addLinksToSongInfo(data.frag.title);
         }
       }
     });
@@ -626,7 +628,30 @@ function setPlaybackInfo(url, title) {
   document.title = title;
   play(url);
 }
+function addLinksToSongInfo(title) {
+  const songInfoDiv = document.getElementById('songInfo');
 
+  const youtubeLink = document.createElement('a');
+  youtubeLink.classList.add('playlist_item__video');
+  youtubeLink.target = '_blank';
+  youtubeLink.href = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(title);
+  youtubeLink.innerHTML = '<img src="./icons/youtube.svg" alt="YouTube Logo">';
+  songInfoDiv.appendChild(youtubeLink);
+
+  const neteaseLink = document.createElement('a');
+  neteaseLink.className = 'playlist_item__netease';
+  neteaseLink.target = '_blank';
+  neteaseLink.href = 'https://music.163.com/#/search/m/?s=' + encodeURIComponent(title);
+  neteaseLink.innerHTML = '<img src="./icons/netease.svg" alt="NetEase Logo">';
+  songInfoDiv.appendChild(neteaseLink);
+
+  const spotifyLink = document.createElement('a');
+  spotifyLink.className = 'playlist_item__spotify';
+  spotifyLink.target = '_blank';
+  spotifyLink.href = 'https://open.spotify.com/search/' + encodeURIComponent(title);
+  spotifyLink.innerHTML = '<img src="./icons/spotify.svg" alt="Spotify Logo">';
+  songInfoDiv.appendChild(spotifyLink);
+}
 function playHitFM1() {
   setPlaybackInfo("https://liveop.cctv.cn/hls/cctvn/playlist.m3u8", "HITFM 央视");
 }
