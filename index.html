@@ -20,7 +20,13 @@
     </div>
  <div class="container">
   <div class="ite item-left">
-  <div class="top"  style="display:flex;align-items:center;">    
+  <div class="top"  style="display:flex;align-items:center;"> 
+  <button class="arrow1" onclick="showPage(1)">
+  <svg width="21px" height="28px" viewBox="0 0 50 80" xml:space="preserve">
+    <polyline fill="none"  class="arr" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="
+	45.63,75.8 0.375,38.087 45.63,0.375 "/>
+  </svg>  
+</button>   
   <div style="margin-left:auto;margin-right:1em;"> <a href="https://www.shazam.com/" ><img src="./icons/shazam.svg" style="width:20px" alt="shazam Logo"></a></div>
 <div class="input-boxLine" style="display:flex;align-items:center;margin-left:0;margin-right:0;">
 	<input id="inputUrl" input type="text" required />
@@ -38,9 +44,17 @@
         </svg>
     </a>
 </button>
-
-
+<button class="arrow2" onclick="showPage(2)">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="21px" height="28px" viewBox="0 0 50 80" xml:space="preserve">
+    <polyline fill="none" class="arr"  stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="
+	0.375,0.375 45.63,38.087 0.375,75.8 "/>
+  </svg>
+</button>
 </div>
+
+<div id="page1" class="page visible">
+
+
    <div class="player">
     <button class="df-button" onclick="playHitFM1()" style="background-image: url(./icons/hit1.png)"></button>
     <button class="df-button" onclick="playHitFM2()" style="background-image: url(./icons/hit广州.png)"></button>
@@ -49,7 +63,7 @@
 <div class="player">   
     <button class="df-button" onclick="playev()" style="background-image: url(./icons/ev.png)"></button>    
     <button class="df-button" onclick="playAT40()" style="background-image: url(./icons/at40.png)"></button>
-    <button class="df-button" onclick="playZ100()" style="background-image: url(./icons/z100.png)"></button>
+    <button class="df-button" onclick="playhitn()" style="background-image: url(./icons/hitn.png)"></button>
 </div>
 <div class="player">   
     <button class="df-button" onclick="playic()" style="background-image: url(./icons/ic.png)"></button>
@@ -57,6 +71,15 @@
     <button class="df-button" onclick="playcf()" style="background-image: url(./icons/cf.png)"></button>
 </div>
 
+ </div>
+<div id="page2" class="page">
+
+   <div class="player">
+    <button class="df-button" onclick="playZ100()" style="background-image: url(./icons/z100.png)"></button>
+    <button class="df-button" onclick="playimf()" style="background-image: url(./icons/imf.png)"></button>
+    <button class="df-button" onclick="playrn()" style="background-image: url(./icons/rn.png)"></button>  
+</div>
+ </div>
      <div id="programName">  ON AIR NOW: Loading...</div>
      <div id="songInfo"></div>
 <div class="menu-container">
