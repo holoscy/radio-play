@@ -119,7 +119,6 @@
                 console.error(event['message']);
                 stopAudio();
             });
-            // Select event Listeners
             select = document.getElementById('src_select');
             select.addEventListener('change', selectChange);
 
@@ -128,7 +127,6 @@
                 getTrackData(JSON.parse(select['value'])['request'], currentList, previousList);
                 timerID = setTimeout(request, delay);
             },0);
-            // Enable events
             eventEnabled = true;
             console.log('events enabled. eventEnabled: ', eventEnabled);
         });
@@ -301,31 +299,25 @@ var img = data['cover'] ? 'background-image:url(' + data['cover'] + '); backgrou
     info.appendChild(song);
     result.appendChild(info);
 if (data['cur_time']) {
-    // 添加 "cur_time" 信息
     var curTime = document.createElement('span');
     curTime.className = 'playlist_item__cur_time';
     curTime.textContent = data['cur_time'];
-    info.insertBefore(curTime, info.firstChild);  // 插入到info的开头
+    info.insertBefore(curTime, info.firstChild); 
 
-    // 添加 "ON AIR " 文本
     var onAirText = document.createElement('span');
     onAirText.textContent = 'ON AIR (EEST): ';
     info.insertBefore(onAirText, info.firstChild);
 } else if (data['cur_end_time']) {
-    // 添加 "cur_end_time" 信息
     var curEndTime = document.createElement('span');
     curEndTime.className = 'playlist_item__cur_end_time';
     curEndTime.textContent = data['cur_end_time'];
     info.insertBefore(curEndTime, info.firstChild);  
 
-    // 添加 "ON AIR " 文本
     var onAirText = document.createElement('span');
     onAirText.textContent = 'ON AIR (EEST) End:';
     info.insertBefore(onAirText, info.firstChild);  
 }
 
-
-    // 添加 "title" 信息
     if (data['title']) {
         var title = document.createElement('span');
         title.className = 'playlist_item__title';
@@ -483,7 +475,6 @@ function playev() {
 function playAT40() {
   setPlaybackInfo("https://stream.revma.ihrhls.com/zc4802/hls.m3u8", "AT40");
 }
-
 function playZ100() {
   setPlaybackInfo("https://stream.revma.ihrhls.com/zc1469/hls.m3u8", "Z100");
 }
@@ -496,6 +487,16 @@ function playip() {
 function playcf() {
   setPlaybackInfo("https://stream.revma.ihrhls.com/zc6951/hls.m3u8", "iHeartRadio Café");
 }
+function playhitn() {
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4422/hls.m3u8", "Hit Nation");
+}
+function playimf() {
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc5158/hls.m3u8", "iHeartRadio Music Festival");
+}
+function playrn() {
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4443/hls.m3u8", "Rock Nation");
+}
+  
 function setPlaybackInfo(url, title) {
   document.body.classList.add('loading');
   inputUrl.value = url;
@@ -503,15 +504,54 @@ function setPlaybackInfo(url, title) {
   document.title = title;
   play(url);
 }
+
+function showPage(pageNumber) {
+    const pages = document.querySelectorAll('.page');
+    pages.forEach(page => page.classList.remove('visible'));
+
+    const targetPage = document.getElementById(`page${pageNumber}`);
+    if (targetPage) {
+        targetPage.classList.add('visible');
+    }
+
+    hideButtons();
+
+    if (pageNumber === 2) {
+        const arrow1Button = document.querySelector('.arrow1');
+        arrow1Button.style.display = 'block';
+    } else if (pageNumber === 1) {
+        const arrow2Button = document.querySelector('.arrow2');
+        arrow2Button.style.display = 'block';
+    }
+}
+
+function hideButtons() {
+    const arrowButtons = document.querySelectorAll('.arrow1, .arrow2');
+    arrowButtons.forEach(button => button.style.display = 'none');
+}
 document.addEventListener("DOMContentLoaded", function() {  
+   const arrowButtons = document.querySelectorAll('.arrow1, .arrow2');
+
+    arrowButtons.forEach(button => {
+        button.style.display = 'none';
+
+        button.parentElement.addEventListener('mouseenter', function() {
+            button.style.display = 'block';
+        });
+
+        button.parentElement.addEventListener('mouseleave', function() {
+            button.style.display = 'none';
+        });
+    });
+
+    showPage(1);
+    hideButtons();
   
-  // 检查本地存储是否有背景图数据
   if (localStorage.getItem("backgroundImage")) {
     var backgroundImage = localStorage.getItem("backgroundImage");
     document.body.style.backgroundImage = `url(${backgroundImage})`;
   }
 
-  // 检查本地存储是否有主题模式数据
   if (localStorage.getItem("themeMode") === "dark") {
     document.body.classList.add("dark");
   }
@@ -521,9 +561,7 @@ document.addEventListener("DOMContentLoaded", function() {
   selectOnlineBgBtn.addEventListener("click", function() {
     var bgUrl = prompt("请输入在线背景图URL：");
     if (bgUrl) {
-      // 更新背景图样式
       document.body.style.backgroundImage = `url(${bgUrl})`;
-      // 将背景图URL保存到本地存储
       localStorage.setItem("backgroundImage", bgUrl);
     }
 
@@ -541,9 +579,7 @@ document.addEventListener("DOMContentLoaded", function() {
         var reader = new FileReader();
         reader.onload = function() {
           var bgUrl = reader.result;
-          // 更新背景图样式
           document.body.style.backgroundImage = `url(${bgUrl})`;
-          // 将背景图URL保存到本地存储
           localStorage.setItem("backgroundImage", bgUrl);
         };
         reader.readAsDataURL(file);
@@ -552,17 +588,12 @@ document.addEventListener("DOMContentLoaded", function() {
     selectBgInput.click();
   });
 
-  // 清除背景图按钮点击事件
   var clearBgBtn = document.getElementById("clear-bg-btn");
   clearBgBtn.addEventListener("click", function() {
-    // 移除背景图样式
     document.body.style.backgroundImage = "";
-    // 移除本地存储的背景图数据
     localStorage.removeItem("backgroundImage");
   });
 var bgPositionSelect = document.getElementById("bg-position-select");
-
-      // 检查本地存储是否有背景图位置数据
       if (localStorage.getItem("bgPosition")) {
         var storedPosition = localStorage.getItem("bgPosition");
         bgPositionSelect.value = storedPosition;
@@ -575,7 +606,6 @@ var bgPositionSelect = document.getElementById("bg-position-select");
         document.body.style.backgroundPosition = selectedPosition;
         localStorage.setItem("bgPosition", selectedPosition);
       });
-// 背景模糊程度滑动条
 var blurSlider = document.getElementById("blur-slider");
 
 // 检查本地存储是否有背景模糊程度数据
@@ -598,10 +628,7 @@ function updateBackgroundBlur(blurLevel) {
     document.body.style.backdropFilter = `blur(${blurLevel}px)`;
   }
 }
-// 获取select元素
 const selectElement = document.getElementById("src_select");
-
-// 添加事件监听器，当选项被改变时保存选择到本地存储
 selectElement.addEventListener("change", function() {
     const selectedOptionIndex = selectElement.selectedIndex;
     localStorage.setItem("selectedOptionIndex", selectedOptionIndex);
@@ -612,7 +639,6 @@ const lastSelectedOptionIndex = localStorage.getItem("selectedOptionIndex");
 if (lastSelectedOptionIndex !== null) {
     selectElement.selectedIndex = lastSelectedOptionIndex;
 }
-  // 显示/隐藏弹窗
   var toggleMenuBtn = document.getElementById("toggle-menu-btn");
   var submenuPopup = document.getElementById("submenu-popup");
 
@@ -620,13 +646,9 @@ if (lastSelectedOptionIndex !== null) {
     e.stopPropagation();
     submenuPopup.classList.toggle("show");
   });
-
-  // 隐藏弹窗
   document.addEventListener("click", function() {
     submenuPopup.classList.remove("show");
   });
-
-  // 阻止点击弹窗时的事件冒泡
   submenuPopup.addEventListener("click", function(e) {
     e.stopPropagation();
   });
@@ -638,8 +660,6 @@ if (lastSelectedOptionIndex !== null) {
       }
       
   );
-
-  // 检查主题模式
   function checkThemeMode() {
     if (localStorage.getItem("themeMode") === "dark") {
       document.body.classList.add("dark");
@@ -648,20 +668,15 @@ if (lastSelectedOptionIndex !== null) {
     }
   }
 
-  // 切换主题模式
 var isDarkMode = false;
 
-// 页面加载时检查主题模式
 function checkThemeMode() {
   var themeMode = localStorage.getItem("themeMode");
   if (themeMode === "dark") {
-    // 应用深色模式
     document.body.classList.add("dark");
     isDarkMode = true;
-      // 设置 --triangle-color 为存储的颜色值
     var storedColor = localStorage.getItem("triangleColor");
     document.body.style.setProperty("--triangle-color", storedColor);
-    // 对.control类元素进行反色处理
     var controlElements = document.querySelectorAll(".control");
     for (var i = 0; i < controlElements.length; i++) {
       var controlElement = controlElements[i];
@@ -674,14 +689,11 @@ function toggleDarkMode() {
   var darkModeButton = document.getElementById("darkModeButton");
 
   if (isDarkMode) {
-    // 切换为浅色模式
     document.body.classList.remove("dark");
     localStorage.setItem("themeMode", "default");
     darkModeButton.style.background = "url(./icons/light.svg)";
-  // 设置 --triangle-color 为黑色（可根据需求修改为其他颜色）
     document.body.style.setProperty("--triangle-color", "black");
     localStorage.setItem("triangleColor", "black");
-        // 取消.control类元素的反色处理
     var controlElements = document.querySelectorAll(".control");
     for (var i = 0; i < controlElements.length; i++) {
       var controlElement = controlElements[i];
@@ -689,14 +701,11 @@ function toggleDarkMode() {
     }
     isDarkMode = false;
   } else {
-    // 切换为深色模式
     document.body.classList.add("dark");
     localStorage.setItem("themeMode", "dark");
     darkModeButton.style.background = "url(./icons/dark.svg)";
-  // 设置 --triangle-color 为白色
     document.body.style.setProperty("--triangle-color", "white");
     localStorage.setItem("triangleColor", "#E5E5E5");
-    // 对.control类元素进行反色处理
     var controlElements = document.querySelectorAll(".control");
     for (var i = 0; i < controlElements.length; i++) {
       var controlElement = controlElements[i];
@@ -707,8 +716,6 @@ function toggleDarkMode() {
   
   darkModeButton.style.backgroundSize = "100%"; 
 }
-
-  // 页面加载时检查主题模式
   checkThemeMode();
 });
 
@@ -730,13 +737,11 @@ function toggleDarkMode() {
     window.location.href = url;
 }
 	     function updateProgramLink() {
-  // get the selected date from the date picker
   const selectedDate = document.getElementById("datePicker").value;
 
   // construct the new URL with the selected date
   const url = `https://www.radio.cn/pc-portal/sanji/passProgram.html?channel_name=662&program_name=undefined&date_checked=${selectedDate}`;
 
-  // redirect the user to the new URL
     window.location.href = url;
 }
       function gotoURL() {
@@ -759,7 +764,7 @@ const opacityInput3 = document.getElementById('opacity2');
 const radiusInput3 = document.getElementById('corner-radius2');
 const colorInput4 = document.getElementById('bg-color3');
 const opacityInput4 = document.getElementById('opacity3');
-// 恢复存储的设置（如果有）
+// 恢复存储的设置
 if (localStorage.getItem('bg-color')) {
   colorInput1.value = localStorage.getItem('bg-color');
   divElementLeft.style.backgroundColor = `rgba(${hexToRgb(colorInput1.value)}, ${opacityInput1.value})`;
@@ -1051,9 +1056,5 @@ document.querySelector(".about").addEventListener("click", function() {
       const currentProgram = getCurrentProgram();
       programNameElement.innerHTML = `ON AIR NOW <br> ${currentProgram}`;
     }
-
-    // Update program name immediately when the webpage is opened
     updateProgramName();
-
-    // Update program name every minute
     setInterval(updateProgramName, 60000);
