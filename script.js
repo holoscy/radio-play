@@ -419,8 +419,39 @@ if (data['video']) {
     }
     return result;
 }
+  var selectElement = document.getElementById("src_select");
+    var playlistTitleContainer = document.getElementById("playlist_title_container");
+    var previousPlaylistTitleContainer = document.getElementById("previous_playlist_title_container");
+
+    selectElement.addEventListener("change", function() {
+        if (selectElement.value === "") {
+            playlistTitleContainer.style.display = "none";
+            previousPlaylistTitleContainer.style.display = "none";
+        } else {
+            playlistTitleContainer.style.display = "block";
+            previousPlaylistTitleContainer.style.display = "block";
+        }
+    });
+
+    // 初始状态下隐藏标题容器
+    window.addEventListener("DOMContentLoaded", function() {
+        playlistTitleContainer.style.display = "none";
+        previousPlaylistTitleContainer.style.display = "none";
+    });  
+
+var select = document.getElementById("src_select");
 
 
+    // 监听选择变化事件
+    select.addEventListener("change", function () {
+        if (select.value === '') {
+            previousPlaylistWrapper.style.display = "none"; // 隐藏
+        } else {
+            previousPlaylistWrapper.style.display = "block"; // 显示
+        }
+    });
+// 获取默认选项
+var defaultOption = select.querySelector("option[value='']");
     const audio = document.getElementById('audio');
     const inputUrl = document.getElementById('inputUrl');
  
@@ -432,6 +463,7 @@ function play(url) {
   const songInfoDiv = document.getElementById('songInfo'); // Get reference to the <div> element
   songInfoDiv.style.display = 'none'; // Hide the songInfo element by default
 
+defaultOption.selected = true;
   if (currentHls) {
     currentHls.destroy(); // Destroy the previous HLS instance if it exists
   }
@@ -705,14 +737,10 @@ function updateBackgroundBlur(blurLevel) {
 const selectElement = document.getElementById("src_select");
 selectElement.addEventListener("change", function() {
     const selectedOptionIndex = selectElement.selectedIndex;
-    localStorage.setItem("selectedOptionIndex", selectedOptionIndex);
 });
 
-// 恢复上次保存的选择（如果有的话）
-const lastSelectedOptionIndex = localStorage.getItem("selectedOptionIndex");
-if (lastSelectedOptionIndex !== null) {
-    selectElement.selectedIndex = lastSelectedOptionIndex;
-}
+localStorage.removeItem("selectedOptionIndex");
+
   var toggleMenuBtn = document.getElementById("toggle-menu-btn");
   var submenuPopup = document.getElementById("submenu-popup");
 
