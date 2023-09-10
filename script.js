@@ -127,7 +127,7 @@
             timerID = setTimeout(function request() {
                 getTrackData(JSON.parse(select['value'])['request'], currentList, previousList);
                 timerID = setTimeout(request, delay);
-            },5000);
+            },3000);
             eventEnabled = true;
             console.log('events enabled. eventEnabled: ', eventEnabled);
         });
@@ -276,7 +276,7 @@ function selectChange() {
     currentRequest = setTimeout(function request() {
         getTrackData(value['request'], currentList, previousList);
         currentRequest = setTimeout(request, delay);
-    }, 5000);
+    }, 3000);
 
     eventEnabled = true;
 }
