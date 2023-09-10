@@ -60,6 +60,7 @@
                 var currentData = data.shift();
                 renderData(current, currentData);
                 renderData(previous, data);
+                setCurrentData(currentData);
             })
             .catch(function (error) {
                 // handle error
@@ -126,7 +127,7 @@
             timerID = setTimeout(function request() {
                 getTrackData(JSON.parse(select['value'])['request'], currentList, previousList);
                 timerID = setTimeout(request, delay);
-            },0);
+            },5000);
             eventEnabled = true;
             console.log('events enabled. eventEnabled: ', eventEnabled);
         });
@@ -149,20 +150,63 @@
 
             return Number(button.dataset['paused']);
         };
+        
+function setCurrentData(data) {
+    currentData = data;
+    mediaMetadata.title = currentData.song;
+    mediaMetadata.artist = currentData.singer;
+    mediaMetadata.artwork = [{
+        src: currentData.cover,
+        sizes: '500x500',
+        type: 'image/jpg'
+    }];
+    navigator.mediaSession.metadata = mediaMetadata;
+}
 
-        function playAudio() {
-            document.body.classList.add('loading');
-            var srcSelect = document.getElementById('src_select');
-            var value = JSON.parse(srcSelect['value']);
-	        appTitle.textContent = value['name'];
-	        document.title = value['name'];
-            radio.src = value['src'];
-            radio.addEventListener('stalled', stalledHandler);
-		 if (currentHls) {
-    currentHls.destroy(); // Destroy the previous HLS instance if it exists
-  }
-            radio.play();
-        };
+var currentData;
+
+var mediaMetadata = new MediaMetadata({
+    title: '',
+    artist: '',
+    artwork: []
+});
+
+function playAudio() {
+    document.body.classList.add('loading');
+    var srcSelect = document.getElementById('src_select');
+    var value = JSON.parse(srcSelect['value']);
+    appTitle.textContent = value['name'];
+    document.title = value['name'];
+    radio.src = value['src'];
+    radio.addEventListener('stalled', stalledHandler);
+
+    navigator.mediaSession.metadata = mediaMetadata;
+   
+    var observer = new MutationObserver(function (mutationsList) {
+        if (radio.paused) {
+            observer.disconnect();
+        } else {
+            mediaMetadata.title = currentData.song;
+            mediaMetadata.artist = currentData.singer;
+            mediaMetadata.artwork = [{
+                src: currentData.cover,
+                sizes: '500x500',
+                type: 'image/jpg'
+            }];
+            navigator.mediaSession.metadata = mediaMetadata;
+        }
+    });
+
+    var observerOptions = { childList: true, subtree: true };
+    observer.observe(currentList, observerOptions);
+
+    if (currentHls) {
+        currentHls.destroy(); // Destroy the previous HLS instance if it exists
+    }
+    radio.play();
+}
+
+
         function stopAudio() {
             if (radio) {
                 radio.pause();
@@ -204,23 +248,39 @@
             setText(playButton, txt, imagePrefix, imageSuffix);
         };
 
-        function selectChange() {
-            eventEnabled = false;
-            var self = this;
-            var value = JSON.parse(self['value']);
-            document.body.classList.remove('loading');
-            if (radio['paused']) {
-                document.body.classList.remove('loading');
-            } else {
-                stopAudio();
-                playAudio();
-            }
-            timerID = setTimeout(function request() {
-                getTrackData(value['request'], currentList, previousList);
-                timerID = setTimeout(request, delay);
-            },0);
-            eventEnabled = true;
-        };
+        var eventEnabled = true;
+var currentRequest = null; // 用于跟踪当前请求
+
+function selectChange() {
+    if (!eventEnabled) {
+        return; // 如果事件被禁用，则不执行任何操作
+    }
+
+    eventEnabled = false;
+    var self = this;
+    var value = JSON.parse(self['value']);
+    document.body.classList.remove('loading');
+
+    if (currentRequest !== null) {
+        // 如果有之前的请求正在进行，可以选择取消它
+        clearTimeout(currentRequest);
+    }
+
+    if (radio['paused']) {
+        document.body.classList.remove('loading');
+    } else {
+        stopAudio();
+        playAudio();
+    }
+
+    currentRequest = setTimeout(function request() {
+        getTrackData(value['request'], currentList, previousList);
+        currentRequest = setTimeout(request, delay);
+    }, 5000);
+
+    eventEnabled = true;
+}
+
 
         function stalledHandler() {
             console.log('stalled');
@@ -375,7 +435,9 @@ function play(url) {
   if (currentHls) {
     currentHls.destroy(); // Destroy the previous HLS instance if it exists
   }
-
+   if (currentRequest !== null) {
+        clearTimeout(currentRequest);
+    }
   if (Hls.isSupported()) {
     const hls = new Hls();
     currentHls = hls; // Store the current HLS instance
@@ -407,11 +469,23 @@ function play(url) {
           }
           songInfoDiv.textContent = songInfo;
           addLinksToSongInfo(songInfo);
+          // Update MediaSession metadata when new data is available
+          navigator.mediaSession.metadata = new MediaMetadata({
+            title: titleMatch ? titleMatch[1].trim() : '',
+            artist: artistMatch ? artistMatch[1].trim() : '',
+           // artwork: [{ src: 'album-art.jpg', sizes: '96x96', type: 'image/jpeg' }]
+          });
         } else {
           // If "url=" is not present, display the entire data
           songInfoDiv.style.display = 'block';
           songInfoDiv.textContent = data.frag.title;
           addLinksToSongInfo(data.frag.title);
+          // Update MediaSession metadata when new data is available
+          navigator.mediaSession.metadata = new MediaMetadata({
+            title: data.frag.title,
+            artist: '', 
+           // artwork: [{ src: 'album-art.jpg', sizes: '96x96', type: 'image/jpeg' }]
+          });
         }
       }
     });
