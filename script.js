@@ -122,7 +122,8 @@
             });
             select = document.getElementById('src_select');
             select.addEventListener('change', selectChange);
-
+           srcSelect = document.getElementById('src_select');
+           value = srcSelect['value'];
             document.body.classList.remove('loading');
             timerID = setTimeout(function request() {
                 getTrackData(JSON.parse(select['value'])['request'], currentList, previousList);
@@ -212,7 +213,6 @@ function playAudio() {
                 radio.pause();
                 radio.currentTime = 0;
             }
-            cancel();
             clearTimeout(timerID);
             isPaused = true;
             eventEnabled = true;
@@ -419,9 +419,15 @@ if (data['video']) {
     }
     return result;
 }
-  var selectElement = document.getElementById("src_select");
+    var selectElement = document.getElementById("src_select");
     var playlistTitleContainer = document.getElementById("playlist_title_container");
     var previousPlaylistTitleContainer = document.getElementById("previous_playlist_title_container");
+    var select = document.getElementById("src_select");
+    var previousPlaylistWrapper = document.getElementById("previous_playlist_wrapper");   
+     window.addEventListener("DOMContentLoaded", function() {
+        playlistTitleContainer.style.display = "none";
+        previousPlaylistTitleContainer.style.display = "none";
+    });
 
     selectElement.addEventListener("change", function() {
         if (selectElement.value === "") {
@@ -433,25 +439,15 @@ if (data['video']) {
         }
     });
 
-    // 初始状态下隐藏标题容器
-    window.addEventListener("DOMContentLoaded", function() {
-        playlistTitleContainer.style.display = "none";
-        previousPlaylistTitleContainer.style.display = "none";
-    });  
-
-var select = document.getElementById("src_select");
-
-
-    // 监听选择变化事件
     select.addEventListener("change", function () {
         if (select.value === '') {
-            previousPlaylistWrapper.style.display = "none"; // 隐藏
-        } else {
-            previousPlaylistWrapper.style.display = "block"; // 显示
+            playlist_title_container.style.display = "none";
+            previousPlaylistWrapper.style.display = "none"; // Hide
+        } else {playlist_title_container.style.display = "block";
+            previousPlaylistWrapper.style.display = "block"; // Show
         }
     });
-// 获取默认选项
-var defaultOption = select.querySelector("option[value='']");
+
     const audio = document.getElementById('audio');
     const inputUrl = document.getElementById('inputUrl');
  
@@ -463,7 +459,6 @@ function play(url) {
   const songInfoDiv = document.getElementById('songInfo'); // Get reference to the <div> element
   songInfoDiv.style.display = 'none'; // Hide the songInfo element by default
 
-defaultOption.selected = true;
   if (currentHls) {
     currentHls.destroy(); // Destroy the previous HLS instance if it exists
   }
@@ -734,10 +729,7 @@ function updateBackgroundBlur(blurLevel) {
     document.body.style.backdropFilter = `blur(${blurLevel}px)`;
   }
 }
-const selectElement = document.getElementById("src_select");
-selectElement.addEventListener("change", function() {
-    const selectedOptionIndex = selectElement.selectedIndex;
-});
+
 
 localStorage.removeItem("selectedOptionIndex");
 
