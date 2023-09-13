@@ -180,6 +180,10 @@ function playAudio() {
     document.title = value['name'];
     radio.src = value['src'];
     radio.addEventListener('stalled', stalledHandler);
+    currentRequest = setTimeout(function request() {
+    getTrackData(value['request'], currentList, previousList);
+    currentRequest = setTimeout(request, delay);  
+}, 3000);
 
     navigator.mediaSession.metadata = mediaMetadata;
    
