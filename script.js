@@ -180,11 +180,7 @@ function playAudio() {
     document.title = value['name'];
     radio.src = value['src'];
     radio.addEventListener('stalled', stalledHandler);
-    currentRequest = setTimeout(function request() {
-    getTrackData(value['request'], currentList, previousList);
-    currentRequest = setTimeout(request, delay);  
-}, 3000);
-
+    
     navigator.mediaSession.metadata = mediaMetadata;
    
     var observer = new MutationObserver(function (mutationsList) {
@@ -227,8 +223,6 @@ function playAudio() {
             eventEnabled = false;
             isPaused = this.paused;
             isMuted = this.muted;
-            console.log('paused: ', isPaused);
-            console.log('muted: ', this.muted);
             var txt = pauseTxt;
             if (isPaused) {
                 txt = playTxt;
