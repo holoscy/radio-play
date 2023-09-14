@@ -151,26 +151,22 @@
 
             return Number(button.dataset['paused']);
         };
-function axioscover() { 
-       const defaultImageUrl = "https://raw.githubusercontent.com/darkduck9/radio-play/darkduck9-patch-1/icons/hit.png";
-        axios.get(defaultImageUrl, { responseType: 'blob' })
-            .then(response => {
-                const reader = new FileReader();
-                reader.onloadend = function () {
-                    const dataURL = reader.result;
-                    mediaMetadata.artwork = [{
-                        src: dataURL,
-                        sizes: '100x100',
-                        type: 'image/png' 
-                    }];
-                    navigator.mediaSession.metadata = mediaMetadata;
-                };
-                reader.readAsDataURL(response.data);
-            })
-            .catch(error => {
-                console.error("Failed to load default image:", error);
-            });
-            }
+function axioscover(callback) {
+    const defaultImageUrl = "https://raw.githubusercontent.com/darkduck9/radio-play/darkduck9-patch-1/icons/hit.png";
+    axios.get(defaultImageUrl, { responseType: 'blob' })
+        .then(response => {
+            const reader = new FileReader();
+            reader.onloadend = function () {
+                const dataURL = reader.result;
+                callback(dataURL); // 直接传递dataURL
+            };
+            reader.readAsDataURL(response.data);
+        })
+        .catch(error => {
+            console.error("Failed to load default image:", error);
+        });
+}
+
 var currentData;          
 function setCurrentData(data) {
     currentData = data;
@@ -184,11 +180,19 @@ function setCurrentData(data) {
             type: 'image/jpg'
         }];
     } else {
-        axioscover()
+        axioscover(function (dataURL) {
+             mediaMetadata.artwork = [{
+                src: dataURL,
+                sizes: '100x100',
+                type: 'image/png'
+            }];
+            navigator.mediaSession.metadata = mediaMetadata;
+        });
     }
 
     navigator.mediaSession.metadata = mediaMetadata;
 }
+
 
 var mediaMetadata = new MediaMetadata({
     title: '',
@@ -211,13 +215,22 @@ function playAudio() {
         if (radio.paused) {
             observer.disconnect();
         } else {
-            mediaMetadata.title = currentData.song;
-            mediaMetadata.artist = currentData.singer;
-            mediaMetadata.artwork = [{
-            src: currentData.cover,
-            sizes: '500x500',
-            type: 'image/jpg'
-        }];
+     if (currentData.cover) {
+                mediaMetadata.artwork = [{
+                    src: currentData.cover,
+                    sizes: '500x500',
+                    type: 'image/jpg'
+                }];
+            } else {
+                axioscover(function (dataURL) {
+                    mediaMetadata.artwork = [{
+                        src: dataURL,
+                        sizes: '100x100',
+                        type: 'image/png'
+                    }];
+                });
+            }
+
           navigator.mediaSession.metadata = mediaMetadata;
         }
     });
@@ -484,23 +497,37 @@ function play(url) {
   const songInfoDiv = document.getElementById('songInfo'); // Get reference to the <div> element
   songInfoDiv.style.display = 'none'; // Hide the songInfo element by default
   desiredOption.selected = true;
-  axioscover(); 
+
+  // Set a default Blob image
+  axioscover(function (dataURL) {
+    const defaultMetadata = new MediaMetadata({
+      title: '',
+      artist: '',
+      artwork: [{
+        src: dataURL,
+        sizes: '100x100',
+        type: 'image/png'
+      }]
+    });
+          
+    navigator.mediaSession.metadata = defaultMetadata;
+  });
+
   if (currentHls) {
     currentHls.destroy(); // Destroy the previous HLS instance if it exists
   }
-   if (currentRequest !== null) {
-        clearTimeout(currentRequest);
-    }
+  if (currentRequest !== null) {
+    clearTimeout(currentRequest);
+  }
   if (Hls.isSupported()) {
     const hls = new Hls();
     currentHls = hls; // Store the current HLS instance
 
     hls.loadSource(url);
     hls.attachMedia(audio);
-    
-    hls.on(Hls.Events.FRAG_PARSING_METADATA, function(event, data) {
+
+    hls.on(Hls.Events.FRAG_PARSING_METADATA, function (event, data) {
       if (data) {
-         
         // Check if the data contains "url="
         if (data.frag.title.includes("url=")) {
           // Extract title and artist information from the data string
@@ -526,8 +553,7 @@ function play(url) {
           // Update MediaSession metadata when new data is available
           navigator.mediaSession.metadata = new MediaMetadata({
             title: titleMatch ? titleMatch[1].trim() : '',
-            artist: artistMatch ? artistMatch[1].trim() : '',
-             
+            artist: artistMatch ? artistMatch[1].trim() : '',           
           }); 
         } else {
           // If "url=" is not present, display the entire data
@@ -537,9 +563,8 @@ function play(url) {
           // Update MediaSession metadata when new data is available
           navigator.mediaSession.metadata = new MediaMetadata({
             title: data.frag.title,
-            artist: '', 
-             
-          }); 
+            artist: '',  
+          });
         }
       }
     });
@@ -552,8 +577,8 @@ function play(url) {
       audio.play();
     });
   }
-   
 }
+
 
 function cplay() {
         const url = inputUrl.value;
