@@ -650,7 +650,15 @@ function playimf() {
 function playrn() {
   setPlaybackInfo("https://stream.revma.ihrhls.com/zc4443/hls.m3u8", "Rock Nation");
 }
-  
+function playkiis() {
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc185/hls.m3u8", "102.7 KIIS-FM");
+}
+ function playmxn() {
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4776/hls.m3u8", "Mix Nation");
+}
+function playalic() {
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc1269/hls.m3u8", "Alice 95.5");
+}
 function setPlaybackInfo(url, title) {
   document.body.classList.add('loading');
   inputUrl.value = url;
