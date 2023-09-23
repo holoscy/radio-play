@@ -170,10 +170,10 @@ function axioscover(callback) {
 var currentData;          
 function setCurrentData(data) {
     currentData = data;
-    mediaMetadata.title = currentData.song;
-    mediaMetadata.artist = currentData.singer;
-
+  
     if (currentData.cover) {
+        mediaMetadata.title = currentData.song;
+        mediaMetadata.artist = currentData.singer;
         mediaMetadata.artwork = [{
             src: currentData.cover,
             sizes: '500x500',
@@ -181,6 +181,8 @@ function setCurrentData(data) {
         }];
     } else {
         axioscover(function (dataURL) {
+             mediaMetadata.title = currentData.song;
+             mediaMetadata.artist = currentData.singer;
              mediaMetadata.artwork = [{
                 src: dataURL,
                 sizes: '100x100',
@@ -676,7 +678,116 @@ function setPlaybackInfo(url, title) {
   document.title = title;
   play(url);
 }
+var arrayRecord = [];
 
+function download(data, filename) {
+    console.log('downloading...');
+    var blob = new Blob([arrayConcat(data)], {
+        type: 'application/octet-stream'
+    });
+    saveAs(blob, filename);
+}
+
+function arrayConcat(inputArray) {
+    var totalLength = inputArray.reduce(function (prev, cur) {
+        return prev + cur.length
+    }, 0);
+    var result = new Uint8Array(totalLength);
+    var offset = 0;
+    inputArray.forEach(function (element) {
+        result.set(element, offset);
+        offset += element.length;
+    });
+    return result;
+}
+
+function saveAs(blob, filename) {
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    document.body.appendChild(a);
+    a.style = "display: none";
+    a.href = url;
+    a.download = filename;
+    a.click();
+    window.URL.revokeObjectURL(url);
+}
+
+var currentRecord = null; // 存储当前录制的数据对象
+var startTime = null; // 记录录制开始的时间
+var recordedTimeElement = document.getElementById('recordedTime');
+ var isRecording = false; // 录制状态标志
+
+function updateRecordedTime() {
+    if (startTime && currentRecord) {
+        var currentTime = new Date().getTime();
+        var elapsedTime = (currentTime - startTime) / 1000;  
+        var elapsedSeconds = parseInt(elapsedTime);  
+        recordedTimeElement.textContent = '已录制时长: ' + elapsedSeconds + '秒';  
+    }
+}
+
+function showRecordedTime() {
+    recordedTimeElement.style.display = 'block';  
+}
+
+function hideRecordedTime() {
+    recordedTimeElement.style.display = 'none';  
+}
+
+function stopRecord() {
+    if (currentRecord) {
+        download(currentRecord.data['audio'], "audio.mp3");
+        currentRecord.hls.destroy();
+        currentRecord = null;  
+        startTime = null;  
+        hideRecordedTime();  
+        isRecording = false;  
+    }
+    cplay();
+}
+
+function startRecord() {
+    if (isRecording) {
+         stopRecord();
+    } else {
+         if (currentRecord) {
+             currentRecord.hls.destroy();
+            currentRecord = null;
+        }
+
+        var dataStream = {
+            'audio': []
+        };
+        var hls = new Hls();
+        hls.loadSource(inputUrl.value);
+        hls.attachMedia(audio);
+        hls.on(Hls.Events.MANIFEST_PARSED, function () {
+            audio.play();
+            hls.on(Hls.Events.BUFFER_APPENDING, function (event, data) {
+                console.log("appending");
+                dataStream[data.type].push(data.data);
+            });
+        });
+
+        currentRecord = {
+            hls: hls,
+            data: dataStream
+        };
+        startTime = new Date().getTime();  
+        showRecordedTime();  
+
+         setInterval(updateRecordedTime, 1000);
+
+        audio.onended = function (e) {
+            stopRecord();
+        }
+
+        isRecording = true;  
+    }
+}
+
+
+ 
 function showPage(pageNumber) {
     const pages = document.querySelectorAll('.page');
     pages.forEach(page => page.classList.remove('visible'));
