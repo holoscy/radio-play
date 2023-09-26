@@ -111,11 +111,11 @@
  <path class="cls-2" d="m53,0h406c28.67,6.67,46.33,24.33,53,53v406c-6.67,28.67-24.33,46.33-53,53H53c-28.67-6.67-46.33-24.33-53-53V53C6.67,24.33,24.33,6.67,53,0Zm8,43c131.38-.49,262.71,0,394,1.5,7.45,3.05,11.95,8.55,13.5,16.5.67,50.67.67,101.33,0,152-22.83-22.83-45.67-45.67-68.5-68.5-10.67-8.67-21.33-8.67-32,0-49.83,49.83-99.67,99.67-149.5,149.5-18.17-18.17-36.33-36.33-54.5-54.5-9.12-6.88-18.45-7.21-28-1-30.83,30.83-61.67,61.67-92.5,92.5-.67-90-.67-180,0-270,2.01-9.85,7.85-15.85,17.5-18Zm322,149c28.92,27.41,57.42,55.41,85.5,84,.67,58.33.67,116.67,0,175-1.83,9.83-7.67,15.67-17.5,17.5-130,.67-260,.67-390,0-9.83-1.83-15.67-7.67-17.5-17.5-.67-19.33-.67-38.67,0-58,35.33-35.33,70.67-70.67,106-106,41.83,41.83,83.67,83.67,125.5,125.5,13.07,6.63,23.9,4.13,32.5-7.5,3.54-7.52,3.21-14.85-1-22-18.47-19.47-37.3-38.64-56.5-57.5,44.54-44.37,88.87-88.87,133-133.5Z"/>
   <path class="cls-1" d="m121,85c26.57-1.57,43.07,10.43,49.5,36,2.05,26.59-9.78,43.09-35.5,49.5-26.59,2.05-43.09-9.78-49.5-35.5-1.85-26.61,9.98-43.28,35.5-50Z"/>
 </svg></button>
-  <button id="darkModeButton" style="width:20px;height:20px;background:url(./icons/light.svg);background-size: 100%;" onclick="toggleDarkMode()"></button>
+  <button id="darkModeButton" onclick="toggleDarkMode()" style="width:20px;height:20px;background:url(./icons/light.svg);background-size: 100%;" ></button>
 
  <div class="submenu" id="submenu-popup">
     <div class="page page1">
-        <p>注意:本地图片大小</p>
+        <p class="t"> 所有自定义数据使用<br>localStorage本地存储,有上限</p>
         <label for="bg-color">左背景色</label><input type="color" id="bg-color" value="#ffffff"><br>
         <label for="corner-radius">左圆角</label><input type="range" id="corner-radius" min="0" max="50" value="0"><br>
         <label for="opacity">左透明度</label><input type="range" id="opacity" min="0" max="1" step="0.01" value="1"><br>
@@ -147,6 +147,8 @@
         <button id="select-online-bg-btn">选择在线图片</button>
         <button id="select-local-bg-btn">选择本地图片</button>
         <button id="clear-bg-btn">清除背景图</button>
+        <button id="toggleButton">切换隐藏外部链接按钮</button>
+        <button id="toggButton">切换隐藏TAVR</button>
          <hr> <!-- Add a horizontal line -->
         <button onclick="backupLocalStorage()">备份数据</button>
         <input id="fileInput" type="file" accept=".json" style="display: none;">
@@ -156,17 +158,20 @@
     </div>
      <div class="page about">
 <a href="https://greasyfork.org/zh-CN/scripts/470185" >云听网页节目HD下载</a><br>
-         <p>网页建议搭配脚本使用,<br>网易云仅为PC端快捷搜索，手机端shazam,spotify建议安装app</p><br>
+         <p>网易云音乐网页建议搭配脚本使用,<br>网易云仅提供PC端快捷搜索 </p><br>
 <a href="https://greasyfork.org/zh-CN/scripts/406054" >1.显示完整歌单</a><br>
 <a href="https://greasyfork.org/zh-CN/scripts/438148" >2.lx-music 辅助脚本
 </a><br>
-<a href="https://greasyfork.org/zh-CN/scripts/33046" >3.直接下载</a><br>
- <a href="https://greasyfork.org/zh-CN/scripts/406821" >4.主题:扁平风格</a><br>
+<a href="https://greasyfork.org/zh-CN/scripts/453804" >3.MyFreeMP3扩展
+</a><br>
+<a href="https://greasyfork.org/zh-CN/scripts/33046" >4.直接下载</a><br>
+ <a href="https://greasyfork.org/zh-CN/scripts/406821" >5.主题:扁平风格</a><br>
         <button id="about-btn">关于</button>
     </div>
 </div>
 
 </div>
+<div id="content-container">
 
     <div class="date" style="display:flex;justify-content:center;align-items:center;margin-bottom:10px;">
      <span for="datepicker" >Date</span>
@@ -184,10 +189,33 @@
        <button class="link-button" onclick="goToWebpage3()" style="background-image: url(./icons/at4.png)"> </button>
        </div> 
          </div>
+</div>
        <div class="ite item-center">
 
 </div> 	
  	<div class="ite item-right">
+<div class="add-button">
+    <button id="openMenuButton"><?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <defs> <style> .cls-1 { fill: none;}</style></defs><path class="cls-1" d="m0,0h800v800H0V0Z"/><path d="m554.77,98.49c4.72,12.97-1.97,27.32-14.94,32.04l-190.87,69.45h276.05c94.64.01,171.73,75.13,174.9,169l.1,6.02v150c0,96.65-78.35,175-175,175H175C78.35,700,0,621.65,0,525v-150c0-96.65,78.35-175,175-175h27.75s319.97-116.45,319.97-116.45c12.97-4.72,27.32,1.97,32.04,14.94Zm70.23,151.51H175c-69.04,0-125,55.96-125,125v150c0,69.04,55.96,125,125,125h450c69.04,0,125-55.96,125-125v-150c0-69.04-55.96-125-125-125Zm-375,75c69.04,0,125,55.96,125,125s-55.96,125-125,125-125-55.96-125-125,55.96-125,125-125Zm375,162.5c13.81,0,25,11.19,25,25s-11.19,25-25,25h-150c-13.81,0-25-11.19-25-25s11.19-25,25-25h150Zm-375-112.5c-41.42,0-75,33.58-75,75s33.58,75,75,75,75-33.58,75-75-33.58-75-75-75Zm375-12.5c13.81,0,25,11.19,25,25s-11.19,25-25,25h-150c-13.81,0-25-11.19-25-25s11.19-25,25-25h150Z"/>
+</svg></button>
+</div>
+<div id="menu" class="hidden">
+    <p class="t">自定义电台</p>
+    <div id="menuContainer">  
+        <div id="menuContent">
+            <!-- 这里是菜单内容 -->
+        </div>
+    </div>
+    <button id="addRowButton">添加</button>
+    <button id="saveButton">保存</button>
+    <button id="closeMenuButton">关闭</button>
+</div>
+ <div id="savedC">
+ <div id="savedContent">
+    <!-- 这里是保存的图片和电台名称 -->
+</div> </div> 
+<div id="tavr-container">
     <article>
         <h2 class="title">TAVR MEDIA</h2>
     </article>
@@ -221,7 +249,7 @@
         <h3 class="playlist_title">Was playing previously</h3>
     </div>
     <ul class="playlist previous"></ul>
-</article>
+</article> </div>
         </div>
        </div>
 </div>
