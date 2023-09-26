@@ -786,8 +786,6 @@ function startRecord() {
     }
 }
 
-
- 
 function showPage(pageNumber) {
     const pages = document.querySelectorAll('.page');
     pages.forEach(page => page.classList.remove('visible'));
@@ -807,12 +805,253 @@ function showPage(pageNumber) {
         arrow2Button.style.display = 'block';
     }
 }
+const contentContainer = document.getElementById("content-container");
+const toggleButton = document.getElementById("toggleButton");
+
+ const isContentHidden = localStorage.getItem("isContentHidden") === "true";
+
+ contentContainer.style.display = isContentHidden ? "none" : "block";
+
+ toggleButton.addEventListener("click", () => {
+    if (contentContainer.style.display === "none" || contentContainer.style.display === "") {
+        contentContainer.style.display = "block";  
+        localStorage.setItem("isContentHidden", "false");  
+    } else {
+        contentContainer.style.display = "none";  
+        localStorage.setItem("isContentHidden", "true");  
+    }
+});
+const tavrContainer = document.getElementById("tavr-container");
+const toggButton = document.getElementById("toggButton");
+
+ const isConHidden = localStorage.getItem("isConHidden") === "true";
+
+ tavrContainer.style.display = isConHidden ? "none" : "block";
+
+ toggButton.addEventListener("click", () => {
+    if (tavrContainer.style.display === "none" || tavrContainer.style.display === "") {
+        tavrContainer.style.display = "block";  
+        localStorage.setItem("isConHidden", "false");  
+    } else {
+        tavrContainer.style.display = "none";  
+        localStorage.setItem("isConHidden", "true");  
+    }
+});
+
+const savedContainer = document.getElementById("savedC");
+
+ savedContainer.addEventListener("mouseenter", () => {
+  savedContainer.style.overflowY = "overlay";  
+});
+
+savedContainer.addEventListener("mouseleave", () => {
+  savedContainer.style.overflowY = "hidden";  
+});
 
 function hideButtons() {
     const arrowButtons = document.querySelectorAll('.arrow1, .arrow2');
     arrowButtons.forEach(button => button.style.display = 'none');
 }
+
 document.addEventListener("DOMContentLoaded", function() {  
+    const openMenuButton = document.getElementById("openMenuButton");
+    const menu = document.getElementById("menu");
+    const menuContent = document.getElementById("menuContent");
+    const addRowButton = document.getElementById("addRowButton");
+    const saveButton = document.getElementById("saveButton");
+    const savedContent = document.getElementById("savedContent");
+    const closeMenuButton = document.getElementById("closeMenuButton");  
+
+    openMenuButton.addEventListener("click", function () {
+        menu.classList.remove("hidden");
+    });
+
+    addRowButton.addEventListener("click", function () {
+        const row = createRow("", "", "");
+        menuContent.appendChild(row);
+    });
+
+    saveButton.addEventListener("click", function () {
+        const rows = menuContent.getElementsByClassName("menu-row");
+        const savedData = [];
+
+        for (let i = 0; i < rows.length; i++) {
+            const row = rows[i];
+            const linkInput = row.querySelector(".link-input");
+            const nameInput = row.querySelector(".name-input");
+            const imageInput = row.querySelector(".image-input");
+
+            const imageFile = imageInput.files[0];
+            const linkValue = linkInput.value;
+            const nameValue = nameInput.value;
+
+            if (linkValue && nameValue) {
+                if (imageFile) {
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        const imageBase64 = event.target.result;
+
+                         row.dataset.link = linkValue;
+                        row.dataset.title = nameValue;
+
+                        savedData.push({
+                            imageBase64: imageBase64,
+                            link: linkValue,
+                            name: nameValue,
+                        });
+                        saveDataToLocalStorage(savedData);
+                        updateSavedContent(savedData);
+                        resetMenu();  
+                    };
+
+                    reader.readAsDataURL(imageFile);
+                } else {
+                    const imgContainer = row.querySelector(".img-container");
+                    const img = imgContainer.querySelector("img");
+                    const imageBase64 = img ? img.src : "";
+
+                     row.dataset.link = linkValue;
+                    row.dataset.title = nameValue;
+
+                    savedData.push({
+                        imageBase64: imageBase64,
+                        link: linkValue,
+                        name: nameValue,
+                    });
+                }
+            }
+        }
+
+        saveDataToLocalStorage(savedData);
+        updateSavedContent(savedData);
+
+        const savedIds = savedData.map(data => data.id);
+        const prevSavedData = JSON.parse(localStorage.getItem("savedData")) || [];
+        const newData = prevSavedData.filter(data => savedIds.includes(data.id));
+        saveDataToLocalStorage(newData);
+    });
+
+   function createRow(imageBase64, linkValue, nameValue, isSaved = false) {
+        const row = document.createElement("div");
+        row.classList.add("menu-row");
+
+        const imgContainer = document.createElement("div");
+        imgContainer.classList.add("img-container");
+
+        const imageInput = document.createElement("input");
+        imageInput.type = "file";
+        imageInput.classList.add("image-input");
+
+        const linkLabel = document.createElement("label");
+        linkLabel.textContent = "链接：";
+
+        const linkInput = document.createElement("input");
+        linkInput.type = "text";
+        linkInput.classList.add("link-input");
+        linkInput.value = linkValue;
+
+        const nameLabel = document.createElement("label");
+        nameLabel.textContent = "名称：";
+
+        const nameInput = document.createElement("input");
+        nameInput.type = "text";
+        nameInput.classList.add("name-input");
+        nameInput.value = nameValue;
+
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "删除";
+        deleteButton.addEventListener("click", function () {
+            const id = parseInt(row.dataset.id);
+            const savedData = JSON.parse(localStorage.getItem("savedData")) || [];
+            const newData = savedData.filter(function (data) {
+                return data.id !== id;
+            });
+            localStorage.setItem("savedData", JSON.stringify(newData));
+             menuContent.removeChild(row);
+             updateSavedContent(newData);
+        });
+
+         let rowData = {
+            link: linkValue,
+            title: nameValue,
+        };
+
+        row.appendChild(imgContainer);  
+        row.appendChild(imageInput);
+        row.appendChild(linkLabel);
+        row.appendChild(linkInput);
+        row.appendChild(nameLabel);
+        row.appendChild(nameInput);
+        row.appendChild(deleteButton);
+
+         if (imageBase64 && isSaved) {
+            const image = document.createElement("img");
+            image.src = imageBase64;
+            image.classList.add("rimg");
+            imgContainer.appendChild(image);
+        }
+ 
+        return row;
+    }
+
+     function saveDataToLocalStorage(data) {
+        localStorage.setItem("savedData", JSON.stringify(data));
+    }
+
+    function attachClickEvent(imgContainer, link, title) {
+        imgContainer.addEventListener("click", function () {
+              const url = link;  
+           setPlaybackInfo(url, title);
+        });
+    }
+
+     function updateSavedContent(data) {
+        savedContent.innerHTML = "";
+
+        data.sort((a, b) => a.id - b.id); // 根据序号排序
+
+        data.forEach(function (item) {
+            const imgContainer = document.createElement("div");
+            imgContainer.classList.add("img-container");
+
+            const image = document.createElement("img");
+            image.src = item.imageBase64;
+            image.classList.add("rimg");
+
+
+            const name = document.createElement("p");
+            name.textContent = item.name;
+
+            imgContainer.appendChild(image);
+            imgContainer.appendChild(name);
+
+            savedContent.appendChild(imgContainer);
+
+            // 使用闭包为每个图片容器添加点击事件
+            attachClickEvent(imgContainer, item.link, item.name);
+        });
+    }
+    // 恢复本地存储的数据
+    function restoreDataFromLocalStorage() {
+        const savedData = JSON.parse(localStorage.getItem("savedData")) || [];
+        updateSavedContent(savedData);
+
+        // 在菜单中恢复已保存的数据
+        savedData.forEach(function (data, index) {
+            const { imageBase64, link, name } = data;
+            const row = createRow(imageBase64, link, name, true);  
+            row.dataset.id = index + 1; // 设置序号
+            menuContent.appendChild(row);
+        });
+    }
+
+     restoreDataFromLocalStorage();
+
+     closeMenuButton.addEventListener("click", function () {
+        menu.classList.add("hidden");
+    });
+ 
+
    const arrowButtons = document.querySelectorAll('.arrow1, .arrow2');
 
     arrowButtons.forEach(button => {
@@ -1195,7 +1434,8 @@ function backupLocalStorage() {
         opacity3: opacity3,
         blurLevel: blurLevel
       };
-
+       var savedData = JSON.parse(localStorage.getItem("savedData")) || [];
+      backupData.savedData = savedData;
       var backupString = JSON.stringify(backupData);
 
       var downloadLink = document.createElement("a");
@@ -1242,6 +1482,8 @@ function backupLocalStorage() {
       localStorage.setItem("bg-color3", backupData.bgColor3);
       localStorage.setItem("opacity3", backupData.opacity3);
       localStorage.setItem("blurLevel", backupData.blurLevel);
+      var savedData = backupData.savedData || [];
+      localStorage.setItem("savedData", JSON.stringify(savedData));
       alert("已成功恢复备份数据！");// 刷新页面
       location.reload();
     }
