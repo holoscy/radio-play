@@ -681,17 +681,10 @@ function setPlaybackInfo(url, title) {
   inputUrl.value = url;
   appTitle.textContent = title;
   document.title = title;
+  play(url);
 
-   var audioElement = document.getElementById('audio');
+}
 
-   if (url.endsWith('.mp3')) {
-     audioElement.src = url;
-    
-     audioElement.play();
-} else {
-     play(url);
-}
-}
 var arrayRecord = [];
 
 function download(data, filename) {
@@ -1012,12 +1005,30 @@ document.addEventListener("DOMContentLoaded", function() {
         localStorage.setItem("savedData", JSON.stringify(data));
     }
 
-    function attachClickEvent(imgContainer, link, title) {
-        imgContainer.addEventListener("click", function () {
-              const url = link;  
-           setPlaybackInfo(url, title);
-        });
+   function attachClickEvent(imgContainer, link, title) {
+    imgContainer.addEventListener("click", function () {
+        const url = link;
+        const fileExtension = url.split('.').pop().toLowerCase();
+         if (currentHls) {
+        currentHls.destroy();  
     }
+         if (fileExtension !== 'm3u8') {
+            const audio = document.getElementById("audio");
+            appTitle.textContent = title;
+            document.title = title;
+            audio.src = url;
+            audio.play();
+            navigator.mediaSession.metadata = new MediaMetadata({
+            title: title,
+            artist: '',
+           
+          }); 
+        } else {
+            setPlaybackInfo(url, title);
+        }
+    });
+}
+ 
 
      function updateSavedContent(data) {
         savedContent.innerHTML = "";
