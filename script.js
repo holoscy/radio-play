@@ -673,16 +673,10 @@ function playbbc6() {
 
 function setPlaybackInfo(url, title) {
   document.body.classList.add('loading');
-  
-   if (url.startsWith('http://')) {
-     url = url.replace(/^http:/, '');
-  }
-  
   inputUrl.value = url;
   appTitle.textContent = title;
   document.title = title;
   play(url);
-
 }
 
 var arrayRecord = [];
