@@ -673,10 +673,24 @@ function playbbc6() {
 
 function setPlaybackInfo(url, title) {
   document.body.classList.add('loading');
+  
+   if (url.startsWith('http://')) {
+     url = url.replace(/^http:/, '');
+  }
+  
   inputUrl.value = url;
   appTitle.textContent = title;
   document.title = title;
-  play(url);
+
+   var audioElement = document.getElementById('audio');
+
+   if (url.endsWith('.mp3')) {
+     audioElement.src = url;
+    
+     audioElement.play();
+} else {
+     play(url);
+}
 }
 var arrayRecord = [];
 
