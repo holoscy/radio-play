@@ -1,257 +1,1613 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0.6,maximum-scale=2">
-    <link href="mystyle.css" rel="stylesheet" type="text/css">
-   <title>HITFM Player</title>
-  <link rel="shortcut icon" type="image/png" href="icons/hit.png"></script>
-  <script src="https://cdn.bootcdn.net/ajax/libs/hls.js/1.4.0/hls.min.js"></script>
-  <script src="https://cdn.bootcdn.net/ajax/libs/axios/1.3.6/axios.min.js"></script>
-</head>
-<body class="loading">
-<div class="app">
-    <h1 class="player_title">HIT FM </h1>
-    <div class="player" >
-        <button class="control mute-button" style="margin-left:auto;margin-right:5px"></button>
-        <input type="range" name="volume-level" class="control volume-level" min="0" max="100" step="1" value="100" style="margin-left:5px;margin-right:5px;max-width: 250px">
-        <button class="control play-button" style="margin-left:5px;margin-right:auto"></button>
-    </div>
- <div class="container">
-  <div class="ite item-left">
-  <div class="top"  style="display:flex;align-items:center;"> 
-  <button class="arrow1" onclick="showPage(1)">
-  <svg width="21px" height="28px" viewBox="0 0 50 80" xml:space="preserve">
-    <polyline fill="none"  class="arr" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="
-	45.63,75.8 0.375,38.087 45.63,0.375 "/>
-  </svg>  
-</button>   
- <div style="display: flex; align-items: center; margin-left: auto;margin-right: 1em;">
-    <button onclick="startRecord()" style="margin-left: auto; margin-right: 0;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" class="custom-filter">
-            <path d="m12,0C5.38,0,0,5.38,0,12s5.38,12,12,12,12-5.38,12-12S18.62,0,12,0Zm-2,7c0-1.11.9-2,2-2s2,.89,2,2v5c0,1.1-.9,2-2,2s-2-.9-2-2v-5Zm3,10.92v1.08c0,.55-.45,1-1,1s-1-.45-1-1v-1.08c-2.83-.48-5-2.95-5-5.92,0-.55.45-1,1-1s1,.45,1,1c0,2.21,1.79,4,4,4s4-1.79,4-4c0-.55.45-1,1-1s1,.45,1,1c0,2.97-2.17,5.44-5,5.92Z"/>
-        </svg>
-    </button>
+   window.mobileAndTabletcheck = function() {
+            var check = false;
+            (function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))) check = true;})(navigator.userAgent||navigator.vendor||window.opera);
+            return check;
+        };
+        var radio = null;
+        var player = radio;
+        var playButton = player;
+        var volumeLevel = playButton;
+        var select = volumeLevel;
+        var muteButton = select;
+        var timerID = muteButton;
+        var appTitle = timerID;
+        var currentList = appTitle;
+        var previousList = currentList;
+        var isPaused = true;
+        var isMuted = false;
+        var volume = 1;
+        var delay = 7500;
+        var playTxt = 'play';
+        var pauseTxt = 'pause';
+        var muteTxt = 'mute';
+        var speakerTxt = [
+            'speaker-0',
+            'speaker-1',
+            'speaker-2',
+            'speaker-3',
+        ];
+        var imagePrefix = './icons/';
+        var imageSuffix = '.svg';
+        var favicon = document.querySelectorAll('link[rel="shortcut icon"]');
+    favicon[0].href = imagePrefix + 'hit' + '.png';
+        var eventEnabled = false;
+        console.log('script. eventEnabled: ', eventEnabled);
+        (function() {
+            var imgsArr = [
+                'mute',
+                'pause',
+                'play',
+                'speaker-0',
+                'speaker-1',
+                'speaker-2',
+                'speaker-3',
+            ];
+            imgsArr.forEach(function (i) {
+                var item = document.createElement('img');
+                item['src'] = imagePrefix + i + imageSuffix;item.loading = 'lazy';
+            });
+        })();
+        const CancelToken = axios.CancelToken;
+        let cancel;
+        var getTrackData = (url, current, previous) => axios.get(url, {
+            cancelToken: new CancelToken(function executor(c) {
+                // An executor function receives a cancel function as a parameter
+                cancel = c;
+            })
+        })
+            .then(function (response) {
+                var data = response['data'].concat();
+                var currentData = data.shift();
+                renderData(current, currentData);
+                renderData(previous, data);
+                setCurrentData(currentData);
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            .finally(function() {
+                document.body.classList.remove('loading');
+                eventEnabled = true;
+            });
+        window.addEventListener('load', function(event) {
+            if (mobileAndTabletcheck()) {
+                document.body.classList.add('mobile');
+            }
+            console.log('window loaded');
+            console.log('window loaded. eventEnabled: ', eventEnabled);
+            // Document entities
+            radio = document.getElementById('audio');               // Audio
+            player = document.querySelector('.player');             // Player
+            muteButton = player.querySelector('.mute-button');      // Mute button
+            volumeLevel = player.querySelector('.volume-level');    // Volume level
+            appTitle = document.querySelector('.player_title');     // Application title
+            currentList = document.querySelector('.current');       // Current playing
+            previousList = document.querySelector('.previous');     // Previously played
+            // Player
+            // Play/Pause button
+            playButton = player.querySelector('.play-button');
+            playButton.dataset['paused'] = Number(isPaused);
+            var pauseValue = isPaused ? playTxt : pauseTxt;
+            setText(playButton, pauseValue, imagePrefix, imageSuffix);
+            playButton.addEventListener('click', function(e) {
+                isPaused = playButtonHanler(this, playAudio, stopAudio);
+            }, false);
+            // Mute button
+            setMuteButtonText(muteButton);
+            muteButton.addEventListener('click', function(e) {
+                isMuted = !isMuted;
+                radio['muted'] = isMuted;
+                setMuteButtonText(this);
+                if (isMuted) {
+                    volumeLevel['value'] = 0;
+                } else {
+                    volumeLevel['value'] = volume * 100;
+                }
+            });
+            // Volume level
+            volumeLevel.addEventListener('change', volumeLevelHandler);
+            volumeLevel.addEventListener('input', volumeLevelHandler);
 
-    <div style="margin-left: 0;">
-        <a href="https://www.shazam.com/">
-            <img src="./icons/shazam.svg" style="width:20px" alt="shazam Logo">
-        </a>
-    </div>
-</div>
+            // Radio event Listeners
+            radio.addEventListener('progress', progressListener);
+            radio.addEventListener('loadeddata', enableBodyListener);
+            radio.addEventListener('seeked', function(event) {
+                console.log('seeked');
+            });
+            radio.addEventListener('error', function(event) {
+                console.log('error');
+                console.error(event['message']);
+                stopAudio();
+            });
+            select = document.getElementById('src_select');
+            select.addEventListener('change', selectChange);
+           srcSelect = document.getElementById('src_select');
+           value = srcSelect['value'];
+            document.body.classList.remove('loading');
+            timerID = setTimeout(function request() {
+                getTrackData(JSON.parse(select['value'])['request'], currentList, previousList);
+                timerID = setTimeout(request, delay);
+            },3000);
+            eventEnabled = true;
+            console.log('events enabled. eventEnabled: ', eventEnabled);
+        });
 
-<div class="input-boxLine" style="display:flex;align-items:center;margin-left:0;margin-right:0;">
-	<input id="inputUrl" input type="text" required />
-	<div class="line"></div>
-	<span>WE PLAY ONLY THE HITS</span>
-</div>
-<button onclick="cplay()" style="margin-left:0;margin-right:auto">
-    <a href="#" class="playBut">
-        <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
-        <svg version="1.1"
-             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
-             x="0px" y="0px" width="40px" height="40px" viewBox="0 0 213.7 213.7" enable-background="new 0 0 213.7 213.7"
-             xml:space="preserve">
-            <polygon class="triangle" id="XMLID_18_" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="73.5,62.5 148.5,105.8 73.5,149.1"/>
-        </svg>
-    </a>
-</button>
-<button class="arrow2" onclick="showPage(2)">
-  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="21px" height="28px" viewBox="0 0 50 80" xml:space="preserve">
-    <polyline fill="none" class="arr"  stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="
-	0.375,0.375 45.63,38.087 0.375,75.8 "/>
-  </svg>
-</button>
-</div>
+        function playButtonHanler(button, playHandler, pauseHandler) {
+            if (!eventEnabled) return;
 
-<div id="page1" class="page visible">
-   <div class="player">
-    <button class="df-button" onclick="playHitFM1()" style="background-image: url(./icons/hit1.png)"></button>
-    <button class="df-button" onclick="playHitFM2()" style="background-image: url(./icons/hit广州.png)"></button>
-    <button class="df-button" onclick="playHitFM3()" style="background-image: url(./icons/hit北京.png)"></button>  
-</div>
-<div class="player">   
-    <button class="df-button" onclick="playev()" style="background-image: url(./icons/ev.png)"></button>    
-    <button class="df-button" onclick="playAT40()" style="background-image: url(./icons/at40.png)"></button>
-    <button class="df-button" onclick="playhitn()" style="background-image: url(./icons/hitn.png)"></button>
-</div>
-<div class="player">   
-    <button class="df-button" onclick="playic()" style="background-image: url(./icons/ic.png)"></button>
-    <button class="df-button" onclick="playip()" style="background-image: url(./icons/ip.png)"></button>    
-    <button class="df-button" onclick="playcf()" style="background-image: url(./icons/cf.png)"></button>
-</div>
+            eventEnabled = false;
+            button.dataset['paused'] = Number(!Number(button.dataset['paused']));
+            var txt;
+            var result = Number(button.dataset['paused']);
+            if (result) {
+                txt = playTxt;
+                pauseHandler();
+            } else {
+                txt = pauseTxt;
+                playHandler();
+            }
+            setText(button, txt, imagePrefix, imageSuffix);
 
- </div>
-<div id="page2" class="page">
+            return Number(button.dataset['paused']);
+        };
+function axioscover(callback) {
+    const defaultImageUrl = "https://raw.githubusercontent.com/darkduck9/radio-play/darkduck9-patch-1/icons/hit.png";
+    axios.get(defaultImageUrl, { responseType: 'blob' })
+        .then(response => {
+            const reader = new FileReader();
+            reader.onloadend = function () {
+                const dataURL = reader.result;
+                callback(dataURL); // 直接传递dataURL
+            };
+            reader.readAsDataURL(response.data);
+        })
+        .catch(error => {
+            console.error("Failed to load default image:", error);
+        });
+}
 
-   <div class="player">
-    <button class="df-button" onclick="playZ100()" style="background-image: url(./icons/z100.png)"></button>
-    <button class="df-button" onclick="playkiis()" style="background-image: url(./icons/kiis.png)"></button>
-    <button class="df-button" onclick="playalic()" style="background-image: url(./icons/alic.png)"></button>       
-</div>
-   <div class="player">
-    <button class="df-button" onclick="playrn()" style="background-image: url(./icons/rn.png)"></button> 
-    <button class="df-button" onclick="playmxn()" style="background-image: url(./icons/mxn.png)"></button>
-    <button class="df-button" onclick="playimf()" style="background-image: url(./icons/imf.png)"></button>
-</div>
- <div class="player">
-    <button class="df-button" onclick="playbbc1()" style="background-image: url(./icons/bbc1.png)"></button> 
-    <button class="df-button" onclick="playbbc1x()" style="background-image: url(./icons/bbc1x.png)"></button>
-    <button class="df-button" onclick="playbbc6()" style="background-image: url(./icons/bbc6.png)"></button>
-</div>
- </div>
-     <div id="recordedTime">已录制时长: 0秒</div>
-     <div id="programName">  ON AIR NOW: Loading...</div>
-     <div id="songInfo"></div>
-<div class="menu-container">
-  <button id="toggle-menu-btn" style="padding:0;width:20px;height:20px"><?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg "width="20px" height="20px" viewBox="0 0 512 512">
-  <defs><style>.cls-1 { opacity: .97;}.cls-1, .cls-2 { fill-rule: evenodd;isolation: isolate;}.cls-2 {opacity: .98;}</style></defs>
- <path class="cls-2" d="m53,0h406c28.67,6.67,46.33,24.33,53,53v406c-6.67,28.67-24.33,46.33-53,53H53c-28.67-6.67-46.33-24.33-53-53V53C6.67,24.33,24.33,6.67,53,0Zm8,43c131.38-.49,262.71,0,394,1.5,7.45,3.05,11.95,8.55,13.5,16.5.67,50.67.67,101.33,0,152-22.83-22.83-45.67-45.67-68.5-68.5-10.67-8.67-21.33-8.67-32,0-49.83,49.83-99.67,99.67-149.5,149.5-18.17-18.17-36.33-36.33-54.5-54.5-9.12-6.88-18.45-7.21-28-1-30.83,30.83-61.67,61.67-92.5,92.5-.67-90-.67-180,0-270,2.01-9.85,7.85-15.85,17.5-18Zm322,149c28.92,27.41,57.42,55.41,85.5,84,.67,58.33.67,116.67,0,175-1.83,9.83-7.67,15.67-17.5,17.5-130,.67-260,.67-390,0-9.83-1.83-15.67-7.67-17.5-17.5-.67-19.33-.67-38.67,0-58,35.33-35.33,70.67-70.67,106-106,41.83,41.83,83.67,83.67,125.5,125.5,13.07,6.63,23.9,4.13,32.5-7.5,3.54-7.52,3.21-14.85-1-22-18.47-19.47-37.3-38.64-56.5-57.5,44.54-44.37,88.87-88.87,133-133.5Z"/>
-  <path class="cls-1" d="m121,85c26.57-1.57,43.07,10.43,49.5,36,2.05,26.59-9.78,43.09-35.5,49.5-26.59,2.05-43.09-9.78-49.5-35.5-1.85-26.61,9.98-43.28,35.5-50Z"/>
-</svg></button>
-  <button id="darkModeButton" onclick="toggleDarkMode()" style="width:20px;height:20px;background:url(./icons/light.svg);background-size: 100%;" ></button>
-
- <div class="submenu" id="submenu-popup">
-    <div class="page page1">
-        <label for="bg-color">左背景色</label><input type="color" id="bg-color" value="#ffffff"><br>
-        <label for="corner-radius">左圆角</label><input type="range" id="corner-radius" min="0" max="50" value="0"><br>
-        <label for="opacity">左透明度</label><input type="range" id="opacity" min="0" max="1" step="0.01" value="1"><br>
-        <label for="bg-color1">右背景色</label><input type="color" id="bg-color1" value="#ffffff"><br>
-        <label for="corner-radius1">右圆角</label><input type="range" id="corner-radius1" min="0" max="50" value="0"><br>
-        <label for="opacity1">右透明度</label><input type="range" id="opacity1" min="0" max="1" step="0.01" value="1"><br>
-        
+var currentData;          
+function setCurrentData(data) {
+    currentData = data;
   
-        <label for="bg-color2">背景色</label><input type="color" id="bg-color2" value="#ffffff"><br>
-        <label for="corner-radius2">圆角</label><input type="range" id="corner-radius2" min="0" max="50" value="0"><br>
-        <label for="opacity2">透明度</label><input type="range" id="opacity2" min="0" max="1" step="0.01" value="1"><br>
-        <label for="bg-color3">网页背景色</label><input type="color" id="bg-color3" value="#ffffff"><br>
-        <label for="opacity3">网页透明度</label><input type="range" id="opacity3" min="0" max="1" step="0.01" value="1">
-        <button id="toggleButton">切换隐藏外部链接按钮</button>
-        <button id="toggButton">切换隐藏TAVR</button>
-        <button id="next-page-btn">下一页</button>
-        <button id="about-btn">关于</button>
-     </div>  
-        <div class="page page2">
-        <label for="bg-position-select">背景图位置</label>
-        <select id="bg-position-select">
-            <option value="top">顶部</option>
-            <option value="center">居中</option>
-            <option value="bottom">底部</option>
-        </select><br>
-        
-        <label for="blur-slider">背景模糊</label> 
-        <input type="range" id="blur-slider" min="0" step="0.01" max="20" value="0">
+    if (currentData.cover) {
+        mediaMetadata.title = currentData.song;
+        mediaMetadata.artist = currentData.singer;
+        mediaMetadata.artwork = [{
+            src: currentData.cover,
+            sizes: '500x500',
+            type: 'image/jpg'
+        }];
+    } else {
+        axioscover(function (dataURL) {
+             mediaMetadata.title = currentData.song;
+             mediaMetadata.artist = currentData.singer;
+             mediaMetadata.artwork = [{
+                src: dataURL,
+                sizes: '100x100',
+                type: 'image/png'
+            }];
+            navigator.mediaSession.metadata = mediaMetadata;
+        });
+    }
 
-        <button id="select-online-bg-btn">选择在线图片</button>
-        <button id="select-local-bg-btn">选择本地图片</button>
-        <button id="clear-bg-btn">清除背景图</button>
-        
-         <hr> <!-- Add a horizontal line -->
-        <button onclick="backupLocalStorage()">备份数据</button>
-        <input id="fileInput" type="file" accept=".json" style="display: none;">
-        <button onclick="selectBackupFile()">选择备份文件</button>
-        <button onclick="restoreLocalStorage()" disabled id="restoreButton">恢复数据</button>
-        <button id="prev-page-btn">上一页</button>
-    </div>
-     <div class="page about">
-<a href="https://greasyfork.org/zh-CN/scripts/470185" >云听网页节目HD下载</a><br>
-     <p class="t">网易云音乐网页建议搭配脚本使用,<br>网易云仅提供PC端快捷搜索  <br>所有自定义数据使用<br>localStorage本地存储,有上限<br></p><hr><p class="t">电台链接由于浏览器安全限制，不能<br>在https下播放http的m3u8链接，<br>解决方法1.把http改为https<br>(部分链接只支持http) 或者<br>2. 对当前网站设置允许不安全内容</p><hr>
-<a href="https://greasyfork.org/zh-CN/scripts/406054" >1.显示完整歌单</a><br>
-<a href="https://greasyfork.org/zh-CN/scripts/438148" >2.lx-music 辅助脚本
-</a><br>
-<a href="https://greasyfork.org/zh-CN/scripts/453804" >3.MyFreeMP3扩展
-</a><br>
-<a href="https://greasyfork.org/zh-CN/scripts/33046" >4.直接下载</a><br>
- <a href="https://greasyfork.org/zh-CN/scripts/406821" >5.主题:扁平风格</a><br>
-        <button id="about-btn">关于</button>
-    </div>
-</div>
+    navigator.mediaSession.metadata = mediaMetadata;
+}
 
-</div>
-<div id="content-container">
 
-    <div class="date" style="display:flex;justify-content:center;align-items:center;margin-bottom:10px;">
-     <span for="datepicker" >Date</span>
-<input type="date" name="datepicker" id="datePicker"> 
-     
-     </div>
-       <div class="player">
-        <button class="link-button" onclick="goToWebpage()" style="background-image: url(./icons/lst.png)"> </button>
-        <button class="link-button" onclick="updateProgramLink()" style="background-image: url(./icons/ls.png)"> </button>   
-        <button class="link-button" onclick="gotoURL()" style="background-image: url(./icons/dl.png)"> </button>
-       </div> 
-       <div class="player">
-       <button class="link-button" onclick="goToWebpage1()" style="background-image: url(./icons/top20.png)"> </button>
-       <button class="link-button" onclick="goToWebpage2()" style="background-image: url(./icons/mv.png)"> </button>
-       <button class="link-button" onclick="goToWebpage3()" style="background-image: url(./icons/at4.png)"> </button>
-       </div> 
-         </div>
-</div>
-       <div class="ite item-center">
+var mediaMetadata = new MediaMetadata({
+    title: '',
+    artist: '',
+    artwork: []
+});
 
-</div> 	
- 	<div class="ite item-right">
-<div class="add-button">
-    <button id="openMenuButton"><?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
-  <defs> <style> .cls-1 { fill: none;}</style></defs><path class="cls-1" d="m0,0h800v800H0V0Z"/><path d="m554.77,98.49c4.72,12.97-1.97,27.32-14.94,32.04l-190.87,69.45h276.05c94.64.01,171.73,75.13,174.9,169l.1,6.02v150c0,96.65-78.35,175-175,175H175C78.35,700,0,621.65,0,525v-150c0-96.65,78.35-175,175-175h27.75s319.97-116.45,319.97-116.45c12.97-4.72,27.32,1.97,32.04,14.94Zm70.23,151.51H175c-69.04,0-125,55.96-125,125v150c0,69.04,55.96,125,125,125h450c69.04,0,125-55.96,125-125v-150c0-69.04-55.96-125-125-125Zm-375,75c69.04,0,125,55.96,125,125s-55.96,125-125,125-125-55.96-125-125,55.96-125,125-125Zm375,162.5c13.81,0,25,11.19,25,25s-11.19,25-25,25h-150c-13.81,0-25-11.19-25-25s11.19-25,25-25h150Zm-375-112.5c-41.42,0-75,33.58-75,75s33.58,75,75,75,75-33.58,75-75-33.58-75-75-75Zm375-12.5c13.81,0,25,11.19,25,25s-11.19,25-25,25h-150c-13.81,0-25-11.19-25-25s11.19-25,25-25h150Z"/>
-</svg></button>
-</div>
-<div id="menu" class="hidden">
-    <p class="t">自定义电台</p>
-    <div id="menuContainer">  
-        <div id="menuContent">
-            <!-- 这里是菜单内容 -->
-        </div>
-    </div>
-    <button id="addRowButton">添加</button>
-    <button id="saveButton">保存</button>
-    <button id="closeMenuButton">关闭</button>
-</div>
- <div id="savedC">
- <div id="savedContent">
-    <!-- 这里是保存的图片和电台名称 -->
-</div> </div> 
-<div id="tavr-container">
-    <article>
-        <h2 class="title">TAVR MEDIA</h2>
-    </article>
-    <select class="station_select  my-select" name="src_select" id="src_select" >
-        <option value='' selected disabled hidden>📻 Station</option>
-        <option value='{"src":"https://online.hitfm.ua/HitFM_HD","request":"https://o.tavrmedia.ua/hit","name":"Hit FM"}'>Hit FM</option>
-        <option value='{"src":"https://online.hitfm.ua/HitFM_Best_HD","request":"https://o.tavrmedia.ua/hitb","name":"Hit FM Best"}'>Hit FM Best</option>       
-        <option value='{"src":"https://online.hitfm.ua/HitFM_Top_HD","request":"https://o.tavrmedia.ua/hitt","name":"Hit FM Top"}'>Hit FM Top</option>
-        <option value='{"src":"https://online.kissfm.ua/KissFM_HD","request":"https://o.tavrmedia.ua/kiss","name":"KISS FM"}'>KISS FM</option>
-        <option value='{"src":"https://online.kissfm.ua/KissFM_Deep","request":"https://o.tavrmedia.ua/kissdeep","name":"KISS FM Deep"}'>KISS FM Deep</option>
-        <option value='{"src":"https://online.kissfm.ua/KissFM_Digital_HD","request":"https://o.tavrmedia.ua/kissdigital","name":"KISS FM Digital"}'>KISS FM Digital</option> 
-        <option value='{"src":"https://online.radioroks.ua/RadioROKS_HD","request":"https://o.tavrmedia.ua/roks","name":"Radio ROKS"}'>Radio ROKS</option>
-        <option value='{"src":"https://online.radioroks.ua/RadioROKS_ClassicRock_HD","request":"https://o.tavrmedia.ua/rokscla","name":"Radio ROKS Classic Rock"}'>Radio ROKS Classic Rock</option>
-        <option value='{"src":"https://online.radioroks.ua/RadioROKS_HardnHeavy_HD","request":"https://o.tavrmedia.ua/rokshar","name":"Radio ROKS Hard n Heavy"}'>Radio ROKS Hard'n'Heavy</option>
-        <option value='{"src":"https://online.melodiafm.ua/MelodiaFM_HD","request":"https://o.tavrmedia.ua/melodia","name":"Melodia FM"}'>Melodia FM</option>
-        <option value='{"src":"https://online.melodiafm.ua/MelodiaFM_Int_HD","request":"https://o.tavrmedia.ua/melodiaint","name":"Melodia FM Int"}'>Melodia FM Int</option>
-        <option value='{"src":"https://online.melodiafm.ua/MelodiaFM_Disco_HD","request":"https://o.tavrmedia.ua/melodiad","name":"Melodia FM Disco"}'>Melodia FM Disco</option>
-        <option value='{"src":"https://online.melodiafm.ua/MelodiaFM_Romantic_HD","request":"https://o.tavrmedia.ua/melodiar","name":"Melodia FM Romantic"}'>Melodia FM Romantic</option>
-        <option value='{"src":"https://online.radioplayer.ua/FlashRadio_HD","request":"https://o.tavrmedia.ua/radio3flash","name":"Flash Radio"}'>Flash Radio</option>       
-    </select>     
-    <audio id="audio" controls="true" preload="none" src=""  ></audio>
-   <article class="playlist_wrapper" id="playlist_wrapper">
-    <div id="playlist_title_container">
-        <h3 class="playlist_title">TAVR is playing now</h3>
-    </div>
-    <ul class="playlist current"></ul>
-</article>
+function playAudio() {
+    document.body.classList.add('loading');
+    var srcSelect = document.getElementById('src_select');
+    var value = JSON.parse(srcSelect['value']);
+    appTitle.textContent = value['name'];
+    document.title = value['name'];
+    radio.src = value['src'];
+    radio.addEventListener('stalled', stalledHandler);
 
-<article class="playlist_wrapper" id="playlist_wrapper">
-    <div id="previous_playlist_title_container">
-        <h3 class="playlist_title">Was playing previously</h3>
-    </div>
-    <ul class="playlist previous"></ul>
-</article> </div>
-        </div>
-       </div>
-</div>
-</body>
-<script src="script.js"></script>
-</html>
+    navigator.mediaSession.metadata = mediaMetadata;
+   
+    var observer = new MutationObserver(function (mutationsList) {
+        if (radio.paused) {
+            observer.disconnect();
+        } else {
+     if (currentData.cover) {
+                mediaMetadata.artwork = [{
+                    src: currentData.cover,
+                    sizes: '500x500',
+                    type: 'image/jpg'
+                }];
+            } else {
+                axioscover(function (dataURL) {
+                    mediaMetadata.artwork = [{
+                        src: dataURL,
+                        sizes: '100x100',
+                        type: 'image/png'
+                    }];
+                });
+            }
+
+          navigator.mediaSession.metadata = mediaMetadata;
+        }
+    });
+
+    var observerOptions = { childList: true, subtree: true };
+    observer.observe(currentList, observerOptions);
+
+    if (currentHls) {
+        currentHls.destroy(); // Destroy the previous HLS instance if it exists
+    }
+    radio.play();
+}
+
+
+        function stopAudio() {
+            if (radio) {
+                radio.pause();
+                radio.currentTime = 0;
+            }
+            clearTimeout(timerID);
+            isPaused = true;
+            eventEnabled = true;
+            setText(playButton, playTxt, imagePrefix, imageSuffix);
+            document.body.classList.remove('loading');
+        };
+        function progressListener() {
+            eventEnabled = false;
+            isPaused = this.paused;
+            isMuted = this.muted;
+            var txt = pauseTxt;
+            if (isPaused) {
+                txt = playTxt;
+            }
+            setText(playButton, txt, imagePrefix, imageSuffix);
+            playButton.dataset['paused'] = Number(isPaused);
+            document.body.classList.remove('loading');
+            eventEnabled = true;
+        };
+
+        function enableBodyListener() {
+            var txt = 'play';
+            if(this.readyState >= 2) {
+                txt = 'pause';
+                document.body.classList.remove('loading');
+                eventEnabled = true;
+            } else {
+                console.log('there was some error while loading audio');
+                stopAudio();
+            }
+            setText(playButton, txt, imagePrefix, imageSuffix);
+        };
+
+        var eventEnabled = true;
+var currentRequest = null; // 用于跟踪当前请求
+
+function selectChange() {
+    if (!eventEnabled) {
+        return; // 如果事件被禁用，则不执行任何操作
+    }
+
+    eventEnabled = false;
+    var self = this;
+    var value = JSON.parse(self['value']);
+    document.body.classList.remove('loading');
+
+    if (currentRequest !== null) {
+        // 如果有之前的请求正在进行，可以选择取消它
+        clearTimeout(currentRequest);
+    }
+
+    if (radio['paused']) {
+        document.body.classList.remove('loading');
+    } else {
+        stopAudio();
+        playAudio();
+    }
+
+    currentRequest = setTimeout(function request() {
+        getTrackData(value['request'], currentList, previousList);
+        currentRequest = setTimeout(request, delay);
+    }, 3000);
+
+    eventEnabled = true;
+}
+
+
+        function stalledHandler() {
+            console.log('stalled');
+            document.body.classList.add('loading');
+            stopAudio();
+            playAudio();
+        };
+
+        function setMuteButtonText(node) {
+            if (radio.muted) {
+                node.style.backgroundImage = 'url(' + imagePrefix + muteTxt + imageSuffix + ')';
+                return;
+            }
+
+            node.style.backgroundImage = 'url(' + imagePrefix + speakerTxt[getDiapason(radio['volume'])] + imageSuffix + ')';
+        };
+
+        function getDiapason(num) {
+            if (num >= 1) return 3;
+
+            if (num > 1/2) return 2;
+
+            if (num > 0) return 1;
+
+            return 0;
+        };
+
+        function volumeLevelHandler() {
+            var value = this['value'];
+            var valueForDec = Number(value/100);
+
+            volume = valueForDec;
+            radio['volume'] = valueForDec;
+
+            setMuteButtonText(muteButton);
+        };
+
+        function renderData(node, data) {
+            if (!Array.isArray(data)) {
+                data = [data];
+            }
+            while (node.firstChild) node.removeChild(node.firstChild);
+            Array.prototype.forEach.call(data, function (i) {
+                node.appendChild(renderItem(i));
+            });
+        }
+
+        function setText(destination, value, prefix, suffix) {
+            destination.style.backgroundImage = 'url(' + prefix + value + suffix + ')';
+        }
+
+ function renderItem(data) {
+var img = data['cover'] ? 'background-image:url(' + data['cover'] + '); background-size: 100%;' : 'background-image:url(./icons/def.png); background-size: 100%;';
+    var result = document.createElement('li');
+    var logo = document.createElement('span');
+    var info = document.createElement('span');
+    var singer = document.createElement('span');
+    var separator = document.createElement('span');
+    var song = document.createElement('span');
+
+    result.className = 'playlist_item';
+    logo.className = 'playlist_item__logo';
+    info.className = 'playlist_item__info';
+    singer.className = 'playlist_item__singer';
+    separator.className = 'playlist_item__separator';
+    song.className = 'playlist_item__song';
+
+    logo.style = img;
+    singer.textContent = data['singer'];
+    separator.innerHTML = '&nbsp;&mdash;&nbsp;';
+    song.textContent = data['song'];
+   
+    result.appendChild(logo);
+    info.appendChild(singer);
+    info.appendChild(separator);
+    info.appendChild(song);
+    result.appendChild(info);
+if (data['cur_time']) {
+    var curTime = document.createElement('span');
+    curTime.className = 'playlist_item__cur_time';
+    curTime.textContent = data['cur_time'];
+    info.insertBefore(curTime, info.firstChild); 
+
+    var onAirText = document.createElement('span');
+    onAirText.textContent = 'ON AIR (EEST): ';
+    info.insertBefore(onAirText, info.firstChild);
+} else if (data['cur_end_time']) {
+    var curEndTime = document.createElement('span');
+    curEndTime.className = 'playlist_item__cur_end_time';
+    curEndTime.textContent = data['cur_end_time'];
+    info.insertBefore(curEndTime, info.firstChild);  
+
+    var onAirText = document.createElement('span');
+    onAirText.textContent = 'ON AIR (EEST) End:';
+    info.insertBefore(onAirText, info.firstChild);  
+}
+
+    if (data['title']) {
+        var title = document.createElement('span');
+        title.className = 'playlist_item__title';
+        title.textContent = data['title'];
+        info.appendChild(title);
+    }
+    
+function removeSymbols(text) {
+  return text.replace(/[^\p{L}\d\s()]/gu, ' ');
+}    
+if (data['video']) {
+        var video = document.createElement('a');
+        video.className = 'playlist_item__video';
+        video.href = 'https://www.youtube.com/watch?v=' + data['video'];
+        video.innerHTML = '<img src="./icons/youtube.svg" alt="YouTube Logo">';
+         info.appendChild(video);    }
+          else if (data['song'] && data['singer']) { 
+          var youtubeLink = document.createElement('a');
+  youtubeLink.href = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(removeSymbols(data['song'] + ' ' + data['singer']));
+  youtubeLink.target = '_blank';
+  youtubeLink.innerHTML = '<img src="./icons/youtube.svg" alt="YouTube Logo">';
+  youtubeLink.classList.add('playlist_item__video');
+  info.appendChild(youtubeLink);
+}
+
+  if (data['song'] && data['singer']) {
+  var neteaseLink = document.createElement('a');
+  neteaseLink.className = 'playlist_item__netease';
+  neteaseLink.href = 'https://music.163.com/#/search/m/?s=' + encodeURIComponent(removeSymbols(data['song'] + ' ' + data['singer']));
+  neteaseLink.target = '_blank';
+  neteaseLink.innerHTML = '<img src="./icons/netease.svg" alt="Netease Logo">';
+  info.appendChild(neteaseLink);
+   var spotifyLink = document.createElement('a');
+  spotifyLink.className = 'playlist_item__spotify';
+  spotifyLink.href = 'https://open.spotify.com/search/' + encodeURIComponent(removeSymbols(data['song'] + ' ' + data['singer']));
+  spotifyLink.target = '_blank';
+  spotifyLink.innerHTML = '<img src="./icons/spotify.svg" alt="spotify Logo">';
+  info.appendChild(spotifyLink);
+    }
+    return result;
+}
+    var selectElement = document.getElementById("src_select");
+    var playlistTitleContainer = document.getElementById("playlist_title_container");
+    var previousPlaylistTitleContainer = document.getElementById("previous_playlist_title_container");
+    var select = document.getElementById("src_select");
+    var previousPlaylistWrapper = document.getElementById("previous_playlist_wrapper");   
+     window.addEventListener("DOMContentLoaded", function() {
+        playlistTitleContainer.style.display = "none";
+        previousPlaylistTitleContainer.style.display = "none";
+    });
+
+    selectElement.addEventListener("change", function() {
+        if (selectElement.value === "") {
+            playlistTitleContainer.style.display = "none";
+            previousPlaylistTitleContainer.style.display = "none";
+        } else {
+            playlistTitleContainer.style.display = "block";
+            previousPlaylistTitleContainer.style.display = "block";
+        }
+    });
+
+    select.addEventListener("change", function () {
+        if (select.value === '') {
+            playlist_title_container.style.display = "none";
+            previousPlaylistWrapper.style.display = "none"; // Hide
+        } else {playlist_title_container.style.display = "block";
+            previousPlaylistWrapper.style.display = "block"; // Show
+        }
+    });
+
+    const audio = document.getElementById('audio');
+    const inputUrl = document.getElementById('inputUrl');
+ 
+let currentHls = null; // Store the current HLS instance
+var selectElement = document.getElementById("src_select");
+
+var desiredOption = selectElement.querySelector("option[value='']");
+
+function play(url) {
+  document.body.classList.add('loading');
+
+  const songInfoDiv = document.getElementById('songInfo'); // Get reference to the <div> element
+  songInfoDiv.style.display = 'none'; // Hide the songInfo element by default
+  desiredOption.selected = true;
+
+  // Set a default Blob image
+  axioscover(function (dataURL) {
+    const defaultMetadata = new MediaMetadata({
+      title: '',
+      artist: '',
+      artwork: [{
+        src: dataURL,
+        sizes: '100x100',
+        type: 'image/png'
+      }]
+    });
+          
+    navigator.mediaSession.metadata = defaultMetadata;
+  });
+
+  if (currentHls) {
+    currentHls.destroy(); // Destroy the previous HLS instance if it exists
+  }
+  if (currentRequest !== null) {
+    clearTimeout(currentRequest);
+  }
+  if (Hls.isSupported()) {
+    const hls = new Hls();
+    currentHls = hls; // Store the current HLS instance
+
+    hls.loadSource(url);
+    hls.attachMedia(audio);
+
+    hls.on(Hls.Events.FRAG_PARSING_METADATA, function (event, data) {
+      if (data) {
+        // Check if the data contains "url="
+        if (data.frag.title.includes("url=")) {
+          // Extract title and artist information from the data string
+          const titleMatch = data.frag.title.match(/title="([^"]*)"/);
+          const artistMatch = data.frag.title.match(/artist="([^"]*)"/);
+
+          // Show the songInfo element
+          songInfoDiv.style.display = 'block';
+
+          // Update the song info if title and artist are available
+          let songInfo = "";
+          if (artistMatch && artistMatch[1].trim() !== "") {
+            songInfo += artistMatch[1].trim();
+          }
+          if (titleMatch && titleMatch[1].trim() !== "") {
+            if (songInfo !== "") {
+              songInfo += " - ";
+            }
+            songInfo += titleMatch[1].trim();
+          }
+          songInfoDiv.textContent = songInfo;
+          addLinksToSongInfo(songInfo);
+          // Update MediaSession metadata when new data is available
+          navigator.mediaSession.metadata = new MediaMetadata({
+            title: titleMatch ? titleMatch[1].trim() : '',
+            artist: artistMatch ? artistMatch[1].trim() : '',           
+          }); 
+        } else {
+          // If "url=" is not present, display the entire data
+          songInfoDiv.style.display = 'block';
+          songInfoDiv.textContent = data.frag.title;
+          addLinksToSongInfo(data.frag.title);
+          // Update MediaSession metadata when new data is available
+          navigator.mediaSession.metadata = new MediaMetadata({
+            title: data.frag.title,
+            artist: '',  
+          });
+        }
+      }
+    });
+    hls.on(Hls.Events.MANIFEST_PARSED, function () {
+      audio.play();
+    });
+  } else if (audio.canPlayType('application/vnd.apple.mpegurl')) {
+    audio.src = url;
+    audio.addEventListener('loadedmetadata', function () {
+      audio.play();
+    });
+  }
+}
+
+
+function cplay() {
+        const url = inputUrl.value;
+         play(url);
+}
+
+
+function addLinksToSongInfo(title) {
+  const songInfoDiv = document.getElementById('songInfo');
+
+  const youtubeLink = document.createElement('a');
+  youtubeLink.classList.add('playlist_item__video');
+  youtubeLink.target = '_blank';
+  youtubeLink.href = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(title);
+  youtubeLink.innerHTML = '<img src="./icons/youtube.svg" alt="YouTube Logo">';
+  songInfoDiv.appendChild(youtubeLink);
+
+  const neteaseLink = document.createElement('a');
+  neteaseLink.className = 'playlist_item__netease';
+  neteaseLink.target = '_blank';
+  neteaseLink.href = 'https://music.163.com/#/search/m/?s=' + encodeURIComponent(title);
+  neteaseLink.innerHTML = '<img src="./icons/netease.svg" alt="NetEase Logo">';
+  songInfoDiv.appendChild(neteaseLink);
+
+  const spotifyLink = document.createElement('a');
+  spotifyLink.className = 'playlist_item__spotify';
+  spotifyLink.target = '_blank';
+  spotifyLink.href = 'https://open.spotify.com/search/' + encodeURIComponent(title);
+  spotifyLink.innerHTML = '<img src="./icons/spotify.svg" alt="Spotify Logo">';
+  songInfoDiv.appendChild(spotifyLink);
+}
+function playHitFM1() {
+  setPlaybackInfo("https://liveop.cctv.cn/hls/cctvn/playlist.m3u8", "HITFM 央视");
+}
+
+function playHitFM2() {
+  setPlaybackInfo("https://satellitepull.cnr.cn/live/wxhitfm/playlist.m3u8", "HITFM 广州");
+}
+
+function playHitFM3() {
+  setPlaybackInfo("https://satellitepull.cnr.cn/live/wxgjlxyy/playlist.m3u8", "HITFM 北京");
+}
+
+function playev() {
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc5953/hls.m3u8", "Evolution");
+}
+
+function playAT40() {
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4802/hls.m3u8", "AT40");
+}
+function playZ100() {
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc1469/hls.m3u8", "Z100");
+}
+function playic() {
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4418/hls.m3u8", "iHeartCountry");
+}
+function playip() {
+  setPlaybackInfo("https://playerservices.streamtheworld.com/api/livestream-redirect/ACIR31_S01AAC.m3u8", "iHeartRadio Pop");
+}
+function playcf() {
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc6951/hls.m3u8", "iHeartRadio Café");
+}
+function playhitn() {
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4422/hls.m3u8", "Hit Nation");
+}
+function playimf() {
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc5158/hls.m3u8", "iHeartRadio Music Festival");
+}
+function playrn() {
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4443/hls.m3u8", "Rock Nation");
+}
+function playkiis() {
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc185/hls.m3u8", "102.7 KIIS-FM");
+}
+ function playmxn() {
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4776/hls.m3u8", "Mix Nation");
+}
+function playalic() {
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc1269/hls.m3u8", "Alice 95.5");
+}
+function playbbc1() {
+  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d320000.norewind.m3u8", "BBC Radio 1");
+}
+function playbbc1x() {
+  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_1xtra/bbc_1xtra.isml/bbc_1xtra-audio%3d320000.norewind.m3u8", "BBC Radio 1Xtra");
+}
+function playbbc6() {
+  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d320000.norewind.m3u8", "BBC Radio 6 Music");
+}
+
+function setPlaybackInfo(url, title) {
+  document.body.classList.add('loading');
+  inputUrl.value = url;
+  appTitle.textContent = title;
+  document.title = title;
+  play(url);
+
+}
+
+var arrayRecord = [];
+
+function download(data, filename) {
+    console.log('downloading...');
+    var blob = new Blob([arrayConcat(data)], {
+        type: 'application/octet-stream'
+    });
+    saveAs(blob, filename);
+}
+
+function arrayConcat(inputArray) {
+    var totalLength = inputArray.reduce(function (prev, cur) {
+        return prev + cur.length
+    }, 0);
+    var result = new Uint8Array(totalLength);
+    var offset = 0;
+    inputArray.forEach(function (element) {
+        result.set(element, offset);
+        offset += element.length;
+    });
+    return result;
+}
+
+function saveAs(blob, filename) {
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    document.body.appendChild(a);
+    a.style = "display: none";
+    a.href = url;
+    a.download = filename;
+    a.click();
+    window.URL.revokeObjectURL(url);
+}
+
+var currentRecord = null; // 存储当前录制的数据对象
+var startTime = null; // 记录录制开始的时间
+var recordedTimeElement = document.getElementById('recordedTime');
+ var isRecording = false; // 录制状态标志
+
+function updateRecordedTime() {
+    if (startTime && currentRecord) {
+        var currentTime = new Date().getTime();
+        var elapsedTime = (currentTime - startTime) / 1000;  
+        var elapsedSeconds = parseInt(elapsedTime);  
+        recordedTimeElement.textContent = '已录制时长: ' + elapsedSeconds + '秒';  
+    }
+}
+
+function showRecordedTime() {
+    recordedTimeElement.style.display = 'block';  
+}
+
+function hideRecordedTime() {
+    recordedTimeElement.style.display = 'none';  
+}
+
+function stopRecord() {
+    if (currentRecord) {
+        download(currentRecord.data['audio'], "audio.mp3");
+        currentRecord.hls.destroy();
+        currentRecord = null;  
+        startTime = null;  
+        hideRecordedTime();  
+        isRecording = false;  
+    }
+    cplay();
+}
+
+function startRecord() {
+    if (isRecording) {
+         stopRecord();
+    } else {
+         if (currentRecord) {
+             currentRecord.hls.destroy();
+            currentRecord = null;
+        }
+
+        var dataStream = {
+            'audio': []
+        };
+        var hls = new Hls();
+        hls.loadSource(inputUrl.value);
+        hls.attachMedia(audio);
+        hls.on(Hls.Events.MANIFEST_PARSED, function () {
+            audio.play();
+            hls.on(Hls.Events.BUFFER_APPENDING, function (event, data) {
+                console.log("appending");
+                dataStream[data.type].push(data.data);
+            });
+        });
+
+        currentRecord = {
+            hls: hls,
+            data: dataStream
+        };
+        startTime = new Date().getTime();  
+        showRecordedTime();  
+
+         setInterval(updateRecordedTime, 1000);
+
+        audio.onended = function (e) {
+            stopRecord();
+        }
+
+        isRecording = true;  
+    }
+}
+
+function showPage(pageNumber) {
+    const pages = document.querySelectorAll('.page');
+    pages.forEach(page => page.classList.remove('visible'));
+
+    const targetPage = document.getElementById(`page${pageNumber}`);
+    if (targetPage) {
+        targetPage.classList.add('visible');
+    }
+
+    hideButtons();
+
+    if (pageNumber === 2) {
+        const arrow1Button = document.querySelector('.arrow1');
+        arrow1Button.style.display = 'block';
+    } else if (pageNumber === 1) {
+        const arrow2Button = document.querySelector('.arrow2');
+        arrow2Button.style.display = 'block';
+    }
+}
+const contentContainer = document.getElementById("content-container");
+const toggleButton = document.getElementById("toggleButton");
+
+ const isContentHidden = localStorage.getItem("isContentHidden") === "true";
+
+ contentContainer.style.display = isContentHidden ? "none" : "block";
+
+ toggleButton.addEventListener("click", () => {
+    if (contentContainer.style.display === "none" || contentContainer.style.display === "") {
+        contentContainer.style.display = "block";  
+        localStorage.setItem("isContentHidden", "false");  
+    } else {
+        contentContainer.style.display = "none";  
+        localStorage.setItem("isContentHidden", "true");  
+    }
+});
+const tavrContainer = document.getElementById("tavr-container");
+const toggButton = document.getElementById("toggButton");
+
+ const isConHidden = localStorage.getItem("isConHidden") === "true";
+
+ tavrContainer.style.display = isConHidden ? "none" : "block";
+
+ toggButton.addEventListener("click", () => {
+    if (tavrContainer.style.display === "none" || tavrContainer.style.display === "") {
+        tavrContainer.style.display = "block";  
+        localStorage.setItem("isConHidden", "false");  
+    } else {
+        tavrContainer.style.display = "none";  
+        localStorage.setItem("isConHidden", "true");  
+    }
+});
+
+const savedContainer = document.getElementById("savedC");
+
+ savedContainer.addEventListener("mouseenter", () => {
+  savedContainer.style.overflowY = "overlay";  
+});
+
+savedContainer.addEventListener("mouseleave", () => {
+  savedContainer.style.overflowY = "hidden";  
+});
+
+function hideButtons() {
+    const arrowButtons = document.querySelectorAll('.arrow1, .arrow2');
+    arrowButtons.forEach(button => button.style.display = 'none');
+}
+
+document.addEventListener("DOMContentLoaded", function() {  
+    const openMenuButton = document.getElementById("openMenuButton");
+    const menu = document.getElementById("menu");
+    const menuContent = document.getElementById("menuContent");
+    const addRowButton = document.getElementById("addRowButton");
+    const saveButton = document.getElementById("saveButton");
+    const savedContent = document.getElementById("savedContent");
+    const closeMenuButton = document.getElementById("closeMenuButton");  
+
+    openMenuButton.addEventListener("click", function () {
+        menu.classList.remove("hidden");
+    });
+
+    addRowButton.addEventListener("click", function () {
+        const row = createRow("", "", "");
+        menuContent.appendChild(row);
+    });
+
+    saveButton.addEventListener("click", function () {
+        const rows = menuContent.getElementsByClassName("menu-row");
+        const savedData = [];
+
+        for (let i = 0; i < rows.length; i++) {
+            const row = rows[i];
+            const linkInput = row.querySelector(".link-input");
+            const nameInput = row.querySelector(".name-input");
+            const imageInput = row.querySelector(".image-input");
+
+            const imageFile = imageInput.files[0];
+            const linkValue = linkInput.value;
+            const nameValue = nameInput.value;
+
+            if (linkValue && nameValue) {
+                if (imageFile) {
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        const imageBase64 = event.target.result;
+
+                         row.dataset.link = linkValue;
+                        row.dataset.title = nameValue;
+
+                        savedData.push({
+                            imageBase64: imageBase64,
+                            link: linkValue,
+                            name: nameValue,
+                        });
+                        saveDataToLocalStorage(savedData);
+                        updateSavedContent(savedData);
+                        resetMenu();  
+                    };
+
+                    reader.readAsDataURL(imageFile);
+                } else {
+                    const imgContainer = row.querySelector(".img-container");
+                    const img = imgContainer.querySelector("img");
+                    const imageBase64 = img ? img.src : "";
+
+                     row.dataset.link = linkValue;
+                    row.dataset.title = nameValue;
+
+                    savedData.push({
+                        imageBase64: imageBase64,
+                        link: linkValue,
+                        name: nameValue,
+                    });
+                }
+            }
+        }
+
+        saveDataToLocalStorage(savedData);
+        updateSavedContent(savedData);
+
+        const savedIds = savedData.map(data => data.id);
+        const prevSavedData = JSON.parse(localStorage.getItem("savedData")) || [];
+        const newData = prevSavedData.filter(data => savedIds.includes(data.id));
+        saveDataToLocalStorage(newData);
+    });
+
+   function createRow(imageBase64, linkValue, nameValue, isSaved = false) {
+        const row = document.createElement("div");
+        row.classList.add("menu-row");
+
+        const imgContainer = document.createElement("div");
+        imgContainer.classList.add("img-container");
+
+        const imageInput = document.createElement("input");
+        imageInput.type = "file";
+        imageInput.classList.add("image-input");
+
+        const linkLabel = document.createElement("label");
+        linkLabel.textContent = "链接：";
+
+        const linkInput = document.createElement("input");
+        linkInput.type = "text";
+        linkInput.classList.add("link-input");
+        linkInput.value = linkValue;
+
+        const nameLabel = document.createElement("label");
+        nameLabel.textContent = "名称：";
+
+        const nameInput = document.createElement("input");
+        nameInput.type = "text";
+        nameInput.classList.add("name-input");
+        nameInput.value = nameValue;
+
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "删除";
+        deleteButton.addEventListener("click", function () {
+            const id = parseInt(row.dataset.id);
+            const savedData = JSON.parse(localStorage.getItem("savedData")) || [];
+            const newData = savedData.filter(function (data) {
+                return data.id !== id;
+            });
+            localStorage.setItem("savedData", JSON.stringify(newData));
+             menuContent.removeChild(row);
+             updateSavedContent(newData);
+        });
+
+         let rowData = {
+            link: linkValue,
+            title: nameValue,
+        };
+
+        row.appendChild(imgContainer);  
+        row.appendChild(imageInput);
+        row.appendChild(linkLabel);
+        row.appendChild(linkInput);
+        row.appendChild(nameLabel);
+        row.appendChild(nameInput);
+        row.appendChild(deleteButton);
+
+         if (imageBase64 && isSaved) {
+            const image = document.createElement("img");
+            image.src = imageBase64;
+            image.classList.add("rimg");
+            imgContainer.appendChild(image);
+        }
+ 
+        return row;
+    }
+
+     function saveDataToLocalStorage(data) {
+        localStorage.setItem("savedData", JSON.stringify(data));
+    }
+
+function attachClickEvent(imgContainer, link, title) {
+    imgContainer.addEventListener("click", function () {
+        const url = link;
+        const fileExtension = url.split('.').pop().toLowerCase();
+
+        if (currentHls) {
+            currentHls.destroy();
+        }
+
+        if (fileExtension !== 'm3u8') {
+            const audio = document.getElementById("audio");
+            appTitle.textContent = title;
+            document.title = title;
+            audio.src = url;
+
+            try {
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        // 音频已成功播放
+                        navigator.mediaSession.metadata = new MediaMetadata({
+                            title: title,
+                            artist: ''
+                        });
+                    }).catch(error => {
+                        // 播放失败，执行其他操作，例如使用setPlaybackInfo
+                        setPlaybackInfo(url, title);
+                    });
+                }
+            } catch (error) {
+                // 播放失败，执行其他操作，例如使用setPlaybackInfo
+                setPlaybackInfo(url, title);
+            }
+        } else {
+            setPlaybackInfo(url, title);
+        }
+    });
+}
+
+
+     function updateSavedContent(data) {
+        savedContent.innerHTML = "";
+
+        data.sort((a, b) => a.id - b.id); // 根据序号排序
+
+        data.forEach(function (item) {
+            const imgContainer = document.createElement("div");
+            imgContainer.classList.add("img-container");
+
+            const image = document.createElement("img");
+            image.src = item.imageBase64;
+            image.classList.add("rimg");
+
+
+            const name = document.createElement("p");
+            name.textContent = item.name;
+
+            imgContainer.appendChild(image);
+            imgContainer.appendChild(name);
+
+            savedContent.appendChild(imgContainer);
+
+            // 使用闭包为每个图片容器添加点击事件
+            attachClickEvent(imgContainer, item.link, item.name);
+        });
+    }
+    // 恢复本地存储的数据
+    function restoreDataFromLocalStorage() {
+        const savedData = JSON.parse(localStorage.getItem("savedData")) || [];
+        updateSavedContent(savedData);
+
+        // 在菜单中恢复已保存的数据
+        savedData.forEach(function (data, index) {
+            const { imageBase64, link, name } = data;
+            const row = createRow(imageBase64, link, name, true);  
+            row.dataset.id = index + 1; // 设置序号
+            menuContent.appendChild(row);
+        });
+    }
+
+     restoreDataFromLocalStorage();
+
+     closeMenuButton.addEventListener("click", function () {
+        menu.classList.add("hidden");
+    });
+ 
+
+   const arrowButtons = document.querySelectorAll('.arrow1, .arrow2');
+
+    arrowButtons.forEach(button => {
+        button.style.display = 'none';
+
+        button.parentElement.addEventListener('mouseenter', function() {
+            button.style.display = 'block';
+        });
+
+        button.parentElement.addEventListener('mouseleave', function() {
+            button.style.display = 'none';
+        });
+    });
+
+    showPage(1);
+    hideButtons();
+  
+  if (localStorage.getItem("backgroundImage")) {
+    var backgroundImage = localStorage.getItem("backgroundImage");
+    document.body.style.backgroundImage = `url(${backgroundImage})`;
+  }
+
+  if (localStorage.getItem("themeMode") === "dark") {
+    document.body.classList.add("dark");
+  }
+
+  // 选择在线背景按钮点击事件
+  var selectOnlineBgBtn = document.getElementById("select-online-bg-btn");
+  selectOnlineBgBtn.addEventListener("click", function() {
+    var bgUrl = prompt("请输入在线背景图URL：");
+    if (bgUrl) {
+      document.body.style.backgroundImage = `url(${bgUrl})`;
+      localStorage.setItem("backgroundImage", bgUrl);
+    }
+
+  });
+
+  // 选择本地图片按钮点击事件
+  var selectLocalBgBtn = document.getElementById("select-local-bg-btn");
+  selectLocalBgBtn.addEventListener("click", function() {
+    var selectBgInput = document.createElement("input");
+    selectBgInput.type = "file";
+    selectBgInput.accept = "image/*";
+    selectBgInput.addEventListener("change", function(event) {
+      var file = event.target.files[0];
+      if (file) {
+        var reader = new FileReader();
+        reader.onload = function() {
+          var bgUrl = reader.result;
+          document.body.style.backgroundImage = `url(${bgUrl})`;
+          localStorage.setItem("backgroundImage", bgUrl);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+    selectBgInput.click();
+  });
+
+  var clearBgBtn = document.getElementById("clear-bg-btn");
+  clearBgBtn.addEventListener("click", function() {
+    document.body.style.backgroundImage = "";
+    localStorage.removeItem("backgroundImage");
+  });
+var bgPositionSelect = document.getElementById("bg-position-select");
+      if (localStorage.getItem("bgPosition")) {
+        var storedPosition = localStorage.getItem("bgPosition");
+        bgPositionSelect.value = storedPosition;
+        document.body.style.backgroundPosition = storedPosition;
+      }
+
+
+      bgPositionSelect.addEventListener("change", function() {
+        var selectedPosition = bgPositionSelect.value;
+        document.body.style.backgroundPosition = selectedPosition;
+        localStorage.setItem("bgPosition", selectedPosition);
+      });
+var blurSlider = document.getElementById("blur-slider");
+
+// 检查本地存储是否有背景模糊程度数据
+if (localStorage.getItem("blurLevel")) {
+  var storedBlurLevel = localStorage.getItem("blurLevel");
+  blurSlider.value = storedBlurLevel;
+  updateBackgroundBlur(storedBlurLevel);
+}
+
+blurSlider.addEventListener("input", function() {
+  var blurLevel = blurSlider.value;
+  updateBackgroundBlur(blurLevel);
+  localStorage.setItem("blurLevel", blurLevel);
+});
+
+function updateBackgroundBlur(blurLevel) {
+  var bgUrl = localStorage.getItem("backgroundImage");
+  if (bgUrl) {
+    document.body.style.backgroundImage = `url(${bgUrl})`;
+    document.body.style.backdropFilter = `blur(${blurLevel}px)`;
+  }
+}
+
+
+localStorage.removeItem("selectedOptionIndex");
+
+  var toggleMenuBtn = document.getElementById("toggle-menu-btn");
+  var submenuPopup = document.getElementById("submenu-popup");
+
+  toggleMenuBtn.addEventListener("click", function(e) {
+    e.stopPropagation();
+    submenuPopup.classList.toggle("show");
+  });
+  document.addEventListener("click", function() {
+    submenuPopup.classList.remove("show");
+  });
+  submenuPopup.addEventListener("click", function(e) {
+    e.stopPropagation();
+  });
+  
+  // 切换主题模式
+  var darkModeButton = document.getElementById("darkModeButton");    
+  darkModeButton.addEventListener("click", function() {
+    toggleDarkMode();
+      }
+      
+  );
+  function checkThemeMode() {
+    if (localStorage.getItem("themeMode") === "dark") {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }
+
+var isDarkMode = false;
+
+function checkThemeMode() {
+  var themeMode = localStorage.getItem("themeMode");
+  if (themeMode === "dark") {
+    document.body.classList.add("dark");
+    isDarkMode = true;
+    var storedColor = localStorage.getItem("triangleColor");
+    document.body.style.setProperty("--triangle-color", storedColor);
+    var controlElements = document.querySelectorAll(".control");
+    for (var i = 0; i < controlElements.length; i++) {
+      var controlElement = controlElements[i];
+      controlElement.style.filter = "invert(90%)";
+    }
+  }
+}
+
+function toggleDarkMode() {
+  var darkModeButton = document.getElementById("darkModeButton");
+
+  if (isDarkMode) {
+    document.body.classList.remove("dark");
+    localStorage.setItem("themeMode", "default");
+    darkModeButton.style.background = "url(./icons/light.svg)";
+    document.body.style.setProperty("--triangle-color", "black");
+    localStorage.setItem("triangleColor", "black");
+    var controlElements = document.querySelectorAll(".control");
+    for (var i = 0; i < controlElements.length; i++) {
+      var controlElement = controlElements[i];
+      controlElement.style.filter = "none";
+    }
+    isDarkMode = false;
+  } else {
+    document.body.classList.add("dark");
+    localStorage.setItem("themeMode", "dark");
+    darkModeButton.style.background = "url(./icons/dark.svg)";
+    document.body.style.setProperty("--triangle-color", "white");
+    localStorage.setItem("triangleColor", "#E5E5E5");
+    var controlElements = document.querySelectorAll(".control");
+    for (var i = 0; i < controlElements.length; i++) {
+      var controlElement = controlElements[i];
+      controlElement.style.filter = "invert(90%)";
+    }
+    isDarkMode = true;
+  }
+  
+  darkModeButton.style.backgroundSize = "100%"; 
+}
+  checkThemeMode();
+});
+
+           function goToWebpage() {
+  const url = "https://space.bilibili.com/1090328045/search/video?keyword=ost"
+
+ window.location.href = url;
+}
+          function goToWebpage1() {
+  const url = "https://music.163.com/#/playlist?id=6705531149";
+    window.location.href = url;
+}
+          function goToWebpage2() {
+  const url = "https://www.acfun.cn/u/633603";
+    window.location.href = url;
+}
+          function goToWebpage3() {
+  const url = "https://music.163.com/#/playlist?id=6659816005";
+    window.location.href = url;
+}
+	     function updateProgramLink() {
+  const selectedDate = document.getElementById("datePicker").value;
+
+  // construct the new URL with the selected date
+  const url = `https://www.radio.cn/pc-portal/sanji/passProgram.html?channel_name=662&program_name=undefined&date_checked=${selectedDate}`;
+
+    window.location.href = url;
+}
+      function gotoURL() {
+ 
+    const url = "https://music.ghxi.com/";
+    window.open(url, "_blank");
+}
+const divElementTop = document.querySelector('.container');
+const divElementLeft = document.querySelector('.item-left');
+const divElementRight = document.querySelector('.item-right');
+const divElementWeb = document.querySelector('.app');
+const colorInput1 = document.getElementById('bg-color');
+const opacityInput1 = document.getElementById('opacity');
+const radiusInput1 = document.getElementById('corner-radius');
+const colorInput2 = document.getElementById('bg-color1');
+const opacityInput2 = document.getElementById('opacity1');
+const radiusInput2 = document.getElementById('corner-radius1');
+const colorInput3 = document.getElementById('bg-color2');
+const opacityInput3 = document.getElementById('opacity2');
+const radiusInput3 = document.getElementById('corner-radius2');
+const colorInput4 = document.getElementById('bg-color3');
+const opacityInput4 = document.getElementById('opacity3');
+// 恢复存储的设置
+if (localStorage.getItem('bg-color')) {
+  colorInput1.value = localStorage.getItem('bg-color');
+  divElementLeft.style.backgroundColor = `rgba(${hexToRgb(colorInput1.value)}, ${opacityInput1.value})`;
+}
+
+if (localStorage.getItem('corner-radius')) {
+  radiusInput1.value = localStorage.getItem('corner-radius');
+  divElementLeft.style.borderRadius = `${radiusInput1.value}px`;
+}
+
+if (localStorage.getItem('opacity')) {
+  opacityInput1.value = localStorage.getItem('opacity');
+  divElementLeft.style.backgroundColor = `rgba(${hexToRgb(colorInput1.value)}, ${opacityInput1.value})`;
+}
+
+if (localStorage.getItem('bg-color1')) {
+  colorInput2.value = localStorage.getItem('bg-color1');
+  divElementRight.style.backgroundColor = `rgba(${hexToRgb(colorInput2.value)}, ${opacityInput2.value})`;
+}
+
+if (localStorage.getItem('corner-radius1')) {
+  radiusInput2.value = localStorage.getItem('corner-radius1');
+  divElementRight.style.borderRadius = `${radiusInput2.value}px`;
+}
+
+if (localStorage.getItem('opacity1')) {
+  opacityInput2.value = localStorage.getItem('opacity1');
+  divElementRight.style.backgroundColor = `rgba(${hexToRgb(colorInput2.value)}, ${opacityInput2.value})`;
+}
+if (localStorage.getItem('bg-color2')) {
+  colorInput3.value = localStorage.getItem('bg-color2');
+  divElementTop.style.backgroundColor = `rgba(${hexToRgb(colorInput3.value)}, ${opacityInput3.value})`;
+}
+
+if (localStorage.getItem('corner-radius2')) {
+  radiusInput3.value = localStorage.getItem('corner-radius2');
+  divElementTop.style.borderRadius = `${radiusInput3.value}px`;
+}
+
+if (localStorage.getItem('opacity2')) {
+  opacityInput3.value = localStorage.getItem('opacity2');
+  divElementTop.style.backgroundColor = `rgba(${hexToRgb(colorInput3.value)}, ${opacityInput3.value})`;
+}
+if (localStorage.getItem('bg-color3')) {
+  colorInput4.value = localStorage.getItem('bg-color3');
+  divElementWeb.style.backgroundColor = `rgba(${hexToRgb(colorInput4.value)}, ${opacityInput4.value})`;
+}
+
+if (localStorage.getItem('opacity3')) {
+  opacityInput4.value = localStorage.getItem('opacity3');
+  divElementWeb.style.backgroundColor = `rgba(${hexToRgb(colorInput4.value)}, ${opacityInput4.value})`;
+}
+// 保存设置到本地存储
+colorInput1.addEventListener('input', function() {
+  const opacity = opacityInput1.value;
+  divElementLeft.style.backgroundColor = `rgba(${hexToRgb(colorInput1.value)}, ${opacity})`;
+  localStorage.setItem('bg-color', colorInput1.value);
+});
+
+radiusInput1.addEventListener('input', function() {
+  divElementLeft.style.borderRadius = `${radiusInput1.value}px`;
+  localStorage.setItem('corner-radius', radiusInput1.value);
+});
+
+opacityInput1.addEventListener('input', function() {
+  const opacity = opacityInput1.value;
+  divElementLeft.style.backgroundColor = `rgba(${hexToRgb(colorInput1.value)}, ${opacity})`;
+  localStorage.setItem('opacity', opacity);
+});
+
+colorInput2.addEventListener('input', function() {
+  const opacity1 = opacityInput2.value;
+  divElementRight.style.backgroundColor = `rgba(${hexToRgb(colorInput2.value)}, ${opacity1})`;
+  localStorage.setItem('bg-color1', colorInput2.value);
+});
+
+radiusInput2.addEventListener('input', function() {
+  divElementRight.style.borderRadius = `${radiusInput2.value}px`;
+  localStorage.setItem('corner-radius1', radiusInput2.value);
+});
+
+opacityInput2.addEventListener('input', function() {
+  const opacity1 = opacityInput2.value;
+  divElementRight.style.backgroundColor = `rgba(${hexToRgb(colorInput2.value)}, ${opacity1})`;
+  localStorage.setItem('opacity1', opacity1);
+});
+colorInput3.addEventListener('input', function() {
+  const opacity2 = opacityInput3.value;
+  divElementTop.style.backgroundColor = `rgba(${hexToRgb(colorInput3.value)}, ${opacity2})`;
+  localStorage.setItem('bg-color2', colorInput3.value);
+});
+
+radiusInput3.addEventListener('input', function() {
+  divElementTop.style.borderRadius = `${radiusInput3.value}px`;
+  localStorage.setItem('corner-radius2', radiusInput3.value);
+});
+
+opacityInput3.addEventListener('input', function() {
+  const opacity2 = opacityInput3.value;
+  divElementTop.style.backgroundColor = `rgba(${hexToRgb(colorInput3.value)}, ${opacity2})`;
+  localStorage.setItem('opacity2', opacity2);
+});
+colorInput4.addEventListener('input', function() {
+  const opacity3 = opacityInput4.value;
+  divElementWeb.style.backgroundColor = `rgba(${hexToRgb(colorInput4.value)}, ${opacity3})`;
+  localStorage.setItem('bg-color3', colorInput4.value);
+});
+
+opacityInput4.addEventListener('input', function() {
+  const opacity3 = opacityInput4.value;
+  divElementWeb.style.backgroundColor = `rgba(${hexToRgb(colorInput4.value)}, ${opacity3})`;
+  localStorage.setItem('opacity3', opacity3);
+});
+// 辅助函数：将十六进制颜色值转换为RGB颜色值
+function hexToRgb(hex) {
+  hex = hex.replace('#', '');
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+  return `${r}, ${g}, ${b}`;
+}
+function backupLocalStorage() {
+      var backgroundImage = localStorage.getItem("backgroundImage");
+      var bgPosition = localStorage.getItem("bgPosition");
+      var themeMode = localStorage.getItem("themeMode");
+      var bgColor = localStorage.getItem("bg-color");
+      var cornerRadius = localStorage.getItem("corner-radius");
+      var opacity = localStorage.getItem("opacity");
+      var bgColor1 = localStorage.getItem("bg-color1");
+      var cornerRadius1 = localStorage.getItem("corner-radius1");
+      var opacity1 = localStorage.getItem("opacity1");
+      var bgColor2 = localStorage.getItem("bg-color2");
+      var cornerRadius2 = localStorage.getItem("corner-radius2");
+      var opacity2 = localStorage.getItem("opacity2");
+      var bgColor3 = localStorage.getItem("bg-color3");
+      var opacity3 = localStorage.getItem("opacity3");
+      var blurLevel = localStorage.getItem("blurLevel");
+      var backupData = {
+        backgroundImage: backgroundImage,
+        bgPosition: bgPosition,
+        themeMode: themeMode,
+        bgColor: bgColor,
+        cornerRadius: cornerRadius,
+        opacity: opacity,
+        bgColor1: bgColor1,
+        cornerRadius1: cornerRadius1,
+        opacity1: opacity1,
+        bgColor2: bgColor2,
+        cornerRadius2: cornerRadius2,
+        opacity2: opacity2,
+        bgColor3: bgColor3,
+        opacity3: opacity3,
+        blurLevel: blurLevel
+      };
+       var savedData = JSON.parse(localStorage.getItem("savedData")) || [];
+      backupData.savedData = savedData;
+      var backupString = JSON.stringify(backupData);
+
+      var downloadLink = document.createElement("a");
+      downloadLink.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(backupString));
+      downloadLink.setAttribute("download", "localStorage_backup.json");
+
+      downloadLink.click();
+    }
+ var fileInput = document.getElementById("fileInput");
+    var restoreButton = document.getElementById("restoreButton");
+    var backupData;
+
+    function selectBackupFile() {
+      fileInput.click();
+    }
+
+    fileInput.addEventListener("change", function(event) {
+      var file = event.target.files[0];
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        backupData = JSON.parse(e.target.result);
+        restoreButton.disabled = false;
+        alert("已成功读取备份文件！");
+      };
+
+      reader.readAsText(file);
+    });
+
+    function restoreLocalStorage() {
+      // 恢复localStorage数据
+      localStorage.setItem("backgroundImage", backupData.backgroundImage);
+      localStorage.setItem("bgPosition", backupData.bgPosition);
+      localStorage.setItem("themeMode", backupData.themeMode);
+      localStorage.setItem("bg-color", backupData.bgColor);
+      localStorage.setItem("corner-radius", backupData.cornerRadius);
+      localStorage.setItem("opacity", backupData.opacity);
+      localStorage.setItem("bg-color1", backupData.bgColor1);
+      localStorage.setItem("corner-radius1", backupData.cornerRadius1);
+      localStorage.setItem("opacity1", backupData.opacity1);
+      localStorage.setItem("bg-color2", backupData.bgColor2);
+      localStorage.setItem("corner-radius2", backupData.cornerRadius2);
+      localStorage.setItem("opacity2", backupData.opacity2);
+      localStorage.setItem("bg-color3", backupData.bgColor3);
+      localStorage.setItem("opacity3", backupData.opacity3);
+      localStorage.setItem("blurLevel", backupData.blurLevel);
+      var savedData = backupData.savedData || [];
+      localStorage.setItem("savedData", JSON.stringify(savedData));
+      alert("已成功恢复备份数据！");// 刷新页面
+      location.reload();
+    }
+    document.getElementById("next-page-btn").addEventListener("click", function() {
+    document.querySelector(".page1").style.display = "none";
+    document.querySelector(".page2").style.display = "block";
+    document.querySelector(".about").style.display = "none";
+});
+
+document.getElementById("prev-page-btn").addEventListener("click", function() {
+    document.querySelector(".page2").style.display = "none";
+    document.querySelector(".page1").style.display = "block";
+    document.querySelector(".about").style.display = "none";
+});
+
+document.getElementById("about-btn").addEventListener("click", function() {
+    document.querySelector(".page1").style.display = "none";
+    document.querySelector(".page2").style.display = "none";
+    document.querySelector(".about").style.display = "block";
+});
+
+document.querySelector(".about").addEventListener("click", function() {
+    document.querySelector(".about").style.display = "none";
+    if (document.querySelector(".page1").style.display === "none") {
+        document.querySelector(".page2").style.display = "block";
+    } else {
+        document.querySelector(".page1").style.display = "block";
+    }
+});
+ function getCurrentProgram() {
+      const programSchedule = {
+        MondayToFriday: [
+          { start: "00:00:00", end: "06:00:00", name: "Music Flow 音乐流" },
+          { start: "06:00:00", end: "07:00:00", name: "Morning Call 音乐叫早" },
+          { start: "07:00:00", end: "10:00:00", name: "Morning Hits 阳光音乐早餐" },
+          { start: "10:00:00", end: "13:00:00", name: "At Work Network 工作随身听" },
+          { start: "13:00:00", end: "16:00:00", name: "Lazy Afternoon 慵懒下午茶" },
+          { start: "16:00:00", end: "19:00:00", name: "Big Drive Home 开车现场秀" },
+          { start: "19:00:00", end: "22:00:00", name: "New Music Express 新音乐速递" },
+          { start: "22:00:00", end: "23:59:59", name: "Hit FM Dance 电音" }
+        ],
+        Saturday: [
+          { start: "00:00:00", end: "08:00:00", name: "Music Flow 音乐流" },
+          { start: "08:00:00", end: "12:00:00", name: "Weekend Morning Show 周末早间音乐" },
+          { start: "12:00:00", end: "14:00:00", name: "Hit the Road 在路上" },
+          { start: "14:00:00", end: "16:00:00", name: "Soul Make 心灵制造" },
+          { start: "16:00:00", end: "18:00:00", name: "Rock DJ 摇滚DJ" },
+          { start: "18:00:00", end: "20:00:00", name: "Top 20 Countdown 顶尖20排行榜" },
+          { start: "20:00:00", end: "22:00:00", name: "CTDM Chart 中国电子音乐巅峰榜" },
+          { start: "22:00:00", end: "23:59:59", name: "Hit FM Dance 电音" }
+        ],
+        Sunday: [
+          { start: "00:00:00", end: "08:00:00", name: "Music Flow 音乐流" },
+          { start: "08:00:00", end: "12:00:00", name: "Weekend Morning Show 周末早间音乐" },
+          { start: "12:00:00", end: "14:00:00", name: "Rock DJ 摇滚DJ" },
+          { start: "14:00:00", end: "16:00:00", name: "CTDM Chart 中国电子音乐巅峰榜" },
+          { start: "16:00:00", end: "18:00:00", name: "Hit FM OST 电影原声坊" },
+          { start: "18:00:00", end: "20:00:00", name: "Top 20 Countdown 顶尖20排行榜" },
+          { start: "20:00:00", end: "22:00:00", name: "Hit FM Dance Carta & Co. 电音-卡塔" },
+          { start: "22:00:00", end: "23:59:59", name: "Hit FM Dance 电音" }
+        ]
+      };
+
+      const currentTime = new Date();
+      const currentDay = currentTime.getDay(); // 0: Sunday, 1: Monday, ..., 6: Saturday
+      const currentTimeString = currentTime.toTimeString().slice(0, 8);
+
+      let currentSchedule;
+      if (currentDay === 0) { // Sunday
+        currentSchedule = programSchedule.Sunday;
+      } else if (currentDay === 6) { // Saturday
+        currentSchedule = programSchedule.Saturday;
+      } else { // Monday to Friday
+        currentSchedule = programSchedule.MondayToFriday;
+      }
+
+      for (const program of currentSchedule) {
+        if (currentTimeString >= program.start && currentTimeString <= program.end) {
+          return program.name;
+        }
+      }
+
+      return "节目未知";
+    }
+
+    function updateProgramName() {
+      const programNameElement = document.getElementById("programName");
+      const currentProgram = getCurrentProgram();
+      programNameElement.innerHTML = `ON AIR NOW <br> ${currentProgram}`;
+    }
+    updateProgramName();
+    setInterval(updateProgramName, 60000);
