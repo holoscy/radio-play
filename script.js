@@ -1011,6 +1011,7 @@ function attachClickEvent(imgContainer, link, title) {
 
         if (fileExtension !== 'm3u8') {
             const audio = document.getElementById("audio");
+	    document.body.classList.add('loading');
             appTitle.textContent = title;
             document.title = title;
             audio.src = url;
