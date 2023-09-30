@@ -129,7 +129,7 @@
         <label for="bg-color3">网页背景色</label><input type="color" id="bg-color3" value="#ffffff"><br>
         <label for="opacity3">网页透明度</label><input type="range" id="opacity3" min="0" max="1" step="0.01" value="1">
         <button id="toggleButton">切换隐藏外部链接按钮</button>
-        <button id="toggButton">切换隐藏TAVR</button>
+        <button id="toggButton">切换隐藏TAVR</button><hr>
         <button id="next-page-btn">下一页</button>
         <button id="about-btn">关于</button>
      </div>  
@@ -157,7 +157,8 @@
     </div>
      <div class="page about">
 <a href="https://greasyfork.org/zh-CN/scripts/470185" >云听网页节目HD下载</a><br>
-     <p class="t">网易云音乐网页建议搭配脚本使用,<br>网易云仅提供PC端快捷搜索  <br>所有自定义数据使用<br>localStorage本地存储,有上限<br></p><hr><p class="t">电台链接由于浏览器安全限制，不能<br>在https下播放http的m3u8链接，<br>解决方法1.把http改为https<br>(部分链接只支持http) 或者<br>2. 对当前网站设置允许不安全内容</p><hr>
+     <p class="t">网易云音乐网页建议搭配脚本使用,<br>网易云仅提供PC端快捷搜索  <br>自定义数据及单个添加的电台使用<br>localStorage本地存储,有上限<br>解析m3u添加的电台使用<br>indexedDB本地存储，无上限</p><hr><p class="t">电台链接由于浏览器安全限制，'不能'<br>在https下播放http的m3u8链接，<br>   解决方法1.把http改为https<br>(部分链接只支持http) 或者<br>2. 对当前网站设置允许不安全内容</p><hr><p class="t">对于无法解决的302跳转解析的<br>m3u8链接会转为使用浏览器打开<br>手机浏览器应该可以直接播放，电脑上<br>给浏览器安装hls播放扩展插件即可</p><hr><p class="t">m3u解析格式: #EXTINF:-1  tvg-logo<br>="图片链接" group-title<br>="分组名",电台名 
+电台链接<br>比如<a href="https://raw.githubusercontent.com/goolguy007/radioer/main/TVradio" > '这个链接' </a>中的格式<br></p><hr> 
 <a href="https://greasyfork.org/zh-CN/scripts/406054" >1.显示完整歌单</a><br>
 <a href="https://greasyfork.org/zh-CN/scripts/438148" >2.lx-music 辅助脚本
 </a><br>
@@ -205,11 +206,18 @@
         <div id="menuContent">
             <!-- 这里是菜单内容 -->
         </div>
+        <div id="menuContent2">
+            <!-- 这里是菜单内容 -->
+        </div>
     </div>
-    <button id="addRowButton">添加</button>
-    <button id="saveButton">保存</button>
-    <button id="closeMenuButton">关闭</button>
-</div>
+    <hr>
+   <label for="m3uTextarea"> M3U内容:</label>
+    <input id="m3uTextarea" rows="10" placeholder="Paste M3U content here"></input>
+    <button onclick="parseM3UFromTextarea()">解析m3u</button>
+     <button id="addRowButton">添加单个</button>
+    <button id="saveButton">保存单个</button>
+    <button id="closeMenuButton">关闭界面</button>
+  </div>
  <div id="savedC">
  <div id="savedContent">
     <!-- 这里是保存的图片和电台名称 -->
