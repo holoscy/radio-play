@@ -527,10 +527,8 @@ function play(url) {
 
     hls.loadSource(url);
     hls.attachMedia(audio);
-
-    hls.on(Hls.Events.FRAG_PARSING_METADATA, function (event, data) {
-      if (data) {
-        // Check if the data contains "url="
+     hls.on(Hls.Events.FRAG_PARSING_METADATA, function (event, data) {
+          
         if (data.frag.title.includes("url=")) {
           // Extract title and artist information from the data string
           const titleMatch = data.frag.title.match(/title="([^"]*)"/);
@@ -568,16 +566,13 @@ function play(url) {
             artist: '',  
           });
         }
-      }
+       
     });
     hls.on(Hls.Events.MANIFEST_PARSED, function () {
       audio.play();
     });
-  } else if (audio.canPlayType('application/vnd.apple.mpegurl')) {
-    audio.src = url;
-    audio.addEventListener('loadedmetadata', function () {
-      audio.play();
-    });
+  } else {
+         alert('只有m3u8能触发播放，其他格式需要在自定义电台创建按钮播放')
   }
 }
 
@@ -854,16 +849,264 @@ function hideButtons() {
     const arrowButtons = document.querySelectorAll('.arrow1, .arrow2');
     arrowButtons.forEach(button => button.style.display = 'none');
 }
-
+ 
 document.addEventListener("DOMContentLoaded", function() {  
     const openMenuButton = document.getElementById("openMenuButton");
     const menu = document.getElementById("menu");
     const menuContent = document.getElementById("menuContent");
+    const menuContent2 = document.getElementById("menuContent2");
     const addRowButton = document.getElementById("addRowButton");
     const saveButton = document.getElementById("saveButton");
     const savedContent = document.getElementById("savedContent");
     const closeMenuButton = document.getElementById("closeMenuButton");  
+    
+   
+let db;
+const dbName = 'Mradio';
+const dbVersion = 1;
 
+const request = indexedDB.open(dbName, dbVersion);
+
+request.onerror = function (event) {
+    console.error('IndexedDB error:', event.target.errorCode);
+};
+
+request.onupgradeneeded = function (event) {
+    db = event.target.result;  // Set db in the upgrade needed event
+    db.createObjectStore('m3uContent', { keyPath: 'id' });
+};
+
+request.onsuccess = function (event) {
+    db = event.target.result;  // Set db in the success event
+    console.log('IndexedDB opened successfully');
+
+    // Load from IndexedDB on page load
+    displayStoredContent();
+    
+};
+
+
+ const parseButton = document.querySelector('#menu button[onclick="parseM3UFromTextarea()"]');
+ parseButton.addEventListener('click', parseM3UFromTextarea);
+
+ function parseM3UFromTextarea(){
+    const m3uContent = document.getElementById('m3uTextarea').value;
+    const parsedData = parseM3U(m3uContent);
+    updateMenuContent(parsedData);
+    
+}
+ 
+function storeGroupContent(groupName, groupData) {
+    const transaction = db.transaction(['m3uContent'], 'readwrite');
+    const objectStore = transaction.objectStore('m3uContent');
+
+    // Convert the data to a JSON string before storing
+    const dataToStore = JSON.stringify(groupData);
+
+    const addRequest = objectStore.put({ id: groupName, data: dataToStore });
+
+    addRequest.onsuccess = function (event) {
+        console.log(`Group '${groupName}' data added to IndexedDB successfully.`);
+    };
+
+    addRequest.onerror = function (event) {
+        console.error(`Error adding group '${groupName}' data to IndexedDB:`, event.target.errorCode);
+    };
+}
+
+
+  
+function clearGroupContent(groupName,groupData) {
+    const transaction = db.transaction(['m3uContent'], 'readwrite');
+    const objectStore = transaction.objectStore('m3uContent');
+
+    const deleteRequest = objectStore.delete(groupName,groupData);
+
+    deleteRequest.onsuccess = function (event) {
+        console.log(`Data for group '${groupName}' cleared successfully.`);
+        displayStoredContent();
+    };
+
+    deleteRequest.onerror = function (event) {
+        console.error(`Error clearing data for group '${groupName}':`, event.target.errorCode);
+    };
+}
+
+function displayStoredContent() {
+    const transaction = db.transaction(['m3uContent'], 'readonly');
+    const objectStore = transaction.objectStore('m3uContent');
+    const menuContent2 = document.getElementById('menuContent2');
+    menuContent2.innerHTML = '';
+    objectStore.openCursor().onsuccess = function (cursorEvent) {
+        const cursor = cursorEvent.target.result;
+
+        if (cursor) {
+            const groupName = cursor.value.id; 
+
+             const getRequest = objectStore.get(groupName);
+
+            getRequest.onsuccess = function (event) {
+                const storedData = event.target.result;
+
+                console.log('Stored Data:', storedData);
+
+                if (typeof storedData.data === 'string') {
+                    try {
+                        const groupData = JSON.parse(storedData.data);
+
+                        // Create containers for each group
+                        const groupContainer = document.createElement('div');
+                        groupContainer.className = 'groupContainer';
+
+                        groupData.forEach(({ tvgLogo, name, link }) => {
+                            const imgContainer = document.createElement('div');
+                            imgContainer.className = 'img-container';
+
+                            const image = document.createElement('img');
+                            image.src = tvgLogo;
+                            image.classList.add('rimg');
+
+                            const nameElement = document.createElement('p');
+                            nameElement.textContent = name;
+                            nameElement.classList.add('t');
+
+                            imgContainer.appendChild(image);
+                            imgContainer.appendChild(nameElement);
+
+                            imgContainer.onclick = () => playLinkContent(name, link);
+
+                            groupContainer.appendChild(imgContainer);
+                        });
+
+                        menuContent2.appendChild(groupContainer);
+                        const clearButton = document.createElement('button');
+                        clearButton.textContent = '清除数据';
+                        clearButton.style.border = '2px solid #3498db';  
+                        clearButton.style.backgroundColor = '#3498db';  
+                        clearButton.style.color = '#ffffff';
+                        clearButton.style.borderRadius = '10px';
+                        clearButton.style.width = '70px';
+                        clearButton.onclick = () => clearGroupContent(groupName,groupData);
+                        groupContainer.appendChild(clearButton);
+                        cursor.continue();
+                    } catch (error) {
+                        console.error('Error parsing JSON:', error);
+                        cursor.continue();
+                    }
+                } else {
+                    
+                    cursor.continue();
+                }
+            };
+
+            getRequest.onerror = function (event) {
+                console.error(`Error getting group '${groupName}' data from IndexedDB:`, event.target.errorCode);
+                cursor.continue();
+            };
+        } else {
+            
+        }
+    };
+}
+
+
+
+function updateMenuContent(data) {
+    const menuContent2 = document.getElementById('menuContent2');
+
+    Object.keys(data).forEach(groupName => {
+        const groupContainer = document.createElement('div');
+        groupContainer.className = 'groupContainer';
+
+        const groupButton = document.createElement('a');
+        groupButton.href = '#';
+        groupButton.className = 'groupButton';
+        groupButton.textContent = groupName;
+        groupButton.onclick = () => showGroupContent(groupName, data[groupName]);
+        groupContainer.appendChild(groupButton);
+
+        data[groupName].forEach(({ tvgLogo, name, link }) => {
+            const imgContainer = document.createElement('div');
+            imgContainer.className = 'img-container';
+
+            const image = document.createElement('img');
+            image.src = tvgLogo;
+            image.classList.add('rimg');
+
+            const nameElement = document.createElement('p');
+            nameElement.textContent = name;
+            nameElement.classList.add('t');
+
+            imgContainer.appendChild(image);
+            imgContainer.appendChild(nameElement);
+
+            imgContainer.onclick = () => playLinkContent(name, link);
+
+            groupContainer.appendChild(imgContainer);
+        });
+
+ 
+        menuContent2.appendChild(groupContainer);
+    const groupData = data[groupName];
+    const storeButton = document.createElement('button');
+    storeButton.textContent = '存储数据';
+    storeButton.style.border = '2px solid #3498db';  
+    storeButton.style.backgroundColor = '#3498db';  
+    storeButton.style.color = '#ffffff';
+    storeButton.style.borderRadius = '10px';
+    storeButton.style.width = '70px';
+    storeButton.onclick = () => storeGroupContent(groupName,groupData);
+    groupContainer.appendChild(storeButton);
+
+     
+    });
+}
+ 
+function parseM3U(m3uData) {
+    const lines = m3uData.split('#EXTINF');
+
+    let groups = {};
+    let currentGroup = '';
+
+    lines.forEach(line => {
+        if (line.trim() !== '') {
+            const groupNameMatch = /group-title="([^"]+)"/.exec(line);
+            const groupName = groupNameMatch ? groupNameMatch[1] : 'Other';
+
+            if (!groups[groupName]) {
+                groups[groupName] = [];
+            }
+
+            const tvgLogoMatch = /tvg-logo="([^"]+)"/.exec(line);
+            const tvgLogo = tvgLogoMatch ? tvgLogoMatch[1] : '';
+            const commaIndex = line.indexOf(',');
+            const nameAndLinkPart = line.substring(commaIndex + 1).trim();
+            const spaceIndex = nameAndLinkPart.indexOf(' ');
+            
+            let name, link;
+            const urlRegex = /(http[s]?:\/\/\S+|rtmp:\/\/\S+)/;
+            const urlMatch = urlRegex.exec(nameAndLinkPart);
+
+            if (urlMatch) {
+                 name = nameAndLinkPart.substring(0, urlMatch.index).trim();
+                link = urlMatch[0];
+            } else {
+                 name = nameAndLinkPart;
+                link = '';  
+            }
+
+            groups[groupName].push({ tvgLogo, name, link });
+            currentGroup = groupName;
+        }
+    });
+    return groups;
+}
+
+
+function playLinkContent(name,link) {
+     const title = name;
+     playmore(link, title);
+  }
     openMenuButton.addEventListener("click", function () {
         menu.classList.remove("hidden");
     });
@@ -999,19 +1242,19 @@ document.addEventListener("DOMContentLoaded", function() {
      function saveDataToLocalStorage(data) {
         localStorage.setItem("savedData", JSON.stringify(data));
     }
-
-function attachClickEvent(imgContainer, link, title) {
-    imgContainer.addEventListener("click", function () {
+    function playmore(link, title){ 
         const url = link;
         const fileExtension = url.split('.').pop().toLowerCase();
-
+        desiredOption.selected = true;
         if (currentHls) {
             currentHls.destroy();
         }
-
+         if (currentRequest !== null) {
+    clearTimeout(currentRequest);
+  }
         if (fileExtension !== 'm3u8') {
             const audio = document.getElementById("audio");
-	    document.body.classList.add('loading');
+            document.body.classList.add('loading');
             appTitle.textContent = title;
             document.title = title;
             audio.src = url;
@@ -1025,18 +1268,22 @@ function attachClickEvent(imgContainer, link, title) {
                             title: title,
                             artist: ''
                         });
-                    }).catch(error => {
-                        // 播放失败，执行其他操作，例如使用setPlaybackInfo
-                        setPlaybackInfo(url, title);
+                    }).catch(error => {//302跳转非直链m3u8无法使用hls.js播放
+                    alert('不支持的链接，即将跳转使用浏览器播放');
+                location.href = url;
                     });
                 }
             } catch (error) {
-                // 播放失败，执行其他操作，例如使用setPlaybackInfo
-                setPlaybackInfo(url, title);
+                alert('不支持的链接，即将跳转使用浏览器播放');
+                location.href = url;
             }
         } else {
-            setPlaybackInfo(url, title);
-        }
+       setPlaybackInfo(url, title);
+         }
+   }
+    function attachClickEvent(imgContainer, link, title) {
+    imgContainer.addEventListener("click", function () {
+     playmore(link, title);
     });
 }
 
@@ -1269,6 +1516,8 @@ function toggleDarkMode() {
 }
   checkThemeMode();
 });
+//dom end
+
 
            function goToWebpage() {
   const url = "https://space.bilibili.com/1090328045/search/video?keyword=ost"
@@ -1550,7 +1799,7 @@ document.querySelector(".about").addEventListener("click", function() {
     }
 });
  function getCurrentProgram() {
-      const programSchedule = {
+      const programSchedule = {//UTC+8 
         MondayToFriday: [
           { start: "00:00:00", end: "06:00:00", name: "Music Flow 音乐流" },
           { start: "06:00:00", end: "07:00:00", name: "Morning Call 音乐叫早" },
