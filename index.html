@@ -16,7 +16,10 @@
     <div class="player" >
         <button class="control mute-button" style="margin-left:auto;margin-right:5px"></button>
         <input type="range" name="volume-level" class="control volume-level" min="0" max="100" step="1" value="100" style="margin-left:5px;margin-right:5px;max-width: 250px">
-        <button class="control play-button" style="margin-left:5px;margin-right:auto"></button>
+        <button class="control play-button" style="margin-left:5px;margin-right:2px"></button>
+        <button id="showButton" class="control" style="margin-left:2px;margin-right:auto"><?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" height="25px" viewBox="0 0 26 26" style="transform: translateY(2px);"><defs><style>.cls-1 {fill: none;stroke: #000;stroke-linecap: round;stroke-linejoin: round;
+stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" height="16"/><polygon class="cls-1" points="11 6 11 12 15 9 11 6"/><circle class="cls-1" cx="7" cy="23" r="2"/><line class="cls-1" x1="1" y1="23" x2="5" y2="23"/><line class="cls-1" x1="12" y1="23" x2="25" y2="23"/></svg></button>
     </div>
  <div class="container">
   <div class="ite item-left">
@@ -48,8 +51,7 @@
 </div>
 <button onclick="cplay()" style="margin-left:0;margin-right:auto">
     <a href="#" class="playBut">
-        <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
-        <svg version="1.1"
+         <svg version="1.1"
              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
              x="0px" y="0px" width="40px" height="40px" viewBox="0 0 213.7 213.7" enable-background="new 0 0 213.7 213.7"
              xml:space="preserve">
@@ -157,7 +159,7 @@
     </div>
      <div class="page about">
 <a href="https://greasyfork.org/zh-CN/scripts/470185" >云听网页节目HD下载</a><br>
-     <p class="t">网易云音乐网页建议搭配脚本使用,<br>网易云仅提供PC端快捷搜索  <br>自定义数据及单个添加的电台使用<br>localStorage本地存储,有上限<br>解析m3u添加的电台使用<br>indexedDB本地存储，无上限</p><hr><p class="t">电台链接由于浏览器安全限制，'不能'<br>在https下播放http的m3u8链接，<br>   解决方法1.把http改为https<br>(部分链接只支持http) 或者<br>2. 对当前网站设置允许不安全内容</p><hr><p class="t">对于无法解决的302跳转解析的<br>m3u8链接会转为使用浏览器打开<br>手机浏览器应该可以直接播放，电脑上<br>给浏览器安装hls播放扩展插件即可</p><hr><p class="t">m3u解析格式: #EXTINF:-1  tvg-logo<br>="图片链接" group-title<br>="分组名",电台名 
+     <p class="t">网易云音乐网页建议搭配脚本使用,<br>网易云仅提供PC端快捷搜索  <br>自定义数据及单个添加的电台使用<br>localStorage本地存储,有上限<br>解析m3u添加的电台使用<br>indexedDB本地存储，无上限</p><hr><p class="t"> 由于部分浏览器安全限制，'不能'<br>在https下播放http的m3u8链接<br>不能加载http来源的图片<br>   解决方法1.把http改为https<br>(部分链接只支持http) 或者<br>2. 对当前网站设置允许不安全内容</p><hr><p class="t">对于302跳转解析触发跨域问题的<br>m3u8链接会转为使用浏览器打开<br>手机浏览器应该可以直接播放，电脑上<br>给浏览器安装hls播放扩展插件即可</p><hr><p class="t">m3u解析格式: #EXTINF:-1  tvg-logo<br>="图片链接" group-title<br>="分组名",电台名 
 电台链接<br>比如<a href="https://raw.githubusercontent.com/goolguy007/radioer/main/TVradio" > '这个链接' </a>中的格式<br></p><hr> 
 <a href="https://greasyfork.org/zh-CN/scripts/406054" >1.显示完整歌单</a><br>
 <a href="https://greasyfork.org/zh-CN/scripts/438148" >2.lx-music 辅助脚本
@@ -170,6 +172,17 @@
     </div>
 </div>
 
+</div>
+
+<div id="videoModal">
+  <div id="videoContainer">
+    <button id="closeButton"><?xml version="1.0" encoding="UTF-8"?>
+<svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800"><defs><style>.cls-10 {fill: none;stroke: #fff;stroke-linecap: round;
+}.cls-10, .cls-21 { stroke-linejoin: round; stroke-width: 66.67px;}.cls-21 {fill: #2f88ff; stroke: #000; }.cls-31 {fill: rgba(255, 255, 255, 0); }</style> </defs><rect class="cls-31" width="800" height="800"/><path class="cls-21" d="m400,733.33c184.09,0,333.33-149.24,333.33-333.33S584.09,66.67,400,66.67,66.67,215.9,66.67,400s149.24,333.33,333.33,333.33Z"/>
+ <path class="cls-10" d="m494.28,305.72l-188.56,188.56"/><path class="cls-10" d="m305.72,305.72l188.56,188.56"/>
+</svg></button>
+    <video id="video" controls="true" preload="none" src=""></video>
+  </div>
 </div>
 <div id="content-container">
 
@@ -244,7 +257,7 @@
         <option value='{"src":"https://online.radioplayer.ua/FlashRadio_HD","request":"https://o.tavrmedia.ua/radio3flash","name":"Flash Radio"}'>Flash Radio</option>       
     </select>     
     <audio id="audio" controls="true" preload="none" src=""  ></audio>
-   <article class="playlist_wrapper" id="playlist_wrapper">
+  <article class="playlist_wrapper" id="playlist_wrapper">
     <div id="playlist_title_container">
         <h3 class="playlist_title">TAVR is playing now</h3>
     </div>
