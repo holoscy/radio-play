@@ -77,7 +77,7 @@
             console.log('window loaded');
             console.log('window loaded. eventEnabled: ', eventEnabled);
             // Document entities
-            radio = document.getElementById('audio');               // Audio
+            radio = document.getElementById('video');               // Audio/Video
             player = document.querySelector('.player');             // Player
             muteButton = player.querySelector('.mute-button');      // Mute button
             volumeLevel = player.querySelector('.volume-level');    // Volume level
@@ -203,6 +203,7 @@ var mediaMetadata = new MediaMetadata({
 });
 
 function playAudio() {
+      
     document.body.classList.add('loading');
     var srcSelect = document.getElementById('src_select');
     var value = JSON.parse(srcSelect['value']);
@@ -305,7 +306,7 @@ function selectChange() {
 
     if (radio['paused']) {
         document.body.classList.remove('loading');
-    } else {
+     } else {
         stopAudio();
         playAudio();
     }
@@ -496,8 +497,8 @@ var desiredOption = selectElement.querySelector("option[value='']");
 function play(url) {
   document.body.classList.add('loading');
 
-  const songInfoDiv = document.getElementById('songInfo'); // Get reference to the <div> element
-  songInfoDiv.style.display = 'none'; // Hide the songInfo element by default
+  const songInfoDiv = document.getElementById('songInfo');
+  songInfoDiv.style.display = 'none';
   desiredOption.selected = true;
 
   // Set a default Blob image
@@ -511,33 +512,32 @@ function play(url) {
         type: 'image/png'
       }]
     });
-          
+
     navigator.mediaSession.metadata = defaultMetadata;
   });
 
   if (currentHls) {
-    currentHls.destroy(); // Destroy the previous HLS instance if it exists
+    currentHls.destroy();
   }
   if (currentRequest !== null) {
     clearTimeout(currentRequest);
   }
   if (Hls.isSupported()) {
     const hls = new Hls();
-    currentHls = hls; // Store the current HLS instance
+    currentHls = hls;
 
     hls.loadSource(url);
-    hls.attachMedia(audio);
-     hls.on(Hls.Events.FRAG_PARSING_METADATA, function (event, data) {
-          
+     hls.attachMedia(video);
+   
+    hls.on(Hls.Events.FRAG_PARSING_METADATA, function (event, data) {
+      if (data) {
         if (data.frag.title.includes("url=")) {
           // Extract title and artist information from the data string
           const titleMatch = data.frag.title.match(/title="([^"]*)"/);
           const artistMatch = data.frag.title.match(/artist="([^"]*)"/);
 
-          // Show the songInfo element
           songInfoDiv.style.display = 'block';
 
-          // Update the song info if title and artist are available
           let songInfo = "";
           if (artistMatch && artistMatch[1].trim() !== "") {
             songInfo += artistMatch[1].trim();
@@ -550,38 +550,54 @@ function play(url) {
           }
           songInfoDiv.textContent = songInfo;
           addLinksToSongInfo(songInfo);
-          // Update MediaSession metadata when new data is available
+
           navigator.mediaSession.metadata = new MediaMetadata({
             title: titleMatch ? titleMatch[1].trim() : '',
-            artist: artistMatch ? artistMatch[1].trim() : '',           
-          }); 
+            artist: artistMatch ? artistMatch[1].trim() : '',
+          });
         } else {
           // If "url=" is not present, display the entire data
           songInfoDiv.style.display = 'block';
           songInfoDiv.textContent = data.frag.title;
           addLinksToSongInfo(data.frag.title);
-          // Update MediaSession metadata when new data is available
+
           navigator.mediaSession.metadata = new MediaMetadata({
             title: data.frag.title,
-            artist: '',  
+            artist: '',
           });
         }
-       
+      }
     });
+
     hls.on(Hls.Events.MANIFEST_PARSED, function () {
-      audio.play();
+      video.play();
+      document.body.classList.remove('loading');
+
     });
   } else {
-         alert('只有m3u8能触发播放，其他格式需要在自定义电台创建按钮播放')
+    alert('只有m3u8能触发播放，其他格式需要在自定义电台创建按钮播放');
   }
 }
 
-
+ 
 function cplay() {
         const url = inputUrl.value;
          play(url);
 }
 
+ const videoModal = document.getElementById('videoModal');
+  const videoContainer = document.getElementById('videoContainer');
+  const video = document.getElementById('video');
+  const showButton = document.getElementById('showButton');
+  const closeButton = document.getElementById('closeButton');
+
+  showButton.addEventListener('click', function () {
+    videoModal.style.display = 'flex';
+  });
+
+  closeButton.addEventListener('click', function () {
+     videoModal.style.display = 'none';
+  });
 
 function addLinksToSongInfo(title) {
   const songInfoDiv = document.getElementById('songInfo');
@@ -757,9 +773,9 @@ function startRecord() {
         };
         var hls = new Hls();
         hls.loadSource(inputUrl.value);
-        hls.attachMedia(audio);
+        hls.attachMedia(video);
         hls.on(Hls.Events.MANIFEST_PARSED, function () {
-            audio.play();
+            video.play();
             hls.on(Hls.Events.BUFFER_APPENDING, function (event, data) {
                 console.log("appending");
                 dataStream[data.type].push(data.data);
@@ -974,7 +990,15 @@ function displayStoredContent() {
                             imgContainer.appendChild(nameElement);
 
                             imgContainer.onclick = () => playLinkContent(name, link);
+                            imgContainer.addEventListener('contextmenu', (e) => {
+                            e.preventDefault();
+            showContextMenu(e.clientX, e.clientY, name, link, () => saveContent(link, name, imgContainer));
+        });
 
+                           imgContainer.addEventListener('touchstart', (e) => {
+                           e.preventDefault();
+            showContextMenu(e.clientX, e.clientY, name, link, () => saveContent(link, name, imgContainer));
+ });
                             groupContainer.appendChild(imgContainer);
                         });
 
@@ -1040,8 +1064,16 @@ function updateMenuContent(data) {
             imgContainer.appendChild(image);
             imgContainer.appendChild(nameElement);
 
-            imgContainer.onclick = () => playLinkContent(name, link);
+            imgContainer.addEventListener('click', () => playLinkContent(name, link));
+            imgContainer.addEventListener('contextmenu', (e) => {
+                            e.preventDefault();
+            showContextMenu(e.clientX, e.clientY, name, link, () => saveContent(link, name, imgContainer));
+        });
 
+                           imgContainer.addEventListener('touchstart', (e) => {
+                           e.preventDefault();
+            showContextMenu(e.clientX, e.clientY, name, link, () => saveContent(link, name, imgContainer));
+ });
             groupContainer.appendChild(imgContainer);
         });
 
@@ -1060,6 +1092,62 @@ function updateMenuContent(data) {
 
      
     });
+}
+ let activeContextMenu = null;
+
+function showContextMenu(x, y, name, link, onSaveCallback) {
+    if (activeContextMenu) {
+        document.body.removeChild(activeContextMenu);
+        activeContextMenu = null;
+    }
+    const contextMenu = document.createElement('div');
+    contextMenu.className = 'context-menu';
+    contextMenu.style.position = 'absolute';
+    contextMenu.style.left = x + 'px';
+    contextMenu.style.top = y + 'px';
+    contextMenu.style.zIndex = '1000';
+    contextMenu.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+    contextMenu.style.borderRadius = '8px';
+    contextMenu.style.padding = '10px';
+    contextMenu.style.color = '#ffffff';
+
+    const playOption = document.createElement('div');
+    playOption.textContent = '播放';
+    playOption.style.color = '#ffffff';
+    playOption.addEventListener('click', () => playLinkContent(name, link));
+
+    const saveOption = document.createElement('div');
+    saveOption.textContent = '保存';
+    saveOption.style.color = '#ffffff';
+    saveOption.addEventListener('click', () => onSaveCallback(link, name));
+
+    contextMenu.appendChild(playOption);
+    contextMenu.appendChild(saveOption);
+
+    document.body.appendChild(contextMenu);
+
+     activeContextMenu = contextMenu;
+
+     document.addEventListener('click', () => {
+        if (activeContextMenu) {
+            document.body.removeChild(activeContextMenu);
+            activeContextMenu = null;
+        }
+    });
+}
+//to do-----save
+function saveContent(link, title, imgContainer) {
+    const savedContent = document.getElementById('savedContent');
+    const clonedContainer = imgContainer.cloneNode(true);
+
+    // Attach the click event listener to the cloned container
+    const image = clonedContainer.querySelector('img');
+    const nameElement = clonedContainer.querySelector('p');
+
+    image.onclick = () => playmore(link, title);
+
+    savedContent.appendChild(clonedContainer);
+    
 }
  
 function parseM3U(m3uData) {
@@ -1253,7 +1341,8 @@ function playLinkContent(name,link) {
     clearTimeout(currentRequest);
   }
         if (fileExtension !== 'm3u8') {
-            const audio = document.getElementById("audio");
+            stopAudio();
+            const audio = document.getElementById('video');
             document.body.classList.add('loading');
             appTitle.textContent = title;
             document.title = title;
@@ -1263,19 +1352,17 @@ function playLinkContent(name,link) {
                 const playPromise = audio.play();
                 if (playPromise !== undefined) {
                     playPromise.then(_ => {
-                        // 音频已成功播放
+                        document.body.classList.remove('loading');
                         navigator.mediaSession.metadata = new MediaMetadata({
                             title: title,
                             artist: ''
                         });
                     }).catch(error => {//302跳转非直链m3u8无法使用hls.js播放
-                    alert('不支持的链接，即将跳转使用浏览器播放');
-                location.href = url;
+                 window.open(url, "_blank");
                     });
                 }
             } catch (error) {
-                alert('不支持的链接，即将跳转使用浏览器播放');
-                location.href = url;
+                 window.open(url, "_blank");
             }
         } else {
        setPlaybackInfo(url, title);
@@ -1799,7 +1886,7 @@ document.querySelector(".about").addEventListener("click", function() {
     }
 });
  function getCurrentProgram() {
-      const programSchedule = {//UTC+8 
+      const programSchedule = {//UTC+08:00 
         MondayToFriday: [
           { start: "00:00:00", end: "06:00:00", name: "Music Flow 音乐流" },
           { start: "06:00:00", end: "07:00:00", name: "Morning Call 音乐叫早" },
