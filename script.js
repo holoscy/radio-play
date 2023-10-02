@@ -990,16 +990,47 @@ function displayStoredContent() {
                             imgContainer.appendChild(nameElement);
 
                             imgContainer.onclick = () => playLinkContent(name, link);
+ 
                             imgContainer.addEventListener('contextmenu', (e) => {
                             e.preventDefault();
             showContextMenu(e.clientX, e.clientY, name, link, () => saveContent(link, name, imgContainer));
         });
+            let touchStartX, touchStartY;
+let isScrolling = false;
 
-                           imgContainer.addEventListener('touchstart', (e) => {
-                           e.preventDefault();
-            showContextMenu(e.clientX, e.clientY, name, link, () => saveContent(link, name, imgContainer));
- });
-                            groupContainer.appendChild(imgContainer);
+imgContainer.addEventListener('touchstart', (e) => {
+  e.preventDefault();
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+  isScrolling = false;
+
+  longPressTimer = setTimeout(() => {
+    if (!isScrolling) {
+      showContextMenu(touchStartX, touchStartY, name, link, () => saveContent(link, name, imgContainer));
+    }
+  }, 500);
+});
+
+imgContainer.addEventListener('touchmove', (e) => {
+  const touchMoveX = e.touches[0].clientX;
+  const touchMoveY = e.touches[0].clientY;
+  const deltaX = Math.abs(touchMoveX - touchStartX);
+  const deltaY = Math.abs(touchMoveY - touchStartY);
+
+   if (deltaX > 5 || deltaY > 5) {
+    isScrolling = true;
+    clearTimeout(longPressTimer);
+  }
+});
+
+imgContainer.addEventListener('touchend', () => {
+  clearTimeout(longPressTimer);
+
+  if (!isScrolling) {
+    playLinkContent(name, link);
+  }
+});
+              groupContainer.appendChild(imgContainer);
                         });
 
                         menuContent2.appendChild(groupContainer);
@@ -1065,16 +1096,48 @@ function updateMenuContent(data) {
             imgContainer.appendChild(nameElement);
 
             imgContainer.addEventListener('click', () => playLinkContent(name, link));
+ 
             imgContainer.addEventListener('contextmenu', (e) => {
                             e.preventDefault();
             showContextMenu(e.clientX, e.clientY, name, link, () => saveContent(link, name, imgContainer));
         });
 
-                           imgContainer.addEventListener('touchstart', (e) => {
-                           e.preventDefault();
-            showContextMenu(e.clientX, e.clientY, name, link, () => saveContent(link, name, imgContainer));
- });
-            groupContainer.appendChild(imgContainer);
+                  let touchStartX, touchStartY;
+let isScrolling = false;
+
+imgContainer.addEventListener('touchstart', (e) => {
+  e.preventDefault();
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+  isScrolling = false;
+
+  longPressTimer = setTimeout(() => {
+    if (!isScrolling) {
+      showContextMenu(touchStartX, touchStartY, name, link, () => saveContent(link, name, imgContainer));
+    }
+  }, 500);
+});
+
+imgContainer.addEventListener('touchmove', (e) => {
+  const touchMoveX = e.touches[0].clientX;
+  const touchMoveY = e.touches[0].clientY;
+  const deltaX = Math.abs(touchMoveX - touchStartX);
+  const deltaY = Math.abs(touchMoveY - touchStartY);
+
+   if (deltaX > 5 || deltaY > 5) {
+    isScrolling = true;
+    clearTimeout(longPressTimer);
+  }
+});
+
+imgContainer.addEventListener('touchend', () => {
+  clearTimeout(longPressTimer);
+
+  if (!isScrolling) {
+    playLinkContent(name, link);
+  }
+});
+      groupContainer.appendChild(imgContainer);
         });
 
  
@@ -1114,6 +1177,8 @@ function showContextMenu(x, y, name, link, onSaveCallback) {
     const playOption = document.createElement('div');
     playOption.textContent = '播放';
     playOption.style.color = '#ffffff';
+    playOption.style.marginBottom = '2px';
+    playOption.style.borderBottom = '2px solid #fff';
     playOption.addEventListener('click', () => playLinkContent(name, link));
 
     const saveOption = document.createElement('div');
@@ -1149,7 +1214,7 @@ function saveContent(link, title, imgContainer) {
     savedContent.appendChild(clonedContainer);
     
 }
- 
+//to do
 function parseM3U(m3uData) {
     const lines = m3uData.split('#EXTINF');
 
