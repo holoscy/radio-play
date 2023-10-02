@@ -981,6 +981,7 @@ function displayStoredContent() {
                             const image = document.createElement('img');
                             image.src = tvgLogo;
                             image.classList.add('rimg');
+                            image.loading = 'lazy';
 
                             const nameElement = document.createElement('p');
                             nameElement.textContent = name;
@@ -1087,6 +1088,7 @@ function updateMenuContent(data) {
             const image = document.createElement('img');
             image.src = tvgLogo;
             image.classList.add('rimg');
+            image.loading = 'lazy';
 
             const nameElement = document.createElement('p');
             nameElement.textContent = name;
@@ -1124,7 +1126,7 @@ imgContainer.addEventListener('touchmove', (e) => {
   const deltaX = Math.abs(touchMoveX - touchStartX);
   const deltaY = Math.abs(touchMoveY - touchStartY);
 
-   if (deltaX > 5 || deltaY > 5) {
+   if (deltaX > 2 || deltaY > 2) {
     isScrolling = true;
     clearTimeout(longPressTimer);
   }
@@ -1163,11 +1165,15 @@ function showContextMenu(x, y, name, link, onSaveCallback) {
         document.body.removeChild(activeContextMenu);
         activeContextMenu = null;
     }
+
     const contextMenu = document.createElement('div');
     contextMenu.className = 'context-menu';
     contextMenu.style.position = 'absolute';
     contextMenu.style.left = x + 'px';
-    contextMenu.style.top = y + 'px';
+
+     const menuHeight = 70;  
+    contextMenu.style.top = (y - menuHeight) + 'px';
+
     contextMenu.style.zIndex = '1000';
     contextMenu.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
     contextMenu.style.borderRadius = '8px';
@@ -1182,7 +1188,7 @@ function showContextMenu(x, y, name, link, onSaveCallback) {
     playOption.addEventListener('click', () => playLinkContent(name, link));
 
     const saveOption = document.createElement('div');
-    saveOption.textContent = '保存';
+    saveOption.textContent = '增加';
     saveOption.style.color = '#ffffff';
     saveOption.addEventListener('click', () => onSaveCallback(link, name));
 
@@ -1191,15 +1197,16 @@ function showContextMenu(x, y, name, link, onSaveCallback) {
 
     document.body.appendChild(contextMenu);
 
-     activeContextMenu = contextMenu;
+    activeContextMenu = contextMenu;
 
-     document.addEventListener('click', () => {
+    document.addEventListener('click', () => {
         if (activeContextMenu) {
             document.body.removeChild(activeContextMenu);
             activeContextMenu = null;
         }
     });
 }
+
 //to do-----save
 function saveContent(link, title, imgContainer) {
     const savedContent = document.getElementById('savedContent');
@@ -1208,7 +1215,8 @@ function saveContent(link, title, imgContainer) {
     // Attach the click event listener to the cloned container
     const image = clonedContainer.querySelector('img');
     const nameElement = clonedContainer.querySelector('p');
-
+    nameElement.classList.remove('t');
+    image.loading = 'lazy';
     image.onclick = () => playmore(link, title);
 
     savedContent.appendChild(clonedContainer);
