@@ -1188,7 +1188,7 @@ function showContextMenu(x, y, name, link, onSaveCallback) {
     playOption.addEventListener('click', () => playLinkContent(name, link));
 
     const saveOption = document.createElement('div');
-    saveOption.textContent = '增加';
+    saveOption.textContent = '添加';
     saveOption.style.color = '#ffffff';
     saveOption.addEventListener('click', () => onSaveCallback(link, name));
 
@@ -1220,10 +1220,50 @@ function saveContent(link, title, imgContainer) {
     image.onclick = () => playmore(link, title);
 
     savedContent.appendChild(clonedContainer);
-    
+
+    // Save data to localStorage
+    saveToLocalStorage(link, title, imgContainer.innerHTML);
 }
-//to do
-function parseM3U(m3uData) {
+
+function saveToLocalStorage(link, title, content) {
+     const savedData = JSON.parse(localStorage.getItem('savedData')) || [];
+     const imgSrc = (new DOMParser().parseFromString(content, 'text/html').querySelector('img')).src;
+     const nextId = savedData.length > 0 ? savedData[savedData.length - 1].id + 1 : 1;
+
+     savedData.push({ id: nextId, link, name: title, imageBase64: imgSrc });
+     localStorage.setItem('savedData', JSON.stringify(savedData));
+     console.log('Data saved to localStorage:', { id: nextId, link, title, imgSrc });
+
+     updateSavedContent(savedData);
+}
+
+function loadSavedContent() {
+    const savedContent = document.getElementById('savedContent');
+     const savedData = JSON.parse(localStorage.getItem('savedData')) || [];
+     console.log('Data loaded from localStorage:', savedData);
+
+     savedData.forEach(item => {
+        const clonedContainer = document.createElement('div');
+
+         const img = document.createElement('img');
+        img.src = item.imageBase64;
+
+         const nameElement = document.createElement('p');
+        nameElement.textContent = item.name;
+
+         clonedContainer.appendChild(img);
+        clonedContainer.appendChild(nameElement);
+
+        img.loading = 'lazy';
+        img.onclick = () => playmore(item.link, item.name);
+
+        savedContent.appendChild(clonedContainer);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', loadSavedContent);
+ 
+ function parseM3U(m3uData) {
     const lines = m3uData.split('#EXTINF');
 
     let groups = {};
@@ -1278,64 +1318,72 @@ function playLinkContent(name,link) {
     });
 
     saveButton.addEventListener("click", function () {
-        const rows = menuContent.getElementsByClassName("menu-row");
-        const savedData = [];
+    const rows = menuContent.getElementsByClassName("menu-row");
 
-        for (let i = 0; i < rows.length; i++) {
-            const row = rows[i];
-            const linkInput = row.querySelector(".link-input");
-            const nameInput = row.querySelector(".name-input");
-            const imageInput = row.querySelector(".image-input");
+     const savedData = JSON.parse(localStorage.getItem("savedData")) || [];
 
-            const imageFile = imageInput.files[0];
-            const linkValue = linkInput.value;
-            const nameValue = nameInput.value;
+     savedData.length = 0;
 
-            if (linkValue && nameValue) {
-                if (imageFile) {
-                    const reader = new FileReader();
-                    reader.onload = function (event) {
-                        const imageBase64 = event.target.result;
+    for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        const linkInput = row.querySelector(".link-input");
+        const nameInput = row.querySelector(".name-input");
+        const imageInput = row.querySelector(".image-input");
 
-                         row.dataset.link = linkValue;
-                        row.dataset.title = nameValue;
+        const imageFile = imageInput.files[0];
+        const linkValue = linkInput.value;
+        const nameValue = nameInput.value;
 
-                        savedData.push({
-                            imageBase64: imageBase64,
-                            link: linkValue,
-                            name: nameValue,
-                        });
-                        saveDataToLocalStorage(savedData);
-                        updateSavedContent(savedData);
-                        resetMenu();  
-                    };
+        if (linkValue && nameValue) {
+            if (imageFile) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const imageBase64 = event.target.result;
+                    const id = getNewId();
 
-                    reader.readAsDataURL(imageFile);
-                } else {
-                    const imgContainer = row.querySelector(".img-container");
-                    const img = imgContainer.querySelector("img");
-                    const imageBase64 = img ? img.src : "";
-
-                     row.dataset.link = linkValue;
+                    row.dataset.link = linkValue;
                     row.dataset.title = nameValue;
 
                     savedData.push({
+                        id,
                         imageBase64: imageBase64,
                         link: linkValue,
                         name: nameValue,
                     });
-                }
+
+                    saveDataToLocalStorage(savedData);
+                    updateSavedContent(savedData);
+                    resetMenu();
+                };
+
+                reader.readAsDataURL(imageFile);
+            } else {
+                const imgContainer = row.querySelector(".img-container");
+                const img = imgContainer.querySelector("img");
+                const imageBase64 = img ? img.src : "";
+                const id = getNewId();
+
+                row.dataset.link = linkValue;
+                row.dataset.title = nameValue;
+
+                savedData.push({
+                    id,
+                    imageBase64: imageBase64,
+                    link: linkValue,
+                    name: nameValue,
+                });
             }
         }
+    }
+    saveDataToLocalStorage(savedData);
 
-        saveDataToLocalStorage(savedData);
-        updateSavedContent(savedData);
+    updateSavedContent(savedData);
+});
 
-        const savedIds = savedData.map(data => data.id);
-        const prevSavedData = JSON.parse(localStorage.getItem("savedData")) || [];
-        const newData = prevSavedData.filter(data => savedIds.includes(data.id));
-        saveDataToLocalStorage(newData);
-    });
+function getNewId() {
+    const savedData = JSON.parse(localStorage.getItem("savedData")) || [];
+    return savedData.length > 0 ? savedData[savedData.length - 1].id + 1 : 1;
+}
 
    function createRow(imageBase64, linkValue, nameValue, isSaved = false) {
         const row = document.createElement("div");
