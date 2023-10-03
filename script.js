@@ -1171,7 +1171,7 @@ function showContextMenu(x, y, name, link, onSaveCallback) {
     contextMenu.style.position = 'absolute';
     contextMenu.style.left = x + 'px';
 
-     const menuHeight = 70;  
+     const menuHeight = 50;  
     contextMenu.style.top = (y - menuHeight) + 'px';
 
     contextMenu.style.zIndex = '1000';
@@ -1181,14 +1181,14 @@ function showContextMenu(x, y, name, link, onSaveCallback) {
     contextMenu.style.color = '#ffffff';
 
     const playOption = document.createElement('div');
-    playOption.textContent = '播放';
+    playOption.textContent = '新标签播放';
     playOption.style.color = '#ffffff';
     playOption.style.marginBottom = '2px';
     playOption.style.borderBottom = '2px solid #fff';
-    playOption.addEventListener('click', () => playLinkContent(name, link));
+    playOption.addEventListener('click', () => playnewLink(name, link));
 
     const saveOption = document.createElement('div');
-    saveOption.textContent = '添加';
+    saveOption.textContent = '添加至主页';
     saveOption.style.color = '#ffffff';
     saveOption.addEventListener('click', () => onSaveCallback(link, name));
 
@@ -1206,9 +1206,12 @@ function showContextMenu(x, y, name, link, onSaveCallback) {
         }
     });
 }
-
-//to do-----save
-function saveContent(link, title, imgContainer) {
+function playnewLink(name, link){
+            const title = name;
+            appTitle.textContent = title;
+            document.title = title;
+            window.open(link, "_blank");}
+ function saveContent(link, title, imgContainer) {
     const savedContent = document.getElementById('savedContent');
     const clonedContainer = imgContainer.cloneNode(true);
 
