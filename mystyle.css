@@ -30,6 +30,9 @@ body{height:100%;min-height: 100vh;}
      @media screen and (min-width: 1080px) {
     .app {height: 100%; zoom: 1.1;   }
   }
+    @media screen and (min-width: 2000px) {
+    .app {height: 100%; zoom: 1.4;   }
+  }
 }
 #programName {text-align: center;font-weight: bold; margin-bottom:1em; text-shadow: 1px 1px 1px #afafaf}
 #songInfo {text-align: center; margin-bottom:1em; text-shadow: 1px 1px 1px #afafaf}
@@ -216,8 +219,6 @@ text-overflow: clip;transition: 1s; }
 	transform: scaleX(1);
 }
 
-
-
 [type="date"] {
   background:#fff url(./icons/calendar.webp)  97% 50% no-repeat ;
 }
@@ -309,19 +310,23 @@ text-overflow: clip;transition: 1s; }
 .add-button {
     text-align: center; 
 }
-.name-input{width:15%; }
-.link-input {width:15%; }
-.image-input{width:15&; }
+.name-input{width:70px; }
+.link-input {width:70px; }
+.image-input{width:70px; }
 #menuContainer {boder:1px solid black;
-    max-height: 80%;  
+     height: 80%;  
     overflow-y: auto; 
 }
-
-#menu {
+#btContainer{ 
+     height: 20%;  
+    overflow-y: auto;}
+ #menu {
     position: fixed; 
     top: 15%;
-    left: 15%;
-    width: 70%;
+     left: 0;
+    right: 0;
+    margin: 0 auto; 
+    width: 80%;
     height:70%;
     padding: 20px;
     background-color: #e5e5e5;
@@ -331,7 +336,7 @@ text-overflow: clip;transition: 1s; }
 }
 
 .menu-row{ display: inline-block ;}
-.img-container{width:auto;height:70px ;text-align: center; display: inline-block;margin:0.5em
+.img-container{width:auto;height:70px ;text-align: center; display: inline-block;margin:0.5em; cursor: pointer;
 }
 .img-container img{  display: inline-block ;
 width:auto;height:40px;filter: none;}
@@ -411,7 +416,7 @@ body.dark path{transition: 0.5s;
       height:auto;
     }
 #m3uTextarea {
-   width: 8em;
+   width: 10em;
    height: 2em;
    border: 1px solid #ccc;
   padding: 5px;
