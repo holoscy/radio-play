@@ -106,6 +106,26 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
      <div id="recordedTime">已录制时长: 0秒</div>
      <div id="programName">  ON AIR NOW: Loading...</div>
      <div id="songInfo"></div>
+
+<div id="content-container">
+    <div class="date" style="display:flex;justify-content:center;align-items:center;margin-bottom:10px;">
+     <span for="datepicker" >Date</span>
+<input type="date" name="datepicker" id="datePicker"> 
+     
+     </div>
+       <div class="player">
+        <button class="link-button" onclick="goToWebpage()" style="background-image: url(./icons/lst.png)"> </button>
+        <button class="link-button" onclick="updateProgramLink()" style="background-image: url(./icons/ls.png)"> </button>   
+        <button class="link-button" onclick="gotoURL()" style="background-image: url(./icons/dl.png)"> </button>
+       </div> 
+       <div class="player">
+       <button class="link-button" onclick="goToWebpage1()" style="background-image: url(./icons/top20.png)"> </button>
+       <button class="link-button" onclick="goToWebpage2()" style="background-image: url(./icons/mv.png)"> </button>
+       <button class="link-button" onclick="goToWebpage3()" style="background-image: url(./icons/at4.png)"> </button>
+       </div> 
+         </div>
+</div>
+
 <div class="menu-container">
   <button id="toggle-menu-btn" style="padding:0;width:20px;height:20px"><?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg "width="20px" height="20px" viewBox="0 0 512 512">
@@ -171,9 +191,7 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
         <button id="about-btn">关于</button>
     </div>
 </div>
-
 </div>
-
 <div id="videoModal">
   <div id="videoContainer">
     <button id="closeButton"><?xml version="1.0" encoding="UTF-8"?>
@@ -184,35 +202,7 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
     <video id="video" controls="true" preload="none" src=""></video>
   </div>
 </div>
-<div id="content-container">
 
-    <div class="date" style="display:flex;justify-content:center;align-items:center;margin-bottom:10px;">
-     <span for="datepicker" >Date</span>
-<input type="date" name="datepicker" id="datePicker"> 
-     
-     </div>
-       <div class="player">
-        <button class="link-button" onclick="goToWebpage()" style="background-image: url(./icons/lst.png)"> </button>
-        <button class="link-button" onclick="updateProgramLink()" style="background-image: url(./icons/ls.png)"> </button>   
-        <button class="link-button" onclick="gotoURL()" style="background-image: url(./icons/dl.png)"> </button>
-       </div> 
-       <div class="player">
-       <button class="link-button" onclick="goToWebpage1()" style="background-image: url(./icons/top20.png)"> </button>
-       <button class="link-button" onclick="goToWebpage2()" style="background-image: url(./icons/mv.png)"> </button>
-       <button class="link-button" onclick="goToWebpage3()" style="background-image: url(./icons/at4.png)"> </button>
-       </div> 
-         </div>
-</div>
-       <div class="ite item-center">
-
-</div> 	
- 	<div class="ite item-right">
-<div class="add-button">
-    <button id="openMenuButton"><?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
-  <defs> <style> .cls-12 { fill: none;}</style></defs><path class="cls-12" d="m0,0h800v800H0V0Z"/><path d="m554.77,98.49c4.72,12.97-1.97,27.32-14.94,32.04l-190.87,69.45h276.05c94.64.01,171.73,75.13,174.9,169l.1,6.02v150c0,96.65-78.35,175-175,175H175C78.35,700,0,621.65,0,525v-150c0-96.65,78.35-175,175-175h27.75s319.97-116.45,319.97-116.45c12.97-4.72,27.32,1.97,32.04,14.94Zm70.23,151.51H175c-69.04,0-125,55.96-125,125v150c0,69.04,55.96,125,125,125h450c69.04,0,125-55.96,125-125v-150c0-69.04-55.96-125-125-125Zm-375,75c69.04,0,125,55.96,125,125s-55.96,125-125,125-125-55.96-125-125,55.96-125,125-125Zm375,162.5c13.81,0,25,11.19,25,25s-11.19,25-25,25h-150c-13.81,0-25-11.19-25-25s11.19-25,25-25h150Zm-375-112.5c-41.42,0-75,33.58-75,75s33.58,75,75,75,75-33.58,75-75-33.58-75-75-75Zm375-12.5c13.81,0,25,11.19,25,25s-11.19,25-25,25h-150c-13.81,0-25-11.19-25-25s11.19-25,25-25h150Z"/>
-</svg></button>
-</div>
 <div id="menu" class="hidden">
     <p class="t">自定义电台</p>
     <div id="menuContainer">  
@@ -224,13 +214,25 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
         </div>
     </div>
     <hr>
-   <label for="m3uTextarea"> M3U内容:</label>
+        <div id="btContainer">  
+    <label for="m3uTextarea"> M3U内容:</label>
     <input id="m3uTextarea" rows="10" placeholder="Paste M3U content here"></input>
     <button onclick="parseM3UFromTextarea()">解析m3u</button>
      <button id="addRowButton">添加单个</button>
     <button id="saveButton">保存单个</button>
-    <button id="closeMenuButton">关闭界面</button>
+    <button id="closeMenuButton">关闭界面</button>  </div>
   </div>
+
+       <div class="ite item-center">
+</div> 	
+ 	<div class="ite item-right">
+<div class="add-button">
+    <button id="openMenuButton"><?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <defs> <style> .cls-12 { fill: none;}</style></defs><path class="cls-12" d="m0,0h800v800H0V0Z"/><path d="m554.77,98.49c4.72,12.97-1.97,27.32-14.94,32.04l-190.87,69.45h276.05c94.64.01,171.73,75.13,174.9,169l.1,6.02v150c0,96.65-78.35,175-175,175H175C78.35,700,0,621.65,0,525v-150c0-96.65,78.35-175,175-175h27.75s319.97-116.45,319.97-116.45c12.97-4.72,27.32,1.97,32.04,14.94Zm70.23,151.51H175c-69.04,0-125,55.96-125,125v150c0,69.04,55.96,125,125,125h450c69.04,0,125-55.96,125-125v-150c0-69.04-55.96-125-125-125Zm-375,75c69.04,0,125,55.96,125,125s-55.96,125-125,125-125-55.96-125-125,55.96-125,125-125Zm375,162.5c13.81,0,25,11.19,25,25s-11.19,25-25,25h-150c-13.81,0-25-11.19-25-25s11.19-25,25-25h150Zm-375-112.5c-41.42,0-75,33.58-75,75s33.58,75,75,75,75-33.58,75-75-33.58-75-75-75Zm375-12.5c13.81,0,25,11.19,25,25s-11.19,25-25,25h-150c-13.81,0-25-11.19-25-25s11.19-25,25-25h150Z"/>
+</svg></button>
+</div>
+
  <div id="savedC">
  <div id="savedContent">
     <!-- 这里是保存的图片和电台名称 -->
