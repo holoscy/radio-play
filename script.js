@@ -584,8 +584,7 @@ function play(url) {
            
             hls.stopLoad(); 
             document.body.classList.remove('loading');
-             alert('播放失败，可能是1.ip限制 2.链接失效 3.未开启ipv6。尝试浏览器播放');
-             window.open(url, '_blank');
+              window.open(url, '_blank');
             break;
         }
       }
