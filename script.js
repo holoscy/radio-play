@@ -569,16 +569,31 @@ function play(url) {
       }
     });
 
-    hls.on(Hls.Events.MANIFEST_PARSED, function () {
-      video.play();
-      document.body.classList.remove('loading');
+     hls.on(Hls.Events.MANIFEST_PARSED, function () {
+      video.play()
+    });
 
+     hls.on(Hls.Events.ERROR, function (event, data) {
+      if (data.fatal) {
+        switch (data.type) {
+          case Hls.ErrorTypes.NETWORK_ERROR:
+            console.error('Network error, trying to recover');
+              
+          case Hls.ErrorTypes.MEDIA_ERROR:
+            console.error('Media error, trying to recover');
+           
+            hls.stopLoad(); 
+            document.body.classList.remove('loading');
+             alert('播放失败，可能是1.ip限制 2.链接失效 3.未开启ipv6。尝试浏览器播放');
+             window.open(url, '_blank');
+            break;
+        }
+      }
     });
   } else {
     alert('只有m3u8能触发播放，其他格式需要在自定义电台创建按钮播放');
   }
 }
-
  
 function cplay() {
         const url = inputUrl.value;
@@ -1018,7 +1033,7 @@ imgContainer.addEventListener('touchmove', (e) => {
   const deltaX = Math.abs(touchMoveX - touchStartX);
   const deltaY = Math.abs(touchMoveY - touchStartY);
 
-   if (deltaX > 5 || deltaY > 5) {
+   if (deltaX > 2 || deltaY > 2) {
     isScrolling = true;
     clearTimeout(longPressTimer);
   }
