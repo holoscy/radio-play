@@ -219,6 +219,8 @@ text-overflow: clip;transition: 1s; }
 	transform: scaleX(1);
 }
 
+
+
 [type="date"] {
   background:#fff url(./icons/calendar.webp)  97% 50% no-repeat ;
 }
@@ -290,7 +292,7 @@ text-overflow: clip;transition: 1s; }
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 9999;
-  animation: loadingAnimation 2s infinite ease-in-out;
+  animation: loadingAnimation 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes loadingAnimation {
@@ -304,6 +306,7 @@ text-overflow: clip;transition: 1s; }
     opacity: 0;
   }
 }
+
 .hidden {
     display: none;
 }
