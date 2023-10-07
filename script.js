@@ -195,7 +195,6 @@ function setCurrentData(data) {
     navigator.mediaSession.metadata = mediaMetadata;
 }
 
-
 var mediaMetadata = new MediaMetadata({
     title: '',
     artist: '',
@@ -246,7 +245,6 @@ function playAudio() {
     }
     radio.play();
 }
-
 
         function stopAudio() {
             if (radio) {
@@ -300,8 +298,7 @@ function selectChange() {
     document.body.classList.remove('loading');
 
     if (currentRequest !== null) {
-        // 如果有之前的请求正在进行，可以选择取消它
-        clearTimeout(currentRequest);
+         clearTimeout(currentRequest);
     }
 
     if (radio['paused']) {
@@ -581,7 +578,13 @@ function play(url) {
               
           case Hls.ErrorTypes.MEDIA_ERROR:
             console.error('Media error, trying to recover');
-           
+           const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = `尝试使用浏览器播放`;
+     document.body.appendChild(notification);
+     setTimeout(() => {
+        document.body.removeChild(notification);
+    }, 2000);
             hls.stopLoad(); 
             document.body.classList.remove('loading');
               window.open(url, '_blank');
@@ -937,6 +940,13 @@ function storeGroupContent(groupName, groupData) {
 
     addRequest.onsuccess = function (event) {
         console.log(`Group '${groupName}' data added to IndexedDB successfully.`);
+        const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = `  '${groupName}' 已成功存储`;
+     document.body.appendChild(notification);
+     setTimeout(() => {
+        document.body.removeChild(notification);
+    }, 2000);
     };
 
     addRequest.onerror = function (event) {
@@ -954,6 +964,13 @@ function clearGroupContent(groupName,groupData) {
 
     deleteRequest.onsuccess = function (event) {
         console.log(`Data for group '${groupName}' cleared successfully.`);
+        const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = `  '${groupName}' 已成功删除`;
+     document.body.appendChild(notification);
+     setTimeout(() => {
+        document.body.removeChild(notification);
+    }, 2000);
         displayStoredContent();
     };
 
@@ -987,22 +1004,29 @@ function displayStoredContent() {
                         // Create containers for each group
                         const groupContainer = document.createElement('div');
                         groupContainer.className = 'groupContainer';
+ 
 
-                        groupData.forEach(({ tvgLogo, name, link }) => {
-                            const imgContainer = document.createElement('div');
-                            imgContainer.className = 'img-container';
+        const groupButton = document.createElement('a');
+        groupButton.href = '#';
+        groupButton.className = 'groupButton';
+        groupButton.textContent = groupName;
+         groupContainer.appendChild(groupButton);
 
-                            const image = document.createElement('img');
-                            image.src = tvgLogo;
-                            image.classList.add('rimg');
-                            image.loading = 'lazy';
+         groupData.forEach(({ tvgLogo, name, link }) => {
+            const imgContainer = document.createElement('div');
+            imgContainer.className = 'img-container';
 
-                            const nameElement = document.createElement('p');
-                            nameElement.textContent = name;
-                            nameElement.classList.add('t');
+            const image = document.createElement('img');
+            image.src = tvgLogo;
+            image.classList.add('rimg');
+            image.loading = 'lazy';
 
-                            imgContainer.appendChild(image);
-                            imgContainer.appendChild(nameElement);
+            const nameElement = document.createElement('p');
+            nameElement.textContent = name;
+            nameElement.classList.add('t');
+
+            imgContainer.appendChild(image);
+            imgContainer.appendChild(nameElement);
 
                             imgContainer.onclick = () => playLinkContent(name, link);
  
@@ -1092,8 +1116,7 @@ function updateMenuContent(data) {
         groupButton.href = '#';
         groupButton.className = 'groupButton';
         groupButton.textContent = groupName;
-        groupButton.onclick = () => showGroupContent(groupName, data[groupName]);
-        groupContainer.appendChild(groupButton);
+         groupContainer.appendChild(groupButton);
 
         data[groupName].forEach(({ tvgLogo, name, link }) => {
             const imgContainer = document.createElement('div');
@@ -1393,8 +1416,14 @@ function playLinkContent(name,link) {
         }
     }
     saveDataToLocalStorage(savedData);
-
     updateSavedContent(savedData);
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = `已保存`;
+     document.body.appendChild(notification);
+     setTimeout(() => {
+        document.body.removeChild(notification);
+    }, 2000);
 });
 
 function getNewId() {
@@ -1496,6 +1525,13 @@ function getNewId() {
                             artist: ''
                         });
                     }).catch(error => {//302跳转非直链m3u8无法使用hls.js播放
+                     const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = `尝试使用浏览器播放`;
+     document.body.appendChild(notification);
+     setTimeout(() => {
+        document.body.removeChild(notification);
+    }, 1000);
                  window.open(url, "_blank");
                     });
                 }
@@ -1969,7 +2005,13 @@ function backupLocalStorage() {
       reader.onload = function(e) {
         backupData = JSON.parse(e.target.result);
         restoreButton.disabled = false;
-        alert("已成功读取备份文件！");
+        const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = ` 已成功读取备份文件！`;
+     document.body.appendChild(notification);
+     setTimeout(() => {
+        document.body.removeChild(notification);
+    }, 2000);
       };
 
       reader.readAsText(file);
@@ -1994,7 +2036,13 @@ function backupLocalStorage() {
       localStorage.setItem("blurLevel", backupData.blurLevel);
       var savedData = backupData.savedData || [];
       localStorage.setItem("savedData", JSON.stringify(savedData));
-      alert("已成功恢复备份数据！");// 刷新页面
+      const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = `已成功恢复备份数据！`;
+     document.body.appendChild(notification);
+     setTimeout(() => {
+        document.body.removeChild(notification);
+    }, 1000);   
       location.reload();
     }
     document.getElementById("next-page-btn").addEventListener("click", function() {
@@ -2075,7 +2123,6 @@ document.querySelector(".about").addEventListener("click", function() {
           return program.name;
         }
       }
-
       return "节目未知";
     }
 
