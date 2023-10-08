@@ -1048,7 +1048,7 @@ imgContainer.addEventListener('touchstart', (e) => {
       showContextMenu(touchStartX, touchStartY, name, link, () => saveContent(link, name, imgContainer));
     }
   }, 500);
-});
+}, { passive: true });
 
 imgContainer.addEventListener('touchmove', (e) => {
   const touchMoveX = e.touches[0].clientX;
@@ -1155,7 +1155,7 @@ imgContainer.addEventListener('touchstart', (e) => {
       showContextMenu(touchStartX, touchStartY, name, link, () => saveContent(link, name, imgContainer));
     }
   }, 500);
-});
+}, { passive: true });
 
 imgContainer.addEventListener('touchmove', (e) => {
   const touchMoveX = e.touches[0].clientX;
@@ -1208,8 +1208,13 @@ function showContextMenu(x, y, name, link, onSaveCallback) {
     contextMenu.style.position = 'absolute';
     contextMenu.style.left = x + 'px';
 
-     const menuHeight = 50;  
-    contextMenu.style.top = (y - menuHeight) + 'px';
+     const menuHeight = 50;
+const windowHeight = window.innerHeight;
+const scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+const topPosition = Math.min(y - menuHeight + scrollTop, windowHeight - menuHeight + scrollTop);
+contextMenu.style.top = topPosition + 'px';
+
 
     contextMenu.style.zIndex = '1000';
     contextMenu.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
@@ -2123,6 +2128,7 @@ document.querySelector(".about").addEventListener("click", function() {
           return program.name;
         }
       }
+
       return "节目未知";
     }
 
