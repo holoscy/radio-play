@@ -1,4 +1,4 @@
-body{margin:0;padding:0;background-position:center;background-repeat: no-repeat;background-size: cover;transition: 1s;}body.mobile button{margin:0 auto 0 8px}.app{width:100% ;margin:0}*{font-family:system-ui, -apple-system, Arial, sans-serif}option{font-family:inherit}.mobile .volume-level,audio{display:none!important}.control{transition: 0.5s;},select{cursor:pointer}button{border:none;font-weight: bold;width:50px;height:50px;display:inline-block;margin:auto;background:none center no-repeat;-webkit-background-size:20px 20px;background-size:20px}.player{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-box-align:stretch;-webkit-align-items:stretch;-ms-flex-align:stretch;align-items:stretch;margin-bottom:15px;text-align: center;}.player_title{margin:0 auto 15px auto;text-align:center}.volume-level{display:block;margin:0;-webkit-box-flex:1;-webkit-flex:1;-ms-flex:1;flex:1}.playlist_wrapper{margin-bottom:15px}.playlist_wrapper:last-child{margin-bottom:0}.title{text-align:center;margin:0 auto 15px auto}.playlist_title{text-align:center;margin:0 auto 15px auto}.playlist{padding:0;margin:0;list-style:none}.playlist_item{margin-bottom:5px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;-webkit-align-items: center;align-items:center}.playlist_item__logo{display:block;width:35px;height:35px;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;margin-right:15px;background:none center no-repeat; border-radius:5px }.playlist_item:last-child{margin-bottom:0}
+body{margin:0;padding:0;background-position:center;background-repeat: no-repeat;background-size: cover;transition: 1s;}body.mobile.app{width:100% ;margin:0}*{font-family:system-ui, -apple-system, Arial, sans-serif}option{font-family:inherit}.mobile .volume-level,audio{display:none!important}.control{transition: 0.5s;},select{cursor:pointer}button{border:none;font-weight: bold;width:50px;height:50px;display:inline-block;margin:auto;background:none center no-repeat;-webkit-background-size:20px 20px;background-size:20px}.player{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-box-align:stretch;-webkit-align-items:stretch;-ms-flex-align:stretch;align-items:stretch;margin-bottom:15px;text-align: center;}.player_title{margin:0 auto 15px auto;text-align:center}.volume-level{display:block;margin:0;-webkit-box-flex:1;-webkit-flex:1;-ms-flex:1;flex:1}.playlist_wrapper{margin-bottom:15px}.playlist_wrapper:last-child{margin-bottom:0}.title{text-align:center;margin:0 auto 15px auto}.playlist_title{text-align:center;margin:0 auto 15px auto}.playlist{padding:0;margin:0;list-style:none}.playlist_item{margin-bottom:5px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;-webkit-align-items: center;align-items:center}.playlist_item__logo{display:block;width:35px;height:35px;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;margin-right:15px;background:none center no-repeat; border-radius:5px }.playlist_item:last-child{margin-bottom:0}
 html{display: flex;
 flex-direction: column;
 min-height: 100vh;}
@@ -76,57 +76,34 @@ body{height:100%;min-height: 100vh;}
   transition: all 1.5s cubic-bezier(0.3, 1, 0.2, 1);
    -webkit-transition: all 1.5s cubic-bezier(0.3, 1, 0.2, 1);
 }
-.page {
-    display: none;
-}
+ .rpage {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
 
-.page.visible {
-    display: block;
-}
+        .rpage1 {
+            display: block;
+        }
 
-button.arrow1 .arrow2 {margin-left:auto;margin-right:auto;
-  -webkit-appearance: none;
-  background: transparent;
-  border: 0;
-  outline:0;
-}
+        .fadeIn {
+            opacity: 1 !important;
+        }
 
-.arrow {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  margin-top: -45px;
-  margin-left: -35px;
-  width: 70px;
-  height: 90px;
+        .fadeOut {
+            opacity: 0 !important;
+        }
+button.switch{width:30px;height:35px; margin-right:auto;margin-left:0;
+padding:0;
 }
-.arr{stroke: var(--triangle-color, black);}
-.left {
-  left: 42%;
+button.sha{width:30px;height:35px; margin-left:0;margin-right:5px;
+padding:0;
 }
-
-.right {
-  left: 58%;
-}
-
-.left:hover polyline,
-.left:focus polyline {
-  stroke-width: 3;
-}
-
-.right:hover polyline,
-.right:focus polyline {
-  stroke-width: 3;
-}
-
-polyline {
-  transition: all 250ms ease-in-out;
-}
-.playBut {
-    display: inline-block;
+button.playBut {padding:0;width:30px;height:35px; margin-left:0;margin-right:5px;margin-bottom:11px;
     transition: all 0.5s ease;
 }
-
+button.rec {padding:0;width:30px;height:35px; margin-left:auto; margin-right:0;
+}
 .triangle {
     transition: all 0.7s ease-in-out;
     stroke-dasharray: 240;
@@ -367,6 +344,7 @@ width:auto;height:40px;filter: none;}
 svg:hover {transition: 0.5s;
              transform: scale(1.1);
         }
+
 img:hover {transition: 0.5s;
              transform: scale(1.1);
         }      
@@ -385,10 +363,10 @@ body.dark p{transition: 1s;
  filter: invert(90%);
 }
 body.dark img{transition: 0.5s;
-  filter: invert(85%);
+  filter: invert(90%);
 }
 body.dark path{transition: 0.5s;
-  filter: invert(85%);
+  filter: invert(90%);
 }
 #videoModal {
       display: none;
@@ -402,16 +380,19 @@ body.dark path{transition: 0.5s;
       align-items: center;
       z-index: 9999;
     }
-#videoContainer { text-align: center;
+
+    #videoContainer { text-align: center;
       position: relative; 
     }
-#closeButton { 
+
+    #closeButton { 
    top: 0;
   right: 0;
   margin: 10px;
   cursor: pointer;
 }
-#video { right:30%;
+
+    #video { right:30%;
       width: 70%;
       height:auto;
     }
@@ -442,6 +423,7 @@ body.dark path{transition: 0.5s;
     z-index: 1000; 
     transition: opacity 0.5s ease; 
 }
+
 .notification.hidden {
     opacity: 0;  
     pointer-events: none; 
