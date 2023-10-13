@@ -815,26 +815,34 @@ function startRecord() {
         isRecording = true;  
     }
 }
+ function showPage() {
+        var rpage1 = document.getElementById('rpage1');
+        var rpage2 = document.getElementById('rpage2');
 
-function showPage(pageNumber) {
-    const pages = document.querySelectorAll('.page');
-    pages.forEach(page => page.classList.remove('visible'));
+        if (rpage1.classList.contains('fadeIn')) {
+             rpage1.classList.remove('fadeIn');
+            rpage1.classList.add('fadeOut');
 
-    const targetPage = document.getElementById(`page${pageNumber}`);
-    if (targetPage) {
-        targetPage.classList.add('visible');
+            rpage2.classList.remove('fadeOut');
+            rpage2.classList.add('fadeIn');
+            
+            setTimeout(function () {
+                rpage1.style.display = 'none';
+                rpage2.style.display = 'block';
+            }, 300);  
+        } else {
+             rpage2.classList.remove('fadeIn');
+            rpage2.classList.add('fadeOut');
+
+            rpage1.classList.remove('fadeOut');
+            rpage1.classList.add('fadeIn');
+
+            setTimeout(function () {
+                rpage2.style.display = 'none';
+                rpage1.style.display = 'block';
+            }, 300); 
+        }
     }
-
-    hideButtons();
-
-    if (pageNumber === 2) {
-        const arrow1Button = document.querySelector('.arrow1');
-        arrow1Button.style.display = 'block';
-    } else if (pageNumber === 1) {
-        const arrow2Button = document.querySelector('.arrow2');
-        arrow2Button.style.display = 'block';
-    }
-}
 const contentContainer = document.getElementById("content-container");
 const toggleButton = document.getElementById("toggleButton");
 
@@ -877,11 +885,6 @@ const savedContainer = document.getElementById("savedC");
 savedContainer.addEventListener("mouseleave", () => {
   savedContainer.style.overflowY = "hidden";  
 });
-
-function hideButtons() {
-    const arrowButtons = document.querySelectorAll('.arrow1, .arrow2');
-    arrowButtons.forEach(button => button.style.display = 'none');
-}
  
 document.addEventListener("DOMContentLoaded", function() {  
     const openMenuButton = document.getElementById("openMenuButton");
@@ -1601,23 +1604,6 @@ function getNewId() {
     });
  
 
-   const arrowButtons = document.querySelectorAll('.arrow1, .arrow2');
-
-    arrowButtons.forEach(button => {
-        button.style.display = 'none';
-
-        button.parentElement.addEventListener('mouseenter', function() {
-            button.style.display = 'block';
-        });
-
-        button.parentElement.addEventListener('mouseleave', function() {
-            button.style.display = 'none';
-        });
-    });
-
-    showPage(1);
-    hideButtons();
-  
   if (localStorage.getItem("backgroundImage")) {
     var backgroundImage = localStorage.getItem("backgroundImage");
     document.body.style.backgroundImage = `url(${backgroundImage})`;
