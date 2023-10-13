@@ -15,7 +15,7 @@
     <h1 class="player_title">HIT FM </h1>
     <div class="player" >
         <button class="control mute-button" style="margin-left:auto;margin-right:5px"></button>
-        <input type="range" name="volume-level" class="control volume-level" min="0" max="100" step="1" value="100" style="margin-left:5px;margin-right:5px;max-width: 250px">
+        <input type="range" name="volume-level" class="control volume-level" min="0" max="100" step="1" value="100" style="margin-left:5px;margin-right:5px;max-width: 15em">
         <button class="control play-button" style="margin-left:5px;margin-right:2px"></button>
         <button id="showButton" class="control" style="margin-left:2px;margin-right:auto"><?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" height="25px" viewBox="0 0 26 26" style="transform: translateY(2px);"><defs><style>.cls-1 {fill: none;stroke: #000;stroke-linecap: round;stroke-linejoin: round;
@@ -24,50 +24,37 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
  <div class="container">
   <div class="ite item-left">
   <div class="top"  style="display:flex;align-items:center;"> 
-  <button class="arrow1" onclick="showPage(1)">
-  <svg width="21px" height="28px" viewBox="0 0 50 80" xml:space="preserve">
-    <polyline fill="none"  class="arr" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="
-	45.63,75.8 0.375,38.087 45.63,0.375 "/>
-  </svg>  
-</button>   
- <div style="display: flex; align-items: center; margin-left: auto;margin-right: 1em;">
-    <button onclick="startRecord()" style="margin-left: auto; margin-right: 0;">
+     <button class="rec" onclick="startRecord()" style="margin-left: auto;">
         <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" class="custom-filter">
             <path d="m12,0C5.38,0,0,5.38,0,12s5.38,12,12,12,12-5.38,12-12S18.62,0,12,0Zm-2,7c0-1.11.9-2,2-2s2,.89,2,2v5c0,1.1-.9,2-2,2s-2-.9-2-2v-5Zm3,10.92v1.08c0,.55-.45,1-1,1s-1-.45-1-1v-1.08c-2.83-.48-5-2.95-5-5.92,0-.55.45-1,1-1s1,.45,1,1c0,2.21,1.79,4,4,4s4-1.79,4-4c0-.55.45-1,1-1s1,.45,1,1c0,2.97-2.17,5.44-5,5.92Z"/>
         </svg>
     </button>
-
-    <div style="margin-left: 0;">
+   <button class="sha">
         <a href="https://www.shazam.com/">
             <img src="./icons/shazam.svg" style="width:20px" alt="shazam Logo">
         </a>
-    </div>
-</div>
-
+   </button>
 <div class="input-boxLine" style="display:flex;align-items:center;margin-left:0;margin-right:0;">
 	<input id="inputUrl" input type="text" required />
 	<div class="line"></div>
 	<span>WE PLAY ONLY THE HITS</span>
 </div>
-<button onclick="cplay()" style="margin-left:0;margin-right:auto">
-    <a href="#" class="playBut">
+<button class="playBut" onclick="cplay()">
          <svg version="1.1"
              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
              x="0px" y="0px" width="40px" height="40px" viewBox="0 0 213.7 213.7" enable-background="new 0 0 213.7 213.7"
              xml:space="preserve">
-            <polygon class="triangle" id="XMLID_18_" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="73.5,62.5 148.5,105.8 73.5,149.1"/>
+            <polygon class="triangle" id="XMLID_18_" fill="none" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="73.5,62.5 148.5,105.8 73.5,149.1"/>
         </svg>
-    </a>
 </button>
-<button class="arrow2" onclick="showPage(2)">
-  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="21px" height="28px" viewBox="0 0 50 80" xml:space="preserve">
-    <polyline fill="none" class="arr"  stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="
-	0.375,0.375 45.63,38.087 0.375,75.8 "/>
-  </svg>
+<button class="switch" onclick="showPage()">
+  <?xml version="1.0" encoding="UTF-8"?>
+<svg  xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 733.29 800"><defs> <style>.cls-15 {fill: #0f0f0f;}</style></defs><path class="cls-15" d="m590.53,57.2c-13.04-13.09-13.04-34.3,0-47.39,13.04-13.09,34.19-13.09,47.23,0l75.72,75.98.44.45c25.88,26.17,25.82,68.44-.18,94.54l-75.82,76.08c-13.03,13.08-34.16,13.08-47.19,0-13.03-13.08-13.03-34.28,0-47.36l42.68-42.83H133.35c-18.41,0-33.33,14.92-33.33,33.33v233.33c0,18.41-14.92,33.33-33.33,33.33s-33.33-14.92-33.33-33.33v-233.33c0-55.23,44.77-100,100-100h499.83l-42.65-42.8Z"/><path class="cls-15" d="m700.02,366.67c0-18.41-14.92-33.33-33.33-33.33s-33.33,14.92-33.33,33.33v233.33c0,18.41-14.92,33.33-33.33,33.33H100.11l42.65-42.8c13.04-13.09,13.04-34.3,0-47.39-13.04-13.08-34.18-13.08-47.23,0l-75.72,75.99-.44.44c-25.89,26.17-25.83,68.44.18,94.54l75.82,76.08c13.03,13.08,34.16,13.08,47.19,0,13.03-13.08,13.03-34.28,0-47.36l-42.69-42.83h500.15c55.23,0,100-44.77,100-100v-233.33Z"/>
+</svg>
 </button>
 </div>
 
-<div id="page1" class="page visible">
+<div id="rpage1" class="rpage rpage1 fadeIn">
    <div class="player">
     <button class="df-button" onclick="playHitFM1()" style="background-image: url(./icons/hit1.png)"></button>
     <button class="df-button" onclick="playHitFM2()" style="background-image: url(./icons/hit广州.png)"></button>
@@ -85,7 +72,7 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
 </div>
 
  </div>
-<div id="page2" class="page">
+<div id="rpage2" class="rpage fadeOut">
 
    <div class="player">
     <button class="df-button" onclick="playZ100()" style="background-image: url(./icons/z100.png)"></button>
@@ -108,6 +95,7 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
      <div id="songInfo"></div>
 
 <div id="content-container">
+
     <div class="date" style="display:flex;justify-content:center;align-items:center;margin-bottom:10px;">
      <span for="datepicker" >Date</span>
 <input type="date" name="datepicker" id="datePicker"> 
@@ -221,9 +209,11 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
      <button id="addRowButton">添加单个</button>
     <button id="saveButton">保存单个</button>
     <button id="closeMenuButton">关闭界面</button>  </div>
+
   </div>
 
        <div class="ite item-center">
+
 </div> 	
  	<div class="ite item-right">
 <div class="add-button">
