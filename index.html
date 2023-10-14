@@ -138,10 +138,10 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
         <label for="opacity2">透明度</label><input type="range" id="opacity2" min="0" max="1" step="0.01" value="1"><br>
         <label for="bg-color3">网页背景色</label><input type="color" id="bg-color3" value="#ffffff"><br>
         <label for="opacity3">网页透明度</label><input type="range" id="opacity3" min="0" max="1" step="0.01" value="1">
-        <button id="toggleButton">切换隐藏外部链接按钮</button>
-        <button id="toggButton">切换隐藏TAVR</button><hr>
-        <button id="next-page-btn">下一页</button>
-        <button id="about-btn">关于</button>
+        <button class="set" id="toggleButton">切换隐藏外部链接按钮</button>
+        <button class="set" id="toggButton">切换隐藏TAVR</button><hr>
+        <button class="set" id="next-page-btn">下一页</button>
+        <button class="set" id="about-btn">关于</button>
      </div>  
         <div class="page page2">
         <label for="bg-position-select">背景图位置</label>
@@ -154,16 +154,16 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
         <label for="blur-slider">背景模糊</label> 
         <input type="range" id="blur-slider" min="0" step="0.01" max="20" value="0">
 
-        <button id="select-online-bg-btn">选择在线图片</button>
-        <button id="select-local-bg-btn">选择本地图片</button>
-        <button id="clear-bg-btn">清除背景图</button>
+        <button class="set" id="select-online-bg-btn">选择在线图片</button>
+        <button class="set" id="select-local-bg-btn">选择本地图片</button>
+        <button class="set" id="clear-bg-btn">清除背景图</button>
         
          <hr> <!-- Add a horizontal line -->
-        <button onclick="backupLocalStorage()">备份数据</button>
+        <button class="set" onclick="backupLocalStorage()">备份数据</button>
         <input id="fileInput" type="file" accept=".json" style="display: none;">
-        <button onclick="selectBackupFile()">选择备份文件</button>
-        <button onclick="restoreLocalStorage()" disabled id="restoreButton">恢复数据</button>
-        <button id="prev-page-btn">上一页</button>
+        <button class="set" onclick="selectBackupFile()">选择备份文件</button>
+        <button class="set" onclick="restoreLocalStorage()" disabled id="restoreButton">恢复数据</button>
+        <button class="set" id="prev-page-btn">上一页</button>
     </div>
      <div class="page about">
 <a href="https://greasyfork.org/zh-CN/scripts/470185" >云听网页节目HD下载</a><br>
@@ -179,7 +179,10 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
         <button id="about-btn">关于</button>
     </div>
 </div>
+
 </div>
+
+
 <div id="videoModal">
   <div id="videoContainer">
     <button id="closeButton"><?xml version="1.0" encoding="UTF-8"?>
@@ -205,10 +208,10 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
         <div id="btContainer">  
     <label for="m3uTextarea"> M3U内容:</label>
     <input id="m3uTextarea" rows="10" placeholder="Paste M3U content here"></input>
-    <button onclick="parseM3UFromTextarea()">解析m3u</button>
-     <button id="addRowButton">添加单个</button>
-    <button id="saveButton">保存单个</button>
-    <button id="closeMenuButton">关闭界面</button>  </div>
+    <button class="set" onclick="parseM3UFromTextarea()">解析m3u</button>
+     <button class="set" id="addRowButton">添加单个</button>
+    <button class="set" id="saveButton">保存单个</button>
+    <button class="set" id="closeMenuButton">关闭界面</button>  </div>
 
   </div>
 
