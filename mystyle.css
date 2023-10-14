@@ -329,7 +329,7 @@ text-overflow: clip;transition: 1s; }
     overflow-y: auto; 
 }
 #btContainer {
-    max-height: 15%;
+    height: 15%;
     overflow-y: auto;
 }
  #menu {
@@ -339,7 +339,7 @@ text-overflow: clip;transition: 1s; }
     right: 0;
     margin: 0 auto; 
     width: 80%;
-    height:70%;
+    height:75%;
     padding: 20px;
     background-color: #e5e5e5;
     z-index: 999;
