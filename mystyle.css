@@ -329,7 +329,7 @@ text-overflow: clip;transition: 1s; }
     overflow-y: auto; 
 }
 #btContainer {
-    height: 30%;
+    max-height: 15%;
     overflow-y: auto;
 }
  #menu {
