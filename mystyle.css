@@ -329,9 +329,8 @@ text-overflow: clip;transition: 1s; }
     overflow-y: auto; 
 }
 #btContainer {
-    height: 20%;
+    height: 30%;
     overflow-y: auto;
-    box-sizing: border-box;
 }
  #menu {
     position: fixed; 
