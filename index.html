@@ -107,9 +107,9 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
         <button class="link-button" onclick="gotoURL()" style="background-image: url(./icons/dl.png)"> </button>
        </div> 
        <div class="player">
-       <button class="link-button" onclick="goToWebpage1()" style="background-image: url(./icons/top20.png)"> </button>
+       <button class="link-button" id="top20" style="background-image: url(./icons/top20.png)"> </button>
        <button class="link-button" onclick="goToWebpage2()" style="background-image: url(./icons/mv.png)"> </button>
-       <button class="link-button" onclick="goToWebpage3()" style="background-image: url(./icons/at4.png)"> </button>
+       <button class="link-button" id="at40" style="background-image: url(./icons/at4.png)"> </button>
        </div> 
          </div>
 </div>
@@ -168,7 +168,7 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
      <div class="page about">
 <a href="https://greasyfork.org/zh-CN/scripts/470185" >云听网页节目HD下载</a><br>
      <p class="t">网易云音乐网页建议搭配脚本使用,<br>网易云仅提供PC端快捷搜索  <br>自定义数据及添加的电台数据使用本地存储 <br>备份导出导入的数据包括1.自定义设置<br>和2.添加到主页的电台数据<br>部分电台有ip限制和ipv6的支持</p><hr><p class="t"> 由于部分浏览器安全限制，'不能'<br>在https下播放http的m3u8链接<br>不能加载http来源的图片<br>   解决方法1.把http改为https<br>(部分链接只支持http) 或者<br>2. 对当前网站设置允许不安全内容</p><hr><p class="t">对于302跳转解析触发跨域问题的<br>m3u8链接会转为使用浏览器打开<br>手机浏览器应该可以直接播放，电脑上<br>给浏览器安装hls播放扩展插件即可</p><hr><p class="t">m3u解析格式: #EXTINF:  tvg-logo<br>="图片链接" group-title<br>="分组名",电台名 
-电台链接<br>比如<a href="https://raw.githubusercontent.com/goolguy007/radioer/main/TVradio" > '这个链接' </a>中的格式<br></p><hr> 
+电台链接<br>比如<a href="https://raw.githubusercontent.com/goolguy007/radioer/main/TVradio" > '这个链接' </a>中的格式<br></p><hr> <p class="t">yAudio音频播放器来自<a href="https://github.com/ZHOUYUANN/yAudio" > @ZHOUYUANN </a></p><hr>
 <a href="https://greasyfork.org/zh-CN/scripts/406054" >1.显示完整歌单</a><br>
 <a href="https://greasyfork.org/zh-CN/scripts/438148" >2.lx-music 辅助脚本
 </a><br>
@@ -182,7 +182,15 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
 
 </div>
 
-
+<div id="musicModal"> <div id="musiccontain"> 
+<div class="yAudio" id="yAudio"></div>
+    <script src="./yAudio.js"></script>
+    <button id="closeButton2"><?xml version="1.0" encoding="UTF-8"?>
+<svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800"><defs><style>.cls-10 {fill: none;stroke: #fff;stroke-linecap: round;
+}.cls-10, .cls-21 { stroke-linejoin: round; stroke-width: 66.67px;}.cls-21 {fill: #2f88ff; stroke: #000; }.cls-31 {fill: rgba(255, 255, 255, 0); }</style> </defs><rect class="cls-31" width="800" height="800"/><path class="cls-21" d="m400,733.33c184.09,0,333.33-149.24,333.33-333.33S584.09,66.67,400,66.67,66.67,215.9,66.67,400s149.24,333.33,333.33,333.33Z"/>
+ <path class="cls-10" d="m494.28,305.72l-188.56,188.56"/><path class="cls-10" d="m305.72,305.72l188.56,188.56"/>
+</svg></button></div>
+    </div>
 <div id="videoModal">
   <div id="videoContainer">
     <button id="closeButton"><?xml version="1.0" encoding="UTF-8"?>
