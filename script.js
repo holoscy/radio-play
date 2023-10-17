@@ -603,10 +603,14 @@ function cplay() {
 }
 
  const videoModal = document.getElementById('videoModal');
+ const musicModal = document.getElementById('musicModal');
   const videoContainer = document.getElementById('videoContainer');
   const video = document.getElementById('video');
   const showButton = document.getElementById('showButton');
-  const closeButton = document.getElementById('closeButton');
+  const closeButton = document.getElementById('closeButton'); 
+  const top20 = document.getElementById('top20');
+  const at40 = document.getElementById('at40');
+  const closeButton2 = document.getElementById('closeButton2');
 
   showButton.addEventListener('click', function () {
     videoModal.style.display = 'flex';
@@ -614,6 +618,16 @@ function cplay() {
 
   closeButton.addEventListener('click', function () {
      videoModal.style.display = 'none';
+  }); 
+  top20.addEventListener('click', function () {
+    musicModal.style.display = 'flex';
+  });
+  at40.addEventListener('click', function () {
+    musicModal.style.display = 'flex';
+  });
+
+  closeButton2.addEventListener('click', function () {
+     musicModal.style.display = 'none';
   });
 
 function addLinksToSongInfo(title) {
@@ -1726,7 +1740,9 @@ function checkThemeMode() {
     document.body.classList.add("dark");
     isDarkMode = true;
     var storedColor = localStorage.getItem("triangleColor");
+    var storedColor2 = localStorage.getItem("--background-color");
     document.body.style.setProperty("--triangle-color", storedColor);
+    document.body.style.setProperty("--background-color", storedColor2);
     var controlElements = document.querySelectorAll(".control");
     for (var i = 0; i < controlElements.length; i++) {
       var controlElement = controlElements[i];
@@ -1743,6 +1759,8 @@ function toggleDarkMode() {
     localStorage.setItem("themeMode", "default");
     darkModeButton.style.background = "url(./icons/light.svg)";
     document.body.style.setProperty("--triangle-color", "black");
+   document.body.style.setProperty("--background-color", "#fff");
+   localStorage.setItem("--background-color", "#fff");
     localStorage.setItem("triangleColor", "black");
     var controlElements = document.querySelectorAll(".control");
     for (var i = 0; i < controlElements.length; i++) {
@@ -1755,6 +1773,8 @@ function toggleDarkMode() {
     localStorage.setItem("themeMode", "dark");
     darkModeButton.style.background = "url(./icons/dark.svg)";
     document.body.style.setProperty("--triangle-color", "white");
+    document.body.style.setProperty("--background-color", "#424242");
+    localStorage.setItem("--background-color", "#424242");
     localStorage.setItem("triangleColor", "#E5E5E5");
     var controlElements = document.querySelectorAll(".control");
     for (var i = 0; i < controlElements.length; i++) {
@@ -1776,24 +1796,14 @@ function toggleDarkMode() {
 
  window.location.href = url;
 }
-          function goToWebpage1() {
-  const url = "https://music.163.com/#/playlist?id=6705531149";
-    window.location.href = url;
-}
-          function goToWebpage2() {
+         function goToWebpage2() {
   const url = "https://www.acfun.cn/u/633603";
     window.location.href = url;
 }
-          function goToWebpage3() {
-  const url = "https://music.163.com/#/playlist?id=6659816005";
-    window.location.href = url;
-}
+ 
 	     function updateProgramLink() {
   const selectedDate = document.getElementById("datePicker").value;
-
-  // construct the new URL with the selected date
-  const url = `https://www.radio.cn/pc-portal/sanji/passProgram.html?channel_name=662&program_name=undefined&date_checked=${selectedDate}`;
-
+   const url = `https://www.radio.cn/pc-portal/sanji/passProgram.html?channel_name=662&program_name=undefined&date_checked=${selectedDate}`;
     window.location.href = url;
 }
       function gotoURL() {
@@ -2125,3 +2135,66 @@ document.querySelector(".about").addEventListener("click", function() {
     }
     updateProgramName();
     setInterval(updateProgramName, 60000);
+      
+document.getElementById('top20').addEventListener('click', function () {
+  if (!hasFetched) {
+    clearAudio();
+    fetchmusic('https://api.i-meto.com/meting/api?server=netease&type=playlist&id=6705531149');
+  }
+   removeDynamicButton();
+   createDynamicButton('https://music.163.com/#/playlist?id=6705531149');
+});
+
+document.getElementById('at40').addEventListener('click', function () {
+  if (!hasFetched2) {
+    clearAudio();
+    fetchmusic('https://api.i-meto.com/meting/api?server=netease&type=playlist&id=6659816005');
+  }
+    removeDynamicButton();
+   createDynamicButton('https://music.163.com/#/playlist?id=6659816005');
+});
+
+let hasFetched = false;
+let hasFetched2 = false;
+
+function fetchmusic(url) {
+  fetch(url).then(async (response) => {
+    const audio = await response.json();
+    new YAudio({
+      element: document.querySelector('#yAudio'),
+      audio: audio,
+    });
+    if (url.includes('6705531149')) {
+      hasFetched = true;
+    } else if (url.includes('6659816005')) {
+      hasFetched2 = true;
+    }
+  });
+}
+
+function clearAudio() {
+  const yAudioElement = document.querySelector('#yAudio');
+  while (yAudioElement.firstChild) {
+    yAudioElement.removeChild(yAudioElement.firstChild);
+  }
+  hasFetched = false;
+  hasFetched2 = false;
+}
+function createDynamicButton(playlistUrl) {
+   const dynamicButton = document.createElement('button');
+  dynamicButton.setAttribute('id', 'nelist');
+  dynamicButton.textContent = '前往歌单页面';
+  dynamicButton.addEventListener('click', function() {
+    window.location.href = playlistUrl;
+  });
+
+  const musicModal = document.getElementById('musiccontain');
+  musicModal.appendChild(dynamicButton);
+}
+
+function removeDynamicButton() {
+  const existingButton = document.getElementById('nelist');
+  if (existingButton) {
+    existingButton.parentNode.removeChild(existingButton);
+  }
+}
