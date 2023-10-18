@@ -95,6 +95,7 @@
           </figure>
         </div>
         <div class="yAudio-content">
+        <div class="yAudio-playlist"></div>
           <header class="yAudio-header">
             <div class="yAudio-play">
               <svg
@@ -119,7 +120,7 @@
               <p class="yAudio-author">${this.music.author}</p>
               <p class="yAudio-title">${this.music.title}</p>
             </div>
-            <div class="yAudio-time">3 小时</div>
+            
           </header>
           <main class="yAudio-main">
             <div class="yAudio-waveform">
