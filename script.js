@@ -164,7 +164,16 @@ function setCurrentData(data) {
             sizes: '500x500',
             type: 'image/jpg'
         }];
+    } else {
+       mediaMetadata.title = currentData.song;
+        mediaMetadata.artist = currentData.singer;
+        mediaMetadata.artwork = [{
+            src: co,
+            sizes: '200x200',
+            type: 'image/png'
+        }];
     }
+
     navigator.mediaSession.metadata = mediaMetadata;
 }
 
@@ -175,7 +184,7 @@ var mediaMetadata = new MediaMetadata({
 });
 
 function playAudio() {
-      
+      audio.pause();
     document.body.classList.add('loading');
     var srcSelect = document.getElementById('src_select');
     var value = JSON.parse(srcSelect['value']);
@@ -196,8 +205,13 @@ function playAudio() {
                     sizes: '500x500',
                     type: 'image/jpg'
                 }];
-            } 
-
+            } else {                
+                    mediaMetadata.artwork = [{
+                        src: co,
+                        sizes: '200x200',
+                        type: 'image/png'
+                    }];                
+            }
           navigator.mediaSession.metadata = mediaMetadata;
         }
     });
@@ -419,38 +433,11 @@ if (data['video']) {
     }
     return result;
 }
-    var selectElement = document.getElementById("src_select");
-    var playlistTitleContainer = document.getElementById("playlist_title_container");
-    var previousPlaylistTitleContainer = document.getElementById("previous_playlist_title_container");
-    var select = document.getElementById("src_select");
-    var previousPlaylistWrapper = document.getElementById("previous_playlist_wrapper");   
-     window.addEventListener("DOMContentLoaded", function() {
-        playlistTitleContainer.style.display = "none";
-        previousPlaylistTitleContainer.style.display = "none";
-    });
-
-    selectElement.addEventListener("change", function() {
-        if (selectElement.value === "") {
-            playlistTitleContainer.style.display = "none";
-            previousPlaylistTitleContainer.style.display = "none";
-        } else {
-            playlistTitleContainer.style.display = "block";
-            previousPlaylistTitleContainer.style.display = "block";
-        }
-    });
-
-    select.addEventListener("change", function () {
-        if (select.value === '') {
-            playlist_title_container.style.display = "none";
-            previousPlaylistWrapper.style.display = "none"; // Hide
-        } else {playlist_title_container.style.display = "block";
-            previousPlaylistWrapper.style.display = "block"; // Show
-        }
-    });
 
     const audio = document.getElementById('audio');
     const inputUrl = document.getElementById('inputUrl');
- 
+    const co = 'https://raw.githubusercontent.com/darkduck9/radio-play/darkduck9-patch-1/icons/hit.png';
+
 let currentHls = null; // Store the current HLS instance
 var selectElement = document.getElementById("src_select");
 
@@ -458,7 +445,6 @@ var desiredOption = selectElement.querySelector("option[value='']");
 
 function play(url,title) {
   document.body.classList.add('loading');
-  const co = 'https://raw.githubusercontent.com/darkduck9/radio-play/darkduck9-patch-1/icons/hit.png';
   navigator.mediaSession.metadata = new MediaMetadata({
             title:title,
             artist: 'HITFM Player',
@@ -471,7 +457,7 @@ function play(url,title) {
   const songInfoDiv = document.getElementById('songInfo');
   songInfoDiv.style.display = 'none';
   desiredOption.selected = true;
-
+  audio.pause();
   if (currentHls) {
     currentHls.destroy();
   }
@@ -879,7 +865,49 @@ document.addEventListener("DOMContentLoaded", function() {
     const savedContent = document.getElementById("savedContent");
     const closeMenuButton = document.getElementById("closeMenuButton");  
     
-   
+        var selectElement = document.getElementById("src_select");
+    var playlistTitleContainer = document.getElementById("playlist_title_container");
+    var previousPlaylistTitleContainer = document.getElementById("previous_playlist_title_container");
+    var select = document.getElementById("src_select");
+    var previousPlaylistWrapper = document.getElementById("previous_playlist_wrapper");   
+        playlistTitleContainer.style.display = "none";
+        previousPlaylistTitleContainer.style.display = "none";
+        selectElement.addEventListener("change", function() {
+         
+        if (selectElement.value === '') {
+            if (playlistTitleContainer) {
+                playlistTitleContainer.style.display = "none";
+            }
+            if (previousPlaylistTitleContainer) {
+                previousPlaylistTitleContainer.style.display = "none"; // Hide
+            }
+        } else {
+            if (playlistTitleContainer) {
+                playlistTitleContainer.style.display = "block";
+            }
+            if (previousPlaylistTitleContainer) {
+                previousPlaylistTitleContainer.style.display = "block"; // Show
+            }
+        }
+    });
+
+    select.addEventListener("change", function () {
+        if (select.value === '') {
+            if (playlist_title_container) {
+                playlist_title_container.style.display = "none";
+            }
+            if (previousPlaylistWrapper) {
+                previousPlaylistWrapper.style.display = "none"; // Hide
+            }
+        } else {
+            if (playlist_title_container) {
+                playlist_title_container.style.display = "block";
+            }
+            if (previousPlaylistWrapper) {
+                previousPlaylistWrapper.style.display = "block"; // Show
+            }
+        }
+    });
 let db;
 const dbName = 'Mradio';
 const dbVersion = 1;
@@ -1336,6 +1364,7 @@ document.addEventListener('DOMContentLoaded', loadSavedContent);
 
 
 function playLinkContent(name,link) {
+           audio.pause();
      const title = name;
      playmore(link, title);
   }
@@ -2117,10 +2146,11 @@ document.getElementById('top20').addEventListener('click', function () {
 if (playlistElement) {
      var newParagraph = document.createElement('p');
      newParagraph.innerText = 'Hit FM Top 20 Countdown';
+     newParagraph.style.fontSize = '18px';
      playlistElement.innerHTML = '';
      playlistElement.appendChild(newParagraph);
   }
-  }, 1000);  
+  }, 2000);  
 });
 
 document.getElementById('at40').addEventListener('click', function () {
@@ -2135,10 +2165,11 @@ document.getElementById('at40').addEventListener('click', function () {
 if (playlistElement) {
      var newParagraph = document.createElement('p');
      newParagraph.innerText = 'American Top 40';
+     newParagraph.style.fontSize = '18px';
      playlistElement.innerHTML = '';
      playlistElement.appendChild(newParagraph);
   }
-  }, 1000);   
+  }, 2000);   
 });
 
 let hasFetched = false;
