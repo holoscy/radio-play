@@ -420,18 +420,21 @@
       element.querySelector('.yAudio-pic').setAttribute('src', this.music.pic)
       element.querySelector('.yAudio-author').innerHTML = this.music.author
       element.querySelector('.yAudio-title').innerHTML = this.music.title
-
+    
       if (this.option.autoplay && !this._isMobile()) {
-        mediaMetadata.title = this.music.title;
-        mediaMetadata.artist = this.music.author;
-        mediaMetadata.artwork = [{
-            src: this.music.pic,
-            sizes: '300x300',
-            type: 'image/jpg'
-        }];
         this.onPlay()
-      }     
-      navigator.mediaSession.metadata = mediaMetadata;
+      }          
+        const mediaMetadata = new MediaMetadata({
+            title: this.music.title,
+            artist: this.music.author,
+            artwork: [{
+                src: this.music.pic,
+                sizes: '300x300',
+                type: 'image/jpg'
+            }]
+        });
+        navigator.mediaSession.metadata = mediaMetadata;
+     
       this.option.autoplay = true;
       if (playIndex > -1) {
         this.audio.pcm = this.pcm
