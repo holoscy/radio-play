@@ -2143,6 +2143,15 @@ document.getElementById('top20').addEventListener('click', function () {
   }
    removeDynamicButton();
    createDynamicButton('https://music.163.com/#/playlist?id=6705531149');
+  setTimeout(function () {
+    const playlistElement = document.querySelector('.yAudio-playlist');
+if (playlistElement) {
+     var newParagraph = document.createElement('p');
+     newParagraph.innerText = 'Hit FM Top 20 Countdown';
+     playlistElement.innerHTML = '';
+     playlistElement.appendChild(newParagraph);
+  }
+  }, 1000);  
 });
 
 document.getElementById('at40').addEventListener('click', function () {
@@ -2152,6 +2161,15 @@ document.getElementById('at40').addEventListener('click', function () {
   }
     removeDynamicButton();
    createDynamicButton('https://music.163.com/#/playlist?id=6659816005');
+  setTimeout(function () {
+    const playlistElement = document.querySelector('.yAudio-playlist');
+if (playlistElement) {
+     var newParagraph = document.createElement('p');
+     newParagraph.innerText = 'American Top 40';
+     playlistElement.innerHTML = '';
+     playlistElement.appendChild(newParagraph);
+  }
+  }, 1000);   
 });
 
 let hasFetched = false;
