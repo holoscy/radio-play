@@ -125,8 +125,8 @@
            srcSelect = document.getElementById('src_select');
            value = srcSelect['value'];
             document.body.classList.remove('loading');
-            timerID = setTimeout(function request() {
-                getTrackData(JSON.parse(select['value'])['request'], currentList, previousList);
+            timerID = setTimeout(function request() {if (select.value !== ''){
+                getTrackData(JSON.parse(select['value'])['request'], currentList, previousList);}
                 timerID = setTimeout(request, delay);
             },3000);
             eventEnabled = true;
@@ -151,21 +151,6 @@
 
             return Number(button.dataset['paused']);
         };
-function axioscover(callback) {
-    const defaultImageUrl = "https://raw.githubusercontent.com/darkduck9/radio-play/darkduck9-patch-1/icons/hit.png";
-    axios.get(defaultImageUrl, { responseType: 'blob' })
-        .then(response => {
-            const reader = new FileReader();
-            reader.onloadend = function () {
-                const dataURL = reader.result;
-                callback(dataURL); // 直接传递dataURL
-            };
-            reader.readAsDataURL(response.data);
-        })
-        .catch(error => {
-            console.error("Failed to load default image:", error);
-        });
-}
 
 var currentData;          
 function setCurrentData(data) {
@@ -179,19 +164,7 @@ function setCurrentData(data) {
             sizes: '500x500',
             type: 'image/jpg'
         }];
-    } else {
-        axioscover(function (dataURL) {
-             mediaMetadata.title = currentData.song;
-             mediaMetadata.artist = currentData.singer;
-             mediaMetadata.artwork = [{
-                src: dataURL,
-                sizes: '100x100',
-                type: 'image/png'
-            }];
-            navigator.mediaSession.metadata = mediaMetadata;
-        });
     }
-
     navigator.mediaSession.metadata = mediaMetadata;
 }
 
@@ -223,15 +196,7 @@ function playAudio() {
                     sizes: '500x500',
                     type: 'image/jpg'
                 }];
-            } else {
-                axioscover(function (dataURL) {
-                    mediaMetadata.artwork = [{
-                        src: dataURL,
-                        sizes: '100x100',
-                        type: 'image/png'
-                    }];
-                });
-            }
+            } 
 
           navigator.mediaSession.metadata = mediaMetadata;
         }
@@ -491,27 +456,21 @@ var selectElement = document.getElementById("src_select");
 
 var desiredOption = selectElement.querySelector("option[value='']");
 
-function play(url) {
+function play(url,title) {
   document.body.classList.add('loading');
-
+  const co = 'https://raw.githubusercontent.com/darkduck9/radio-play/darkduck9-patch-1/icons/hit.png';
+  navigator.mediaSession.metadata = new MediaMetadata({
+            title:title,
+            artist: 'HITFM Player',
+            artwork: [{
+                src: co,
+                sizes: '200x200',
+                type: 'image/png'
+            }]
+          });
   const songInfoDiv = document.getElementById('songInfo');
   songInfoDiv.style.display = 'none';
   desiredOption.selected = true;
-
-  // Set a default Blob image
-  axioscover(function (dataURL) {
-    const defaultMetadata = new MediaMetadata({
-      title: '',
-      artist: '',
-      artwork: [{
-        src: dataURL,
-        sizes: '100x100',
-        type: 'image/png'
-      }]
-    });
-
-    navigator.mediaSession.metadata = defaultMetadata;
-  });
 
   if (currentHls) {
     currentHls.destroy();
@@ -551,6 +510,11 @@ function play(url) {
           navigator.mediaSession.metadata = new MediaMetadata({
             title: titleMatch ? titleMatch[1].trim() : '',
             artist: artistMatch ? artistMatch[1].trim() : '',
+            artwork: [{
+                src: co,
+                sizes: '200x200',
+                type: 'image/png'
+            }]
           });
         } else {
           // If "url=" is not present, display the entire data
@@ -561,6 +525,11 @@ function play(url) {
           navigator.mediaSession.metadata = new MediaMetadata({
             title: data.frag.title,
             artist: '',
+            artwork: [{
+                src: co,
+                sizes: '200x200',
+                type: 'image/png'
+            }]
           });
         }
       }
@@ -599,7 +568,7 @@ function play(url) {
  
 function cplay() {
         const url = inputUrl.value;
-         play(url);
+         play(url,title);
 }
 
  const videoModal = document.getElementById('videoModal');
@@ -718,7 +687,7 @@ function setPlaybackInfo(url, title) {
   inputUrl.value = url;
   appTitle.textContent = title;
   document.title = title;
-  play(url);
+  play(url,title);
 
 }
 
@@ -1544,7 +1513,7 @@ function getNewId() {
                         document.body.classList.remove('loading');
                         navigator.mediaSession.metadata = new MediaMetadata({
                             title: title,
-                            artist: ''
+                            artist: 'HITFM Player'
                         });
                     }).catch(error => {//302跳转非直链m3u8无法使用hls.js播放
                      const notification = document.createElement('div');
