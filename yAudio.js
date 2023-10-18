@@ -434,7 +434,15 @@
             }]
         });
         navigator.mediaSession.metadata = mediaMetadata;
-     
+        const video = document.getElementById('video');
+        video.pause();
+      if (currentHls) {
+        currentHls.destroy();  
+    }
+    if (currentRequest !== null) {
+    clearTimeout(currentRequest);
+  }
+    desiredOption.selected = true;
       this.option.autoplay = true;
       if (playIndex > -1) {
         this.audio.pcm = this.pcm
