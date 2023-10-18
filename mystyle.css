@@ -462,7 +462,7 @@ body.dark path{transition: 0.5s;
   :root {
   --background-color: #fff;  
 }
-#musicModal {
+#musicModal {overflow-y: auto;
        display: none;
       position: fixed;
       top: 0;
@@ -474,7 +474,8 @@ body.dark path{transition: 0.5s;
       align-items: center;
       z-index: 9999;
     }
- #musiccontain{        display: flex;
+ #musiccontain{margin: auto;
+        display: flex;
        align-items: center;
       justify-content: center;
     flex-direction: column;
