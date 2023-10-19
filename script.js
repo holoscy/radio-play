@@ -436,8 +436,8 @@ if (data['video']) {
 
     const audio = document.getElementById('audio');
     const inputUrl = document.getElementById('inputUrl');
-    const co = 'https://raw.githubusercontent.com/darkduck9/radio-play/darkduck9-patch-1/icons/hit.png';
-
+    const co = 'https://p1.music.126.net/e9akTfr5SUJX9nIVdIYFHw==/109951164828622694.jpg'
+    const iheart = 'https://p1.music.126.net/J32qbemrQtkBMHiVq21Djw==/18723583511609689.jpg'
 let currentHls = null; // Store the current HLS instance
 var selectElement = document.getElementById("src_select");
 
@@ -497,7 +497,7 @@ function play(url,title) {
             title: titleMatch ? titleMatch[1].trim() : '',
             artist: artistMatch ? artistMatch[1].trim() : '',
             artwork: [{
-                src: co,
+                src: iheart,
                 sizes: '200x200',
                 type: 'image/png'
             }]
@@ -512,7 +512,7 @@ function play(url,title) {
             title: data.frag.title,
             artist: '',
             artwork: [{
-                src: co,
+                src: iheart,
                 sizes: '200x200',
                 type: 'image/png'
             }]
