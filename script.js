@@ -554,7 +554,7 @@ function play(url,title) {
  
 function cplay() {
         const url = inputUrl.value;
-         play(url,title);
+         play(url);
 }
 
  const videoModal = document.getElementById('videoModal');
@@ -674,7 +674,6 @@ function setPlaybackInfo(url, title) {
   appTitle.textContent = title;
   document.title = title;
   play(url,title);
-
 }
 
 var arrayRecord = [];
@@ -735,15 +734,17 @@ function hideRecordedTime() {
 
 function stopRecord() {
     if (currentRecord) {
-        download(currentRecord.data['audio'], "audio.mp3");
+         var FileName = appTitle.textContent + ".mp3";
+        download(currentRecord.data['audio'], FileName);
         currentRecord.hls.destroy();
-        currentRecord = null;  
-        startTime = null;  
-        hideRecordedTime();  
-        isRecording = false;  
+        currentRecord = null;
+        startTime = null;
+        hideRecordedTime();
+        isRecording = false;
     }
     cplay();
 }
+
 
 function startRecord() {
     if (isRecording) {
