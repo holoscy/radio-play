@@ -427,25 +427,7 @@
       if (this.option.autoplay && !this._isMobile()) {
         this.onPlay()
       }          
-        const mediaMetadata = new MediaMetadata({
-            title: this.music.title,
-            artist: this.music.author,
-            artwork: [{
-                src: this.music.pic,
-                sizes: '300x300',
-                type: 'image/jpg'
-            }]
-        });
-        navigator.mediaSession.metadata = mediaMetadata;
-        const video = document.getElementById('video');
-        video.pause();
-      if (currentHls) {
-        currentHls.destroy();  
-    }
-    if (currentRequest !== null) {
-    clearTimeout(currentRequest);
-  }
-    desiredOption.selected = true;
+         
       this.option.autoplay = true;
       if (playIndex > -1) {
         this.audio.pcm = this.pcm
@@ -691,13 +673,31 @@
       var totalWidth = element.querySelector('.yAudio-total').clientWidth
 
       this.playing = !this.playing
-
+      
       if (this.playing) {
         this.audio.play()
         this.start = true
         element.classList.add('start')
         element.classList.add('play')
-
+        const video = document.getElementById('video');
+        video.pause();
+       if (currentHls) {
+        currentHls.destroy();  
+    }
+    if (currentRequest !== null) {
+    clearTimeout(currentRequest);
+  }     
+  desiredOption.selected = true;
+   const mediaMetadata = new MediaMetadata({
+            title: this.music.title,
+            artist: this.music.author,
+            artwork: [{
+                src: this.music.pic,
+                sizes: '300x300',
+                type: 'image/jpg'
+            }]
+        });
+        navigator.mediaSession.metadata = mediaMetadata;      
         function getCurrentTime() {
           var proBarWidth =
             (self.audio.currentTime / self.audio.duration) * width
