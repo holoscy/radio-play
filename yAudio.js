@@ -417,6 +417,9 @@
       this.load = true
       this.attachAudioEvents()
       element.classList.add('load')
+      var originalPic = this.music.pic;
+      var parameterToAdd = "param=300y300";
+      this.music.pic = originalPic + "?" + parameterToAdd;
       element.querySelector('.yAudio-pic').setAttribute('src', this.music.pic)
       element.querySelector('.yAudio-author').innerHTML = this.music.author
       element.querySelector('.yAudio-title').innerHTML = this.music.title
