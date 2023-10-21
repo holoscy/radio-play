@@ -2138,41 +2138,47 @@ document.querySelector(".about").addEventListener("click", function() {
 document.getElementById('top20').addEventListener('click', function () {
   if (!hasFetched) {
     clearAudio();
-    //fetchmusic('https://api.i-meto.com/meting/api?server=netease&type=playlist&id=6705531149');
-    fetchmusic('https://api2.52jan.com/music/songlist?server=wyy&id=6705531149');
+    if (window.mobileAndTabletcheck()) {
+      fetchmusic('https://api.i-meto.com/meting/api?server=netease&type=playlist&id=6705531149');
+    } else {
+      fetchmusic('https://api2.52jan.com/music/songlist?server=wyy&id=6705531149');
+    }
   }
-   removeDynamicButton();
-   createDynamicButton('https://music.163.com/#/playlist?id=6705531149');
+  removeDynamicButton();
+  createDynamicButton('https://music.163.com/#/playlist?id=6705531149');
   setTimeout(function () {
     const playlistElement = document.querySelector('.yAudio-playlist');
-if (playlistElement) {
-     var newParagraph = document.createElement('p');
-     newParagraph.innerText = 'Hit FM Top 20 Countdown';
-     newParagraph.style.fontSize = '18px';
-     playlistElement.innerHTML = '';
-     playlistElement.appendChild(newParagraph);
-  }
-  }, 2000);  
+    if (playlistElement) {
+      var newParagraph = document.createElement('p');
+      newParagraph.innerText = 'Hit FM Top 20 Countdown';
+      newParagraph.style.fontSize = '18px';
+      playlistElement.innerHTML = '';
+      playlistElement.appendChild(newParagraph);
+    }
+  }, 2000);
 });
 
 document.getElementById('at40').addEventListener('click', function () {
   if (!hasFetched2) {
     clearAudio();
-    //fetchmusic('https://api.i-meto.com/meting/api?server=netease&type=playlist&id=6659816005');
-    fetchmusic('https://api2.52jan.com/music/songlist?server=wyy&id=6659816005');
+    if (window.mobileAndTabletcheck()) {
+      fetchmusic('https://api.i-meto.com/meting/api?server=netease&type=playlist&id=6659816005');
+    } else {
+      fetchmusic('https://api2.52jan.com/music/songlist?server=wyy&id=6659816005');
+    }
   }
-    removeDynamicButton();
-   createDynamicButton('https://music.163.com/#/playlist?id=6659816005');
+  removeDynamicButton();
+  createDynamicButton('https://music.163.com/#/playlist?id=6659816005');
   setTimeout(function () {
     const playlistElement = document.querySelector('.yAudio-playlist');
-if (playlistElement) {
-     var newParagraph = document.createElement('p');
-     newParagraph.innerText = 'American Top 40';
-     newParagraph.style.fontSize = '18px';
-     playlistElement.innerHTML = '';
-     playlistElement.appendChild(newParagraph);
-  }
-  }, 2000);   
+    if (playlistElement) {
+      var newParagraph = document.createElement('p');
+      newParagraph.innerText = 'American Top 40';
+      newParagraph.style.fontSize = '18px';
+      playlistElement.innerHTML = '';
+      playlistElement.appendChild(newParagraph);
+    }
+  }, 2000);
 });
 
 let hasFetched = false;
@@ -2192,6 +2198,7 @@ function fetchmusic(url) {
     }
   });
 }
+
 
 function clearAudio() {
   const yAudioElement = document.querySelector('#yAudio');
