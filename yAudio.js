@@ -399,9 +399,11 @@
       drawBars()
       drawBars(true)
     },
+    
     ready: function () {
       var element = this.option.element,
         playIndex = this.playIndex
+   
       if (
         (playIndex > -1 && !this.audioMap.get(playIndex)) ||
         playIndex === -1
@@ -419,7 +421,9 @@
       element.classList.add('load')
       var originalPic = this.music.pic;
       var parameterToAdd = "param=300y300";
-      this.music.pic = originalPic + "?" + parameterToAdd;
+if (!originalPic.includes("param=300y300")) {
+  this.music.pic = originalPic + (originalPic.includes("?") ? "&" : "?") + parameterToAdd;
+}
       element.querySelector('.yAudio-pic').setAttribute('src', this.music.pic)
       element.querySelector('.yAudio-author').innerHTML = this.music.author
       element.querySelector('.yAudio-title').innerHTML = this.music.title
