@@ -1359,7 +1359,7 @@ document.addEventListener('DOMContentLoaded', loadSavedContent);
 
             const tvgLogoMatch = /tvg-logo="([^"]+)"/.exec(line);
             const tvgLogo = tvgLogoMatch ? tvgLogoMatch[1] : '';
-            const commaIndex = line.indexOf(',');
+            const commaIndex = line.lastIndexOf(',');
             const nameAndLinkPart = line.substring(commaIndex + 1).trim();
             const spaceIndex = nameAndLinkPart.indexOf(' ');
             
