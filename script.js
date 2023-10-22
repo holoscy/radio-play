@@ -937,12 +937,29 @@ request.onsuccess = function (event) {
  const parseButton = document.querySelector('#menu button[onclick="parseM3UFromTextarea()"]');
  parseButton.addEventListener('click', parseM3UFromTextarea);
 
- function parseM3UFromTextarea(){
+async function parseM3UFromTextarea() {
     const m3uContent = document.getElementById('m3uTextarea').value;
-    const parsedData = parseM3U(m3uContent);
-    updateMenuContent(parsedData);
-    
+
+     if (m3uContent.trim().endsWith('.m3u')) {
+        try {
+            // Fetch the M3U file content
+            const response = await fetch(m3uContent);
+            if (response.ok) {
+                const m3uData = await response.text();
+                const parsedData = parseM3U(m3uData);
+                updateMenuContent(parsedData);
+            } else {
+                console.error('Failed to fetch the M3U file.');
+            }
+        } catch (error) {
+            console.error('An error occurred while fetching the M3U file:', error);
+        }
+    } else {
+         const parsedData = parseM3U(m3uContent);
+        updateMenuContent(parsedData);
+    }
 }
+
  
 function storeGroupContent(groupName, groupData) {
     const transaction = db.transaction(['m3uContent'], 'readwrite');
@@ -1090,11 +1107,12 @@ imgContainer.addEventListener('touchend', () => {
                         menuContent2.appendChild(groupContainer);
                         const clearButton = document.createElement('button');
                         clearButton.textContent = '清除数据';
-                        clearButton.style.border = '2px solid #3498db';  
-                        clearButton.style.backgroundColor = '#3498db';  
+                        clearButton.style.border = '2px solid #2c3e50'; 
+                        clearButton.style.backgroundColor = 'rgba(44, 62, 80, 0.7)';
                         clearButton.style.color = '#ffffff';
-                        clearButton.style.borderRadius = '10px';
-                        clearButton.style.width = '70px';
+                        clearButton.style.borderRadius = '10px';  
+                        clearButton.style.width = '90px'; 
+                        clearButton.style.fontWeight = 'bold';
                         clearButton.onclick = () => clearGroupContent(groupName,groupData);
                         groupContainer.appendChild(clearButton);
                         cursor.continue();
@@ -1199,11 +1217,12 @@ imgContainer.addEventListener('touchend', () => {
     const groupData = data[groupName];
     const storeButton = document.createElement('button');
     storeButton.textContent = '存储数据';
-    storeButton.style.border = '2px solid #3498db';  
-    storeButton.style.backgroundColor = '#3498db';  
+    storeButton.style.border = '2px solid #2c3e50'; 
+    storeButton.style.backgroundColor = 'rgba(44, 62, 80, 0.7)';
     storeButton.style.color = '#ffffff';
-    storeButton.style.borderRadius = '10px';
-    storeButton.style.width = '70px';
+    storeButton.style.borderRadius = '10px';  
+    storeButton.style.width = '90px'; 
+    storeButton.style.fontWeight = 'bold';  
     storeButton.onclick = () => storeGroupContent(groupName,groupData);
     groupContainer.appendChild(storeButton);
 
