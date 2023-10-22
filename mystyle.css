@@ -137,7 +137,7 @@ button.rec {padding:0;width:30px;height:35px; margin-left:auto; margin-right:0;
 .playlist_item__spotify img {width: 16px;position: relative;top: 2px;margin-left: 2px;transition: 1s;}
 p{color:black;font-size: 12px;font-weight: bold;margin-bottom:0;margin-top:5px; text-align:center;white-space: nowrap;  overflow: hidden;  
 text-overflow: clip;transition: 1s; }	
- 
+
 .input-boxLine {
 	position: relative;
 	width: 60%;
@@ -357,12 +357,12 @@ text-overflow: clip;transition: 1s; }
     color: #000;  
     border-color: #000;
 }
-.img-container{width:auto;height:70px ;text-align: center; display: inline-block;margin:0.5em; cursor: pointer; position: relative; 
+.img-container{width:auto;height:auto;max-height:70px ;text-align: center; display: inline-block;margin:0.5em; cursor: pointer; position: relative; 
 }
 .img-container::before {
     content: "";
     position: absolute;
-    bottom: 0;
+    bottom:-4px;
     left: 0;
     width: 100%;
     height: 3px;
@@ -374,8 +374,15 @@ text-overflow: clip;transition: 1s; }
     background-color: #a1a1f0; 
 }
 
-.img-container img{  display: inline-block ;
-width:auto;height:40px;filter: none;}
+.img-container img {
+    display: inline-block;
+    max-width: 90px;
+    max-height: 40px;
+    width: auto;
+    height: auto; 
+    filter: none;
+}
+
 #savedC {
     max-height: 350px;  
     overflow-y: hidden;  
