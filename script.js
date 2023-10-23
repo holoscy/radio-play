@@ -862,6 +862,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const menuContent = document.getElementById("menuContent");
     const menuContent2 = document.getElementById("menuContent2");
     const addRowButton = document.getElementById("addRowButton");
+    const exportM3uFile = document.getElementById("exportM3uFile");
+    const reM3uFile = document.getElementById("reM3uFile");
     const saveButton = document.getElementById("saveButton");
     const savedContent = document.getElementById("savedContent");
     const closeMenuButton = document.getElementById("closeMenuButton");  
@@ -959,8 +961,6 @@ async function parseM3UFromTextarea() {
         updateMenuContent(parsedData);
     }
 }
-
- 
 function storeGroupContent(groupName, groupData) {
     const transaction = db.transaction(['m3uContent'], 'readwrite');
     const objectStore = transaction.objectStore('m3uContent');
@@ -1106,12 +1106,12 @@ imgContainer.addEventListener('touchend', () => {
 
                         menuContent2.appendChild(groupContainer);
                         const clearButton = document.createElement('button');
-                        clearButton.textContent = '清除数据';
+                        clearButton.textContent = '清除';
                         clearButton.style.border = '2px solid #2c3e50'; 
                         clearButton.style.backgroundColor = 'rgba(44, 62, 80, 0.7)';
                         clearButton.style.color = '#ffffff';
                         clearButton.style.borderRadius = '10px';  
-                        clearButton.style.width = '90px'; 
+                        clearButton.style.width = '50px'; 
                         clearButton.style.fontWeight = 'bold';
                         clearButton.onclick = () => clearGroupContent(groupName,groupData);
                         groupContainer.appendChild(clearButton);
@@ -1135,7 +1135,86 @@ imgContainer.addEventListener('touchend', () => {
         }
     };
 }
+reM3uFile.addEventListener("click", function () {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+     fileInput.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        
+        if (file) {
+            const reader = new FileReader();
+            
+            reader.onload = function (e) {
+                const m3uData = e.target.result;
+                const parsedData = parseM3U(m3uData);
+                updateMenuContent(parsedData);
+            };
+            
+            reader.readAsText(file);
+        }
+    });
+    fileInput.click();
+});
+exportM3uFile.addEventListener("click", function (){
+    const transaction = db.transaction(['m3uContent'], 'readonly');
+    const objectStore = transaction.objectStore('m3uContent');
+    const allData = {};
 
+    transaction.oncomplete = function () {
+        const m3uContent = generateM3uFileContent(allData);
+        downloadM3uFile(m3uContent);
+    };
+
+    objectStore.openCursor().onsuccess = function (cursorEvent) {
+        const cursor = cursorEvent.target.result;
+        if (cursor) {
+            const groupName = cursor.value.id;
+            const getRequest = objectStore.get(groupName);
+            console.log(groupName);
+            getRequest.onsuccess = function (event) {
+                const storedData = event.target.result;
+                if (typeof storedData.data === 'string') {
+                    try {
+                        const groupData = JSON.parse(storedData.data);
+                        allData[groupName] = groupData;
+                    } catch (error) {
+                        console.error('Error parsing JSON:', error);
+                    }
+                }
+                cursor.continue();
+            };
+            getRequest.onerror = function (event) {
+                console.error(`Error getting group '${groupName}' data from IndexedDB:`, event.target.errorCode);
+                cursor.continue();
+            };
+        }
+    };
+});
+
+function generateM3uFileContent(dataObject) {
+    let m3uContent = "#EXTM3U\n";
+    for (const groupName in dataObject) {
+        if (dataObject.hasOwnProperty(groupName)) {
+            const groupData = dataObject[groupName];
+
+            groupData.forEach(({ tvgLogo, name, link }) => {
+                m3uContent += `#EXTINF:-1 group-title="${groupName}" tvg-logo="${tvgLogo}", ${name}\n${link}\n`;
+            });
+        }
+    }
+    return m3uContent;
+}
+
+
+function downloadM3uFile(content) {
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'exported.m3u';
+    a.click();
+    URL.revokeObjectURL(url);
+}
 
 
 function updateMenuContent(data) {
@@ -1211,17 +1290,15 @@ imgContainer.addEventListener('touchend', () => {
 });
       groupContainer.appendChild(imgContainer);
         });
-
- 
         menuContent2.appendChild(groupContainer);
     const groupData = data[groupName];
     const storeButton = document.createElement('button');
-    storeButton.textContent = '存储数据';
+    storeButton.textContent = '存储';
     storeButton.style.border = '2px solid #2c3e50'; 
     storeButton.style.backgroundColor = 'rgba(44, 62, 80, 0.7)';
     storeButton.style.color = '#ffffff';
     storeButton.style.borderRadius = '10px';  
-    storeButton.style.width = '90px'; 
+    storeButton.style.width = '50px'; 
     storeButton.style.fontWeight = 'bold';  
     storeButton.onclick = () => storeGroupContent(groupName,groupData);
     groupContainer.appendChild(storeButton);
@@ -1381,7 +1458,6 @@ document.addEventListener('DOMContentLoaded', loadSavedContent);
     });
     return groups;
 }
-
 
 function playLinkContent(name,link) {
            audio.pause();
@@ -1588,7 +1664,6 @@ function getNewId() {
     });
 }
 
-
      function updateSavedContent(data) {
         savedContent.innerHTML = "";
 
@@ -1601,7 +1676,6 @@ function getNewId() {
             const image = document.createElement("img");
             image.src = item.imageBase64;
             image.classList.add("rimg");
-
 
             const name = document.createElement("p");
             name.textContent = item.name;
@@ -1635,7 +1709,6 @@ function getNewId() {
         menu.classList.add("hidden");
     });
  
-
   if (localStorage.getItem("backgroundImage")) {
     var backgroundImage = localStorage.getItem("backgroundImage");
     document.body.style.backgroundImage = `url(${backgroundImage})`;
@@ -1717,7 +1790,6 @@ function updateBackgroundBlur(blurLevel) {
     document.body.style.backdropFilter = `blur(${blurLevel}px)`;
   }
 }
-
 
 localStorage.removeItem("selectedOptionIndex");
 
@@ -1807,7 +1879,6 @@ function toggleDarkMode() {
   checkThemeMode();
 });
 //dom end
-
 
            function goToWebpage() {
   const url = "https://space.bilibili.com/1090328045/search/video?keyword=ost"
@@ -2217,7 +2288,6 @@ function fetchmusic(url) {
     }
   });
 }
-
 
 function clearAudio() {
   const yAudioElement = document.querySelector('#yAudio');
