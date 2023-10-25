@@ -23,8 +23,8 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
     </div>
  <div class="container">
   <div class="ite item-left">
-  <div class="top"  style="display:flex;align-items:center;"> 
-     <button class="rec" onclick="startRecord()" style="margin-left: auto;">
+  <div class="top"> 
+     <button class="rec" onclick="startRecord()">
         <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" class="custom-filter">
             <path d="m12,0C5.38,0,0,5.38,0,12s5.38,12,12,12,12-5.38,12-12S18.62,0,12,0Zm-2,7c0-1.11.9-2,2-2s2,.89,2,2v5c0,1.1-.9,2-2,2s-2-.9-2-2v-5Zm3,10.92v1.08c0,.55-.45,1-1,1s-1-.45-1-1v-1.08c-2.83-.48-5-2.95-5-5.92,0-.55.45-1,1-1s1,.45,1,1c0,2.21,1.79,4,4,4s4-1.79,4-4c0-.55.45-1,1-1s1,.45,1,1c0,2.97-2.17,5.44-5,5.92Z"/>
         </svg>
@@ -34,7 +34,7 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
             <img src="./icons/shazam.svg" style="width:20px" alt="shazam Logo">
         </a>
    </button>
-<div class="input-boxLine" style="display:flex;align-items:center;margin-left:0;margin-right:0;">
+<div class="input-boxLine">
 	<input id="inputUrl" input type="text" required />
 	<div class="line"></div>
 	<span>WE PLAY ONLY THE HITS</span>
@@ -95,33 +95,36 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
      <div id="songInfo"></div>
 
 <div id="content-container">
-
-    <div class="date" style="display:flex;justify-content:center;align-items:center;margin-bottom:10px;">
+    <div class="date">
      <span for="datepicker" >Date</span>
 <input type="date" name="datepicker" id="datePicker"> 
      
      </div>
        <div class="player">
-        <button class="link-button" onclick="goToWebpage()" style="background-image: url(./icons/lst.png)"> </button>
-        <button class="link-button" onclick="updateProgramLink()" style="background-image: url(./icons/ls.png)"> </button>   
-        <button class="link-button" onclick="gotoURL()" style="background-image: url(./icons/dl.png)"> </button>
+       <button class="link-button" onclick="goToWebpage()" role="button"><span class="text">OST</span><span>Bilibili</span></button>
+       <button class="link-button" onclick="updateProgramLink()" role="button"><span class="text">往期节目</span><span>云听</span></button>
+       <button class="link-button" onclick="gotoURL()" role="button"><span class="text">下载歌曲</span><span>果核</span></button>
        </div> 
        <div class="player">
-       <button class="link-button" id="top20" style="background-image: url(./icons/top20.png)"> </button>
-       <button class="link-button" onclick="goToWebpage2()" style="background-image: url(./icons/mv.png)"> </button>
-       <button class="link-button" id="at40" style="background-image: url(./icons/at4.png)"> </button>
+       <button class="link-button" id="top20" role="button"><span class="text">TOP 20</span><span>网易云</span></button>
+       <button class="link-button" onclick="goToWebpage2()" role="button"><span class="text">TOP MV</span><span>Acfun</span></button>
+       <button class="link-button" id="at40" role="button"><span class="text">AT 40</span><span>网易云</span></button>
        </div> 
          </div>
 </div>
 
 <div class="menu-container">
-  <button id="toggle-menu-btn" style="padding:0;width:20px;height:20px"><?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg "width="20px" height="20px" viewBox="0 0 512 512">
+  <button id="toggle-menu-btn"><?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 512 512">
   <defs><style>.cls-1 { opacity: .97;}.cls-1, .cls-2 { fill-rule: evenodd;isolation: isolate;}.cls-2 {opacity: .98;}</style></defs>
  <path class="cls-2" d="m53,0h406c28.67,6.67,46.33,24.33,53,53v406c-6.67,28.67-24.33,46.33-53,53H53c-28.67-6.67-46.33-24.33-53-53V53C6.67,24.33,24.33,6.67,53,0Zm8,43c131.38-.49,262.71,0,394,1.5,7.45,3.05,11.95,8.55,13.5,16.5.67,50.67.67,101.33,0,152-22.83-22.83-45.67-45.67-68.5-68.5-10.67-8.67-21.33-8.67-32,0-49.83,49.83-99.67,99.67-149.5,149.5-18.17-18.17-36.33-36.33-54.5-54.5-9.12-6.88-18.45-7.21-28-1-30.83,30.83-61.67,61.67-92.5,92.5-.67-90-.67-180,0-270,2.01-9.85,7.85-15.85,17.5-18Zm322,149c28.92,27.41,57.42,55.41,85.5,84,.67,58.33.67,116.67,0,175-1.83,9.83-7.67,15.67-17.5,17.5-130,.67-260,.67-390,0-9.83-1.83-15.67-7.67-17.5-17.5-.67-19.33-.67-38.67,0-58,35.33-35.33,70.67-70.67,106-106,41.83,41.83,83.67,83.67,125.5,125.5,13.07,6.63,23.9,4.13,32.5-7.5,3.54-7.52,3.21-14.85-1-22-18.47-19.47-37.3-38.64-56.5-57.5,44.54-44.37,88.87-88.87,133-133.5Z"/>
   <path class="cls-1" d="m121,85c26.57-1.57,43.07,10.43,49.5,36,2.05,26.59-9.78,43.09-35.5,49.5-26.59,2.05-43.09-9.78-49.5-35.5-1.85-26.61,9.98-43.28,35.5-50Z"/>
 </svg></button>
-  <button id="darkModeButton" onclick="toggleDarkMode()" style="width:20px;height:20px;background:url(./icons/light.svg);background-size: 100%;" ></button>
+  <button id="darkModeButton" onclick="toggleDarkMode()"><?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 662.64 662.06" ><g transform="translate(0, -20)"><defs><style>.cls-05 {fill: #323232;isolation: isolate;opacity: .1;}
+.cls-205 {fill: none;stroke: #323232;stroke-linecap: round;stroke-linejoin: round;stroke-width: 66.67px;}</style></defs><path class="cls-05" d="m628.89,439.27c1.73-3.94-2.2-7.93-6.25-6.47-112.09,40.48-240.98,16.59-325.56-67.95-84.18-84.15-108.13-212.23-68.36-323.94,1.64-4.61-2.91-9.09-7.38-7.09-.3.14-.6.27-.9.41-61.85,27.93-116.89,75.05-149.21,134.41-34.55,63.46-45.95,136.95-32.24,207.88,13.71,70.93,51.69,134.89,107.41,180.9s125.72,71.22,197.99,71.3c62.15,0,122.88-18.59,174.37-53.38,47.54-32.12,85.2-80.77,108.94-133.42.4-.88.79-1.77,1.19-2.66Z"/>
+  <path class="cls-205" d="m628.89,439.27c1.73-3.94-2.2-7.93-6.25-6.47h0c-112.09,40.48-240.98,16.59-325.56-67.95-84.18-84.15-108.13-212.23-68.36-323.94h0c1.64-4.61-2.91-9.09-7.38-7.09-.3.14-.6.27-.9.41-61.85,27.93-116.89,75.05-149.21,134.41-34.55,63.46-45.95,136.95-32.24,207.88,13.71,70.93,51.69,134.89,107.41,180.9s125.72,71.22,197.99,71.3c62.15,0,122.88-18.59,174.37-53.38,47.54-32.12,85.2-80.77,108.94-133.42.4-.88.79-1.77,1.19-2.66Z"/></g>
+</svg></button>
 
  <div class="submenu" id="submenu-popup">
     <div class="page page1">
@@ -193,12 +196,12 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
     </div>
 <div id="videoModal">
   <div id="videoContainer">
+    <video id="video" controls="true" preload="none" src=""></video>
     <button id="closeButton"><?xml version="1.0" encoding="UTF-8"?>
 <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800"><defs><style>.cls-10 {fill: none;stroke: #fff;stroke-linecap: round;
 }.cls-10, .cls-21 { stroke-linejoin: round; stroke-width: 66.67px;}.cls-21 {fill: #2f88ff; stroke: #000; }.cls-31 {fill: rgba(255, 255, 255, 0); }</style> </defs><rect class="cls-31" width="800" height="800"/><path class="cls-21" d="m400,733.33c184.09,0,333.33-149.24,333.33-333.33S584.09,66.67,400,66.67,66.67,215.9,66.67,400s149.24,333.33,333.33,333.33Z"/>
  <path class="cls-10" d="m494.28,305.72l-188.56,188.56"/><path class="cls-10" d="m305.72,305.72l188.56,188.56"/>
 </svg></button>
-    <video id="video" controls="true" preload="none" src=""></video>
   </div>
 </div>
 
