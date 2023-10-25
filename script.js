@@ -1847,7 +1847,6 @@ function toggleDarkMode() {
   if (isDarkMode) {
     document.body.classList.remove("dark");
     localStorage.setItem("themeMode", "default");
-    darkModeButton.style.background = "url(./icons/light.svg)";
     document.body.style.setProperty("--triangle-color", "black");
    document.body.style.setProperty("--background-color", "#fff");
    localStorage.setItem("--background-color", "#fff");
@@ -1861,7 +1860,6 @@ function toggleDarkMode() {
   } else {
     document.body.classList.add("dark");
     localStorage.setItem("themeMode", "dark");
-    darkModeButton.style.background = "url(./icons/dark.svg)";
     document.body.style.setProperty("--triangle-color", "white");
     document.body.style.setProperty("--background-color", "#424242");
     localStorage.setItem("--background-color", "#424242");
@@ -1896,7 +1894,6 @@ function toggleDarkMode() {
     window.location.href = url;
 }
       function gotoURL() {
- 
     const url = "https://music.ghxi.com/";
     window.open(url, "_blank");
 }
@@ -2228,11 +2225,7 @@ document.querySelector(".about").addEventListener("click", function() {
 document.getElementById('top20').addEventListener('click', function () {
   if (!hasFetched) {
     clearAudio();
-    if (window.mobileAndTabletcheck()) {
       fetchmusic('https://api.i-meto.com/meting/api?server=netease&type=playlist&id=6705531149');
-    } else {
-      fetchmusic('https://api2.52jan.com/music/songlist?server=wyy&id=6705531149');
-    }
   }
   removeDynamicButton();
   createDynamicButton('https://music.163.com/#/playlist?id=6705531149');
@@ -2251,11 +2244,7 @@ document.getElementById('top20').addEventListener('click', function () {
 document.getElementById('at40').addEventListener('click', function () {
   if (!hasFetched2) {
     clearAudio();
-    if (window.mobileAndTabletcheck()) {
-      fetchmusic('https://api.i-meto.com/meting/api?server=netease&type=playlist&id=6659816005');
-    } else {
-      fetchmusic('https://api2.52jan.com/music/songlist?server=wyy&id=6659816005');
-    }
+     fetchmusic('https://api.i-meto.com/meting/api?server=netease&type=playlist&id=6659816005')
   }
   removeDynamicButton();
   createDynamicButton('https://music.163.com/#/playlist?id=6659816005');
