@@ -515,25 +515,24 @@ width: 70%;}
 }
 
 .link-button {
-  width: 25%;
-  height: 3em;
+  width: 100px;
+  height: 40px;
   position: relative;
   overflow: hidden;
   border: 2px solid #424242; 
-  color: rgba(24, 24, 26, 0.8);
+  color: black;
   display: inline-block;
-  font-size: 15px;
+  font-size: 12px;
   line-height: 2em; 
    text-align: center;
   text-decoration: none;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.6);
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
   border-radius: 10px;
 }
-
 
 .link-button span:first-child {
   position: relative;
