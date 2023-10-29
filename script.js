@@ -1897,6 +1897,31 @@ function toggleDarkMode() {
     const url = "https://music.ghxi.com/";
     window.open(url, "_blank");
 }
+  const mainColorInput = document.getElementById('main-color');
+  const savedColor = localStorage.getItem('mainColor');
+  if (savedColor) {
+    document.documentElement.style.setProperty('--main-color', savedColor);
+    mainColorInput.value = savedColor;
+  }
+  mainColorInput.addEventListener('input', function() {
+    const selectedColor = mainColorInput.value;
+    document.documentElement.style.setProperty('--main-color', selectedColor);
+    localStorage.setItem('mainColor', selectedColor);
+  });
+  const textToEdit = document.getElementById('textToEdit');
+const editButton = document.getElementById('editButton');
+
+if (localStorage.getItem('editedText')) {
+  textToEdit.textContent = localStorage.getItem('editedText');
+}
+
+editButton.addEventListener('click', () => {
+  const newText = prompt('Enter new text:', textToEdit.textContent);
+  if (newText !== null) {
+    textToEdit.textContent = newText;
+    localStorage.setItem('editedText', newText);
+  }
+});
 const divElementTop = document.querySelector('.container');
 const divElementLeft = document.querySelector('.item-left');
 const divElementRight = document.querySelector('.item-right');
@@ -2050,6 +2075,8 @@ function backupLocalStorage() {
       var bgColor3 = localStorage.getItem("bg-color3");
       var opacity3 = localStorage.getItem("opacity3");
       var blurLevel = localStorage.getItem("blurLevel");
+      var savedColor = localStorage.getItem("mainColor");
+
       var backupData = {
         backgroundImage: backgroundImage,
         bgPosition: bgPosition,
@@ -2065,8 +2092,9 @@ function backupLocalStorage() {
         opacity2: opacity2,
         bgColor3: bgColor3,
         opacity3: opacity3,
-        blurLevel: blurLevel
-      };
+        blurLevel: blurLevel,
+        savedColor: savedColor,
+       };
        var savedData = JSON.parse(localStorage.getItem("savedData")) || [];
       backupData.savedData = savedData;
       var backupString = JSON.stringify(backupData);
@@ -2121,7 +2149,8 @@ function backupLocalStorage() {
       localStorage.setItem("bg-color3", backupData.bgColor3);
       localStorage.setItem("opacity3", backupData.opacity3);
       localStorage.setItem("blurLevel", backupData.blurLevel);
-      var savedData = backupData.savedData || [];
+      localStorage.setItem("mainColor", backupData.savedColor);
+       var savedData = backupData.savedData || [];
       localStorage.setItem("savedData", JSON.stringify(savedData));
       const notification = document.createElement('div');
     notification.className = 'notification';
