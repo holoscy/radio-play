@@ -15,7 +15,7 @@
     <h1 class="player_title">HIT FM </h1>
     <div class="player" >
         <button class="control mute-button" style="margin-left:auto;margin-right:5px"></button>
-        <input type="range" name="volume-level" class="control volume-level" min="0" max="100" step="1" value="100" style="margin-left:5px;margin-right:5px;max-width: 15em">
+        <input type="range" name="volume-level" class="control volume-level" min="0" max="100" step="1" value="100">
         <button class="control play-button" style="margin-left:5px;margin-right:2px"></button>
         <button id="showButton" class="control" style="margin-left:2px;margin-right:auto"><?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" height="25px" viewBox="0 0 26 26" style="transform: translateY(2px);"><defs><style>.cls-1 {fill: none;stroke: #000;stroke-linecap: round;stroke-linejoin: round;
@@ -37,7 +37,7 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
 <div class="input-boxLine">
 	<input id="inputUrl" input type="text" required />
 	<div class="line"></div>
-	<span>WE PLAY ONLY THE HITS</span>
+	<span id="textToEdit">WE PLAY ONLY THE HITS</span>
 </div>
 <button class="playBut" onclick="cplay()">
          <svg version="1.1"
@@ -140,7 +140,9 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
         <label for="corner-radius2">圆角</label><input type="range" id="corner-radius2" min="0" max="50" value="0"><br>
         <label for="opacity2">透明度</label><input type="range" id="opacity2" min="0" max="1" step="0.01" value="1"><br>
         <label for="bg-color3">网页背景色</label><input type="color" id="bg-color3" value="#ffffff"><br>
-        <label for="opacity3">网页透明度</label><input type="range" id="opacity3" min="0" max="1" step="0.01" value="1">
+        <label for="opacity3">网页透明度</label><input type="range" id="opacity3" min="0" max="1" step="0.01" value="1"><br>
+        <label for="main-color">主要颜色</label><input type="color" id="main-color" value="#a1a1f0"><br>
+        <button id="editButton">修改Span</button>
         <button class="set" id="toggleButton">切换隐藏外部链接按钮</button>
         <button class="set" id="toggButton">切换隐藏TAVR</button><hr>
         <button class="set" id="next-page-btn">下一页</button>
