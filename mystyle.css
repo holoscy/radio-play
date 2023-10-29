@@ -1,4 +1,4 @@
-body{margin:0;padding:0;background-position:center;background-repeat: no-repeat;background-size: cover;transition: 1s;}body.mobile.app{width:100% ;margin:0}*{font-family:system-ui, -apple-system, Arial, sans-serif}option{font-family:inherit}.mobile .volume-level,audio{display:none!important}.control{transition: 0.5s;},select{cursor:pointer}button{border:none;font-weight: bold;width:50px;height:50px;display:inline-block;margin:auto;background:none center no-repeat;-webkit-background-size:20px 20px;background-size:20px}.player{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-box-align:stretch;-webkit-align-items:stretch;-ms-flex-align:stretch;align-items:stretch;margin-bottom:15px;text-align: center;}.player_title{margin:0 auto 15px auto;text-align:center}.volume-level{display:block;margin:0;-webkit-box-flex:1;-webkit-flex:1;-ms-flex:1;flex:1}.playlist_wrapper{margin-bottom:15px}.playlist_wrapper:last-child{margin-bottom:0}.title{text-align:center;margin:0 auto 15px auto}.playlist_title{text-align:center;margin:0 auto 15px auto}.playlist{padding:0;margin:0;list-style:none}.playlist_item{margin-bottom:5px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;-webkit-align-items: center;align-items:center}.playlist_item__logo{display:block;width:35px;height:35px;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;margin-right:15px;background:none center no-repeat; border-radius:5px }.playlist_item:last-child{margin-bottom:0}
+body{margin:0;padding:0;background-position:center;background-repeat: no-repeat;background-size: cover;transition: 1s;}body.mobile.app{width:100% ;margin:0}*{font-family:system-ui, -apple-system, Arial, sans-serif}option{font-family:inherit}.mobile .volume-level,audio{display:none!important}.control{transition: 0.5s;},select{cursor:pointer}button{border:none;font-weight: bold;width:50px;height:50px;display:inline-block;margin:auto;background:none center no-repeat;-webkit-background-size:20px 20px;background-size:20px}.player{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-box-align:stretch;-webkit-align-items:stretch;-ms-flex-align:stretch;align-items:stretch;margin-bottom:15px;text-align: center;}.player_title{margin:0 auto 15px auto;text-align:center}.playlist_wrapper{margin-bottom:15px}.playlist_wrapper:last-child{margin-bottom:0}.title{text-align:center;margin:0 auto 15px auto}.playlist_title{text-align:center;margin:0 auto 15px auto}.playlist{padding:0;margin:0;list-style:none}.playlist_item{margin-bottom:5px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;-webkit-align-items: center;align-items:center}.playlist_item__logo{display:block;width:35px;height:35px;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;margin-right:15px;background:none center no-repeat; border-radius:5px }.playlist_item:last-child{margin-bottom:0}
 html{display: flex;
 flex-direction: column;
 min-height: 100vh;}
@@ -29,8 +29,8 @@ body{height:100%;min-height: 100vh;}
 .container {display: flex;flex-wrap: nowrap;}
  
 }
-#programName {text-align: center;font-weight: bold; margin-bottom:1em; text-shadow: 1px 1px 1px #afafaf}
-#songInfo {text-align: center; margin-bottom:1em; text-shadow: 1px 1px 1px #afafaf}
+#programName {text-align: center;font-weight: bold; margin-bottom:1em;}
+#songInfo {text-align: center; margin-bottom:1em;}
 #recordedTime{display: none;text-align: center; margin-bottom:1em;}
 .df-button {
     width: 120px;
@@ -83,7 +83,7 @@ button.rec {padding:0;width:30px;height:35px; margin-left:auto; margin-right:0;
 .playBut:hover .triangle {
     stroke-dashoffset: 0;
     opacity: 1;
-    stroke: #a1a1f0;
+    stroke: var(--main-color);
     animation: nudge 0.7s ease-in-out;
 }
 
@@ -124,18 +124,17 @@ text-overflow: clip;transition: 1s; }
 	height: 100%;
 	border: none;
 	font-size: 15px;
-	border-bottom: 2px solid #a1a1f0;
+	border-bottom: 2px solid var(--main-color);
 	color: #616161;
     border-radius: 5px;
-      background-color: rgba(255, 255, 255, 0.7);
-
+    background-color: rgba(255, 255, 255, 0.7);
 }
 
 .input-boxLine span {
 	position: absolute;
-	bottom: 10px;
+	bottom: 8px;
 	font-size: 15px;
-	left: 0px;
+	left:0;
 	color: #616161;
 	pointer-events: none;
 	transition: all 0.3s ease;
@@ -144,9 +143,9 @@ text-overflow: clip;transition: 1s; }
 .input-boxLine .line {
 	position: absolute;
 	bottom: -1px;
-	height: 3px;
+	height: 2px;
 	width: 100%;
-	background-color: #a1a1f0;
+	background-color: var(--main-color);
 	transform: scaleX(0);
 	transition: all 0.3s ease;
 }
@@ -154,16 +153,47 @@ text-overflow: clip;transition: 1s; }
 .input-boxLine input:valid~span {
 	top: -15px;
 	font-size: 12px;
-	color: #a1a1f0;
+	color: var(--main-color);
 	font-style: oblique;
-	font-weight:bold;  text-shadow: 1px 1px 1px #616161;
+	font-weight:bold;
 }
 
 .input-boxLine input:focus~.line,
 .input-boxLine input:valid~.line {
 	transform: scaleX(1);
 }
+input[type="range"].volume-level {filter: none !important;    
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  background: var(--main-color); 
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  margin-left: 5px;
+  margin-right: 5px;
+  max-width: 10em;
+  position: relative;
+  top: 23px;
+  transform: translateY(-50%);
+}
 
+input[type="range"].volume-level:hover {
+  opacity: 1;
+}
+
+input[type="range"].volume-level::-webkit-slider-thumb {filter: none !important;    
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--main-color);
+  border: 2px solid #fff;
+  border-radius: 50%;
+  cursor: pointer;
+}
 
 
 [type="date"] {
@@ -176,14 +206,14 @@ text-overflow: clip;transition: 1s; }
   opacity: 0;
 }
 .date input{ border: none;
-  border-bottom: 2px solid #a1a1f0 ;
+  border-bottom: 2px solid var(--main-color) ;
   border-radius: 5px;
   padding: 3px 5px;
   background-color: rgba(255, 255, 255, 0.7);
   width: 30%;}
 .date{display:flex;justify-content:center;align-items:center;margin-bottom:10px;}
  .station_select{display:block;width:50%;height:35px;margin:0 auto 15px auto;text-align:center; border: none;
-  border-bottom: 3px solid #a1a1f0 ;
+  border-bottom: 3px solid var(--main-color) ;
   border-radius: 5px;  background-color: rgba(255, 255, 255, 0.7);
   }
 .top{display:flex;align-items:center;}
@@ -281,7 +311,7 @@ text-overflow: clip;transition: 1s; }
 }
 
 .set:hover::after {
-    background-color: #a1a1f0;
+    background-color: var(--main-color);
 }
 
 .hidden {
@@ -345,7 +375,7 @@ text-overflow: clip;transition: 1s; }
 }
 
 .img-container:hover::before {
-    background-color: #a1a1f0; 
+    background-color: var(--main-color); 
 }
 
 .img-container img {
@@ -378,7 +408,7 @@ text-overflow: clip;transition: 1s; }
     padding: 10px;
      border: none;
     cursor: pointer;
-   color: #a1a1f0;
+   color: var(--main-color);
     transition: background-color 0.3s, color 0.3s; 
 }
 
@@ -394,7 +424,7 @@ text-overflow: clip;transition: 1s; }
 }
 
 #nelist:hover::after {
-    background-color: #a1a1f0;
+    background-color: var(--main-color);
 }
 
 .rimg,.t,.cls-10,.cls-21 {
@@ -440,7 +470,7 @@ body.dark path{transition: 0.5s;
       align-items: center;
       z-index: 9999;
     }
-  :root {
+  :root {--main-color:#a1a1f0;
   --background-color: #fff;  
 }
 #musicModal {overflow-y: auto;
