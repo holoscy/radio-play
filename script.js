@@ -412,6 +412,7 @@ if (data['video']) {
           var youtubeLink = document.createElement('a');
   youtubeLink.href = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(removeSymbols(data['song'] + ' ' + data['singer']));
   youtubeLink.target = '_blank';
+  youtubeLink.style.userSelect = 'none';
   youtubeLink.innerHTML = '<img src="./icons/youtube.svg" alt="YouTube Logo">';
   youtubeLink.classList.add('playlist_item__video');
   info.appendChild(youtubeLink);
@@ -422,12 +423,14 @@ if (data['video']) {
   neteaseLink.className = 'playlist_item__netease';
   neteaseLink.href = 'https://music.163.com/#/search/m/?s=' + encodeURIComponent(removeSymbols(data['song'] + ' ' + data['singer']));
   neteaseLink.target = '_blank';
+  neteaseLink.style.userSelect = 'none';
   neteaseLink.innerHTML = '<img src="./icons/netease.svg" alt="Netease Logo">';
   info.appendChild(neteaseLink);
    var spotifyLink = document.createElement('a');
   spotifyLink.className = 'playlist_item__spotify';
   spotifyLink.href = 'https://open.spotify.com/search/' + encodeURIComponent(removeSymbols(data['song'] + ' ' + data['singer']));
   spotifyLink.target = '_blank';
+  spotifyLink.style.userSelect = 'none';
   spotifyLink.innerHTML = '<img src="./icons/spotify.svg" alt="spotify Logo">';
   info.appendChild(spotifyLink);
     }
@@ -592,6 +595,7 @@ function addLinksToSongInfo(title) {
   youtubeLink.classList.add('playlist_item__video');
   youtubeLink.target = '_blank';
   youtubeLink.href = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(title);
+  youtubeLink.style.userSelect = 'none';
   youtubeLink.innerHTML = '<img src="./icons/youtube.svg" alt="YouTube Logo">';
   songInfoDiv.appendChild(youtubeLink);
 
@@ -599,6 +603,7 @@ function addLinksToSongInfo(title) {
   neteaseLink.className = 'playlist_item__netease';
   neteaseLink.target = '_blank';
   neteaseLink.href = 'https://music.163.com/#/search/m/?s=' + encodeURIComponent(title);
+  neteaseLink.style.userSelect = 'none';
   neteaseLink.innerHTML = '<img src="./icons/netease.svg" alt="NetEase Logo">';
   songInfoDiv.appendChild(neteaseLink);
 
@@ -606,6 +611,7 @@ function addLinksToSongInfo(title) {
   spotifyLink.className = 'playlist_item__spotify';
   spotifyLink.target = '_blank';
   spotifyLink.href = 'https://open.spotify.com/search/' + encodeURIComponent(title);
+  spotifyLink.style.userSelect = 'none';
   spotifyLink.innerHTML = '<img src="./icons/spotify.svg" alt="Spotify Logo">';
   songInfoDiv.appendChild(spotifyLink);
 }
@@ -1032,17 +1038,23 @@ function displayStoredContent() {
                 if (typeof storedData.data === 'string') {
                     try {
                         const groupData = JSON.parse(storedData.data);
-
                         // Create containers for each group
-                        const groupContainer = document.createElement('div');
-                        groupContainer.className = 'groupContainer';
- 
+const groupContainer = document.createElement('div');
+groupContainer.className = 'groupContainer';
+groupContainer.style.display = 'none';
 
-        const groupButton = document.createElement('a');
-        groupButton.href = '#';
-        groupButton.className = 'groupButton';
-        groupButton.textContent = groupName;
-         groupContainer.appendChild(groupButton);
+const groupButton = document.createElement('a');
+groupButton.className = 'groupButton';
+groupButton.textContent = groupName;
+
+groupButton.addEventListener('click', function() {
+    if (groupContainer.style.display === 'none' || groupContainer.style.display === '') {
+        groupContainer.style.display = 'block';
+    } else {
+        groupContainer.style.display = 'none';
+    }
+});
+menuContent2.appendChild(groupButton);
 
          groupData.forEach(({ tvgLogo, name, link }) => {
             const imgContainer = document.createElement('div');
@@ -1216,20 +1228,26 @@ function downloadM3uFile(content) {
     URL.revokeObjectURL(url);
 }
 
-
 function updateMenuContent(data) {
     const menuContent2 = document.getElementById('menuContent2');
 
     Object.keys(data).forEach(groupName => {
         const groupContainer = document.createElement('div');
-        groupContainer.className = 'groupContainer';
+groupContainer.className = 'groupContainer';
+groupContainer.style.display = 'none';
 
-        const groupButton = document.createElement('a');
-        groupButton.href = '#';
-        groupButton.className = 'groupButton';
-        groupButton.textContent = groupName;
-         groupContainer.appendChild(groupButton);
+const groupButton = document.createElement('a');
+groupButton.className = 'groupButton';
+groupButton.textContent = groupName;
 
+groupButton.addEventListener('click', function() {
+    if (groupContainer.style.display === 'none' || groupContainer.style.display === '') {
+        groupContainer.style.display = 'block';
+    } else {
+        groupContainer.style.display = 'none';
+    }
+});
+menuContent2.appendChild(groupButton);
         data[groupName].forEach(({ tvgLogo, name, link }) => {
             const imgContainer = document.createElement('div');
             imgContainer.className = 'img-container';
@@ -1689,19 +1707,40 @@ function getNewId() {
             attachClickEvent(imgContainer, item.link, item.name);
         });
     }
-    // 恢复本地存储的数据
-    function restoreDataFromLocalStorage() {
-        const savedData = JSON.parse(localStorage.getItem("savedData")) || [];
-        updateSavedContent(savedData);
+function restoreDataFromLocalStorage() {
+    const savedData = JSON.parse(localStorage.getItem("savedData")) || [];
+    updateSavedContent(savedData);
 
-        // 在菜单中恢复已保存的数据
-        savedData.forEach(function (data, index) {
-            const { imageBase64, link, name } = data;
-            const row = createRow(imageBase64, link, name, true);  
-            row.dataset.id = index + 1; // 设置序号
-            menuContent.appendChild(row);
-        });
+    // 在菜单中恢复已保存的数据
+    savedData.forEach(function (data, index) {
+        const { imageBase64, link, name } = data;
+        const row = createRow(imageBase64, link, name, true);
+        row.dataset.id = index + 1; 
+        menuContent.appendChild(row);
+    });
+
+    const toggleButton = document.createElement('div');
+    toggleButton.className = 'groupButton';
+    toggleButton.textContent = '主页电台';
+    toggleButton.addEventListener('click', function () {
+        if (menuContent.style.display === 'none' || menuContent.style.display === '') {
+            menuContent.style.display = 'block';
+            localStorage.setItem('menuContentIsExpanded', 'true');
+        } else {
+            menuContent.style.display = 'none';
+            localStorage.setItem('menuContentIsExpanded', 'false');
+        }
+    });
+    const isMenuExpanded = localStorage.getItem('menuContentIsExpanded');
+    if (isMenuExpanded === 'true') {
+        menuContent.style.display = 'block';
+    } else {
+        menuContent.style.display = 'none';
     }
+    menuContent.insertAdjacentElement('beforebegin', toggleButton);
+    menuContent.className = 'groupContainer';
+}
+
 
      restoreDataFromLocalStorage();
 
@@ -2267,7 +2306,7 @@ document.getElementById('top20').addEventListener('click', function () {
       playlistElement.innerHTML = '';
       playlistElement.appendChild(newParagraph);
     }
-  }, 2000);
+  }, 4000);
 });
 
 document.getElementById('at40').addEventListener('click', function () {
@@ -2286,7 +2325,7 @@ document.getElementById('at40').addEventListener('click', function () {
       playlistElement.innerHTML = '';
       playlistElement.appendChild(newParagraph);
     }
-  }, 2000);
+  }, 4000);
 });
 
 let hasFetched = false;
@@ -2333,3 +2372,49 @@ function removeDynamicButton() {
     existingButton.parentNode.removeChild(existingButton);
   }
 }
+const openButton = document.getElementById('openButton');
+  const overlay = document.getElementById('overlay');
+  const popup = document.getElementById('popup');
+  const timeInput = document.getElementById('timeInput');
+  const setCloseTime = document.getElementById('setCloseTime');
+  const cancelClose = document.getElementById('cancelClose');
+  const closePopup = document.getElementById('closePopup');
+  const countdown = document.getElementById('countdown');
+  let countdownInterval;
+
+  openButton.addEventListener('click', () => {
+    overlay.style.display = 'block';
+    popup.style.display = 'block';
+  });
+
+  setCloseTime.addEventListener('click', () => {
+    const minutes = parseInt(timeInput.value);
+    if (!isNaN(minutes)) {
+      const milliseconds = minutes * 60 * 1000; 
+      countdownInterval = setInterval(updateCountdown, 1000);
+      countdownStart = Date.now();
+      setTimeout(() => {
+        clearInterval(countdownInterval);
+        overlay.style.display = 'none';
+        popup.style.display = 'none';
+window.close();
+      }, milliseconds);
+    }
+  });
+
+  cancelClose.addEventListener('click', () => {
+    clearInterval(countdownInterval);
+    overlay.style.display = 'none';
+    popup.style.display = 'none';
+  });
+
+  closePopup.addEventListener('click', () => {
+    overlay.style.display = 'none';
+    popup.style.display = 'none';
+  });
+
+  function updateCountdown() {
+    const remainingTime = parseInt(timeInput.value * 60 - (Date.now() - countdownStart) / 1000);
+    countdown.innerHTML = `剩余时间: ${remainingTime} 秒`;
+  }
+  let countdownStart;
