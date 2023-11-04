@@ -406,6 +406,7 @@ if (data['video']) {
         var video = document.createElement('a');
         video.className = 'playlist_item__video';
         video.href = 'https://www.youtube.com/watch?v=' + data['video'];
+        video.style.userSelect = 'none';
         video.innerHTML = '<img src="./icons/youtube.svg" alt="YouTube Logo">';
          info.appendChild(video);    }
           else if (data['song'] && data['singer']) { 
@@ -947,8 +948,8 @@ request.onsuccess = function (event) {
 
 async function parseM3UFromTextarea() {
     const m3uContent = document.getElementById('m3uTextarea').value;
-
-     if (m3uContent.trim().endsWith('.m3u')) {
+    const urlPattern = /^(http(s)?:\/\/)/;
+    if (urlPattern.test(m3uContent.trim())) {
         try {
             // Fetch the M3U file content
             const response = await fetch(m3uContent);
@@ -963,10 +964,11 @@ async function parseM3UFromTextarea() {
             console.error('An error occurred while fetching the M3U file:', error);
         }
     } else {
-         const parsedData = parseM3U(m3uContent);
+        const parsedData = parseM3U(m3uContent);
         updateMenuContent(parsedData);
     }
 }
+
 function storeGroupContent(groupName, groupData) {
     const transaction = db.transaction(['m3uContent'], 'readwrite');
     const objectStore = transaction.objectStore('m3uContent');
