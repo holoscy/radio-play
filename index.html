@@ -174,15 +174,13 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
     </div>
      <div class="page about">
 <a href="https://greasyfork.org/zh-CN/scripts/470185" >云听网页节目HD下载</a><br>
-     <p class="t">网易云音乐网页建议搭配脚本使用,<br>网易云仅提供PC端快捷搜索  <br>自定义数据及添加的电台数据使用本地存储 <br>备份导出导入的数据包括1.自定义设置<br>和2.添加到主页的电台数据<br>部分电台有ip限制和ipv6的支持</p><hr><p class="t"> 由于部分浏览器安全限制，'不能'<br>在https下播放http的m3u8链接<br>不能加载http来源的图片<br>   解决方法1.把http改为https<br>(部分链接只支持http) 或者<br>2. 对当前网站设置允许不安全内容</p><hr><p class="t">对于302跳转解析触发跨域问题的<br>m3u8链接会转为使用浏览器打开<br>手机浏览器应该可以直接播放，电脑上<br>给浏览器安装hls播放扩展插件即可</p><hr><p class="t">m3u解析格式: #EXTINF:  tvg-logo<br>="图片链接" group-title<br>="分组名",电台名 
-电台链接<br>比如<a href="https://raw.githubusercontent.com/goolguy007/radioer/main/TVradio" > '这个链接' </a>中的格式<br></p><hr> <p class="t">yAudio音频播放器来自<a href="https://github.com/ZHOUYUANN/yAudio" > @ZHOUYUANN </a></p><hr>
+     <p class="t"> 自定义数据及添加的电台数据使用本地存储 <br>备份导出导入的数据包括1.自定义设置<br>和2.添加到主页的电台数据<br>部分电台有ip限制，需要ipv6的支持</p><hr><p class="t"> 由于部分浏览器安全限制，'不能'<br>在https下播放http的m3u8链接，图片<br>解决方法1.把http改为https<br>(部分链接只支持http) 或者<br>2. 对当前网站设置允许http不安全内容</p><hr><p class="t">对于解析有问题的<br>m3u8链接会转为使用浏览器打开<br>电脑浏览器需要安装hls播放扩展插件</p><hr><p class="t">m3u解析格式: #EXTINF:  tvg-logo<br>="图片链接" group-title<br>="分组名",电台名 
+电台链接<br>比如推荐播放源1:<a href="https://raw.githubusercontent.com/goolguy007/radioer/main/TVradio">@goolguy007</a><br>播放源2（地方台）<a href="https://raw.githubusercontent.com/zbefine/iptv/main/iptv.m3u">@zbefine</a></p><hr> <p class="t">yAudio音频播放器来自<a href="https://github.com/ZHOUYUANN/yAudio" > @ZHOUYUANN </a></p><hr><p class="t">网易云音乐推荐脚本</p>
 <a href="https://greasyfork.org/zh-CN/scripts/406054" >1.显示完整歌单</a><br>
-<a href="https://greasyfork.org/zh-CN/scripts/438148" >2.lx-music 辅助脚本
+<a href="https://greasyfork.org/zh-CN/scripts/453804" >2.MyFreeMP3扩展
 </a><br>
-<a href="https://greasyfork.org/zh-CN/scripts/453804" >3.MyFreeMP3扩展
-</a><br>
-<a href="https://greasyfork.org/zh-CN/scripts/33046" >4.直接下载</a><br>
- <a href="https://greasyfork.org/zh-CN/scripts/406821" >5.主题:扁平风格</a><br>
+<a href="https://greasyfork.org/zh-CN/scripts/33046" >3.直接下载</a><br>
+ <a href="https://greasyfork.org/zh-CN/scripts/406821" >4.主题:扁平风格</a><br>
         <button id="about-btn">关于</button>
     </div>
 </div>
@@ -232,8 +230,8 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
     </div>
     <hr>
         <div id="btContainer">  
-    <label for="m3uTextarea">M3U内容:</label>
-    <input id="m3uTextarea" rows="10" placeholder="Paste M3U content"></input>
+    <label for="m3uTextarea">链接/文本:</label>
+    <input id="m3uTextarea" rows="10" placeholder="Paste raw url/text"></input>
     <button class="set" onclick="parseM3UFromTextarea()">解析m3u</button>
     <button class="set" id="exportM3uFile">导出m3u</button>
     <button class="set" id="reM3uFile">导入m3u</button>
