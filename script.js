@@ -152,7 +152,8 @@
             return Number(button.dataset['paused']);
         };
 
-var currentData;          
+var currentData;  
+const tavr = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRH-LIEQnJciIUI-0nzHzsfJlRiYA3X95exVMjZE3SJsytCBoHZ082B813yVhGEXfXqCiI&usqp=CAU'        
 function setCurrentData(data) {
     currentData = data;
   
@@ -168,7 +169,7 @@ function setCurrentData(data) {
        mediaMetadata.title = currentData.song;
         mediaMetadata.artist = currentData.singer;
         mediaMetadata.artwork = [{
-            src: co,
+            src: tavr,
             sizes: '200x200',
             type: 'image/png'
         }];
@@ -205,9 +206,9 @@ function playAudio() {
                     sizes: '500x500',
                     type: 'image/jpg'
                 }];
-            } else {                
+            } else {         
                     mediaMetadata.artwork = [{
-                        src: co,
+                        src: tavr,
                         sizes: '200x200',
                         type: 'image/png'
                     }];                
@@ -440,20 +441,21 @@ if (data['video']) {
 
     const audio = document.getElementById('audio');
     const inputUrl = document.getElementById('inputUrl');
-    const co = 'https://p1.music.126.net/e9akTfr5SUJX9nIVdIYFHw==/109951164828622694.jpg'
+    const hitfm = 'https://p1.music.126.net/e9akTfr5SUJX9nIVdIYFHw==/109951164828622694.jpg'
     const iheart = 'https://p1.music.126.net/J32qbemrQtkBMHiVq21Djw==/18723583511609689.jpg'
+    const bbc = 'https://p1.music.126.net/pMdzEAArKfkAcrtM3r8aog==/18691697674155874.jpg'
 let currentHls = null; // Store the current HLS instance
 var selectElement = document.getElementById("src_select");
 
 var desiredOption = selectElement.querySelector("option[value='']");
 
-function play(url,title) {
+function play(url,title,cover) {
   document.body.classList.add('loading');
   navigator.mediaSession.metadata = new MediaMetadata({
             title:title,
             artist: 'HITFM Player',
             artwork: [{
-                src: co,
+                src: cover,
                 sizes: '200x200',
                 type: 'image/png'
             }]
@@ -501,7 +503,7 @@ function play(url,title) {
             title: titleMatch ? titleMatch[1].trim() : '',
             artist: artistMatch ? artistMatch[1].trim() : '',
             artwork: [{
-                src: iheart,
+                src: cover,
                 sizes: '200x200',
                 type: 'image/png'
             }]
@@ -516,7 +518,7 @@ function play(url,title) {
             title: data.frag.title,
             artist: '',
             artwork: [{
-                src: iheart,
+                src: cover,
                 sizes: '200x200',
                 type: 'image/png'
             }]
@@ -617,70 +619,70 @@ function addLinksToSongInfo(title) {
   songInfoDiv.appendChild(spotifyLink);
 }
 function playHitFM1() {
-  setPlaybackInfo("https://liveop.cctv.cn/hls/cctvn/playlist.m3u8", "HITFM 央视");
+  setPlaybackInfo("https://liveop.cctv.cn/hls/cctvn/playlist.m3u8", "HITFM 央视",hitfm);
 }
 
 function playHitFM2() {
-  setPlaybackInfo("https://satellitepull.cnr.cn/live/wxhitfm/playlist.m3u8", "HITFM 广州");
+  setPlaybackInfo("https://satellitepull.cnr.cn/live/wxhitfm/playlist.m3u8", "HITFM 广州",hitfm);
 }
 
 function playHitFM3() {
-  setPlaybackInfo("https://satellitepull.cnr.cn/live/wxgjlxyy/playlist.m3u8", "HITFM 北京");
+  setPlaybackInfo("https://satellitepull.cnr.cn/live/wxgjlxyy/playlist.m3u8", "HITFM 北京",hitfm);
 }
 
 function playev() {
-  setPlaybackInfo("https://stream.revma.ihrhls.com/zc5953/hls.m3u8", "Evolution");
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc5953/hls.m3u8", "Evolution",iheart);
 }
 
 function playAT40() {
-  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4802/hls.m3u8", "AT40");
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4802/hls.m3u8", "AT40",iheart);
 }
 function playZ100() {
-  setPlaybackInfo("https://stream.revma.ihrhls.com/zc1469/hls.m3u8", "Z100");
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc1469/hls.m3u8", "Z100",iheart);
 }
 function playic() {
-  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4418/hls.m3u8", "iHeartCountry");
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4418/hls.m3u8", "iHeartCountry",iheart);
 }
 function playip() {
-  setPlaybackInfo("https://playerservices.streamtheworld.com/api/livestream-redirect/ACIR31_S01AAC.m3u8", "iHeartRadio Pop");
+  setPlaybackInfo("https://playerservices.streamtheworld.com/api/livestream-redirect/ACIR31_S01AAC.m3u8", "iHeartRadio Pop",iheart);
 }
 function playcf() {
-  setPlaybackInfo("https://stream.revma.ihrhls.com/zc6951/hls.m3u8", "iHeartRadio Café");
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc6951/hls.m3u8", "iHeartRadio Café",iheart);
 }
 function playhitn() {
-  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4422/hls.m3u8", "Hit Nation");
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4422/hls.m3u8", "Hit Nation",iheart);
 }
 function playimf() {
-  setPlaybackInfo("https://stream.revma.ihrhls.com/zc5158/hls.m3u8", "iHeartRadio Music Festival");
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc5158/hls.m3u8", "iHeartRadio Music Festival",iheart);
 }
 function playrn() {
-  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4443/hls.m3u8", "Rock Nation");
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4443/hls.m3u8", "Rock Nation",iheart);
 }
 function playkiis() {
-  setPlaybackInfo("https://stream.revma.ihrhls.com/zc185/hls.m3u8", "102.7 KIIS-FM");
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc185/hls.m3u8", "102.7 KIIS-FM",iheart);
 }
  function playmxn() {
-  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4776/hls.m3u8", "Mix Nation");
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4776/hls.m3u8", "Mix Nation",iheart);
 }
 function playalic() {
-  setPlaybackInfo("https://stream.revma.ihrhls.com/zc1269/hls.m3u8", "Alice 95.5");
+  setPlaybackInfo("https://stream.revma.ihrhls.com/zc1269/hls.m3u8", "Alice 95.5",iheart);
 }
 function playbbc1() {
-  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d320000.norewind.m3u8", "BBC Radio 1");
+  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d320000.norewind.m3u8", "BBC Radio 1",bbc);
 }
 function playbbc1x() {
-  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_1xtra/bbc_1xtra.isml/bbc_1xtra-audio%3d320000.norewind.m3u8", "BBC Radio 1Xtra");
+  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_1xtra/bbc_1xtra.isml/bbc_1xtra-audio%3d320000.norewind.m3u8", "BBC Radio 1Xtra",bbc);
 }
 function playbbc6() {
-  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d320000.norewind.m3u8", "BBC Radio 6 Music");
+  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d320000.norewind.m3u8", "BBC Radio 6 Music",bbc);
 }
 
-function setPlaybackInfo(url, title) {
+function setPlaybackInfo(url, title,cover) {
   document.body.classList.add('loading');
   inputUrl.value = url;
   appTitle.textContent = title;
   document.title = title;
-  play(url,title);
+  play(url,title,cover);
 }
 
 var arrayRecord = [];
@@ -1073,8 +1075,8 @@ menuContent2.appendChild(groupButton);
 
             imgContainer.appendChild(image);
             imgContainer.appendChild(nameElement);
-
-                            imgContainer.onclick = () => playLinkContent(name, link);
+             let cover = image.src;
+                            imgContainer.onclick = () => playLinkContent(name, link,cover);
  
                             imgContainer.addEventListener('contextmenu', (e) => {
                             e.preventDefault();
@@ -1112,7 +1114,7 @@ imgContainer.addEventListener('touchend', () => {
   clearTimeout(longPressTimer);
 
   if (!isScrolling) {
-    playLinkContent(name, link);
+    playLinkContent(name, link,cover);
   }
 });
               groupContainer.appendChild(imgContainer);
@@ -1265,8 +1267,8 @@ menuContent2.appendChild(groupButton);
 
             imgContainer.appendChild(image);
             imgContainer.appendChild(nameElement);
-
-            imgContainer.addEventListener('click', () => playLinkContent(name, link));
+            let cover = image.src;
+            imgContainer.addEventListener('click', () => playLinkContent(name, link,cover));
  
             imgContainer.addEventListener('contextmenu', (e) => {
                             e.preventDefault();
@@ -1305,7 +1307,7 @@ imgContainer.addEventListener('touchend', () => {
   clearTimeout(longPressTimer);
 
   if (!isScrolling) {
-    playLinkContent(name, link);
+    playLinkContent(name, link,cover);
   }
 });
       groupContainer.appendChild(imgContainer);
@@ -1393,7 +1395,8 @@ function playnewLink(name, link){
     const nameElement = clonedContainer.querySelector('p');
     nameElement.classList.remove('t');
     image.loading = 'lazy';
-    image.onclick = () => playmore(link, title);
+    let cover = image;
+    image.onclick = () => playmore(link, title,cover);
 
     savedContent.appendChild(clonedContainer);
 
@@ -1429,9 +1432,9 @@ function loadSavedContent() {
 
          clonedContainer.appendChild(img);
         clonedContainer.appendChild(nameElement);
-
+                let cover = img.src;
         img.loading = 'lazy';
-        img.onclick = () => playmore(item.link, item.name);
+        img.onclick = () => playmore(item.link, item.name,cover);
 
         savedContent.appendChild(clonedContainer);
     });
@@ -1479,10 +1482,10 @@ document.addEventListener('DOMContentLoaded', loadSavedContent);
     return groups;
 }
 
-function playLinkContent(name,link) {
+function playLinkContent(name,link,cover) {
            audio.pause();
      const title = name;
-     playmore(link, title);
+     playmore(link, title,cover);
   }
     openMenuButton.addEventListener("click", function () {
         menu.classList.remove("hidden");
@@ -1633,7 +1636,7 @@ function getNewId() {
      function saveDataToLocalStorage(data) {
         localStorage.setItem("savedData", JSON.stringify(data));
     }
-    function playmore(link, title){ 
+    function playmore(link, title,cover){ 
         const url = link;
         const fileExtension = url.split('.').pop().toLowerCase();
         desiredOption.selected = true;
@@ -1658,7 +1661,12 @@ function getNewId() {
                         document.body.classList.remove('loading');
                         navigator.mediaSession.metadata = new MediaMetadata({
                             title: title,
-                            artist: 'HITFM Player'
+                            artist: 'HITFM Player',
+                            artwork : [{
+            src:cover,
+            sizes: '300x300',
+            type: 'image/jpg'
+        }]
                         });
                     }).catch(error => {//302跳转非直链m3u8无法使用hls.js播放
                      const notification = document.createElement('div');
@@ -1675,12 +1683,12 @@ function getNewId() {
                  window.open(url, "_blank");
             }
         } else {
-       setPlaybackInfo(url, title);
+       setPlaybackInfo(url, title,cover);
          }
    }
-    function attachClickEvent(imgContainer, link, title) {
+    function attachClickEvent(imgContainer, link, title,cover) {
     imgContainer.addEventListener("click", function () {
-     playmore(link, title);
+     playmore(link, title,cover);
     });
 }
 
@@ -1704,9 +1712,9 @@ function getNewId() {
             imgContainer.appendChild(name);
 
             savedContent.appendChild(imgContainer);
-
+            let cover = image.src;
             // 使用闭包为每个图片容器添加点击事件
-            attachClickEvent(imgContainer, item.link, item.name);
+            attachClickEvent(imgContainer, item.link, item.name,cover);
         });
     }
 function restoreDataFromLocalStorage() {
