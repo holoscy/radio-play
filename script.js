@@ -1036,9 +1036,6 @@ function displayStoredContent() {
 
             getRequest.onsuccess = function (event) {
                 const storedData = event.target.result;
-
-                console.log('Stored Data:', storedData);
-
                 if (typeof storedData.data === 'string') {
                     try {
                         const groupData = JSON.parse(storedData.data);
@@ -1122,13 +1119,8 @@ imgContainer.addEventListener('touchend', () => {
 
                         menuContent2.appendChild(groupContainer);
                         const clearButton = document.createElement('button');
-                        clearButton.textContent = '清除';
-                        clearButton.style.border = '2px solid #2c3e50'; 
-                        clearButton.style.backgroundColor = 'rgba(44, 62, 80, 0.7)';
-                        clearButton.style.color = '#ffffff';
-                        clearButton.style.borderRadius = '10px';  
-                        clearButton.style.width = '50px'; 
-                        clearButton.style.fontWeight = 'bold';
+                        clearButton.classList.add('clear-button');
+                        clearButton.textContent = '删除本组';
                         clearButton.onclick = () => clearGroupContent(groupName,groupData);
                         groupContainer.appendChild(clearButton);
                         cursor.continue();
@@ -1315,17 +1307,10 @@ imgContainer.addEventListener('touchend', () => {
         menuContent2.appendChild(groupContainer);
     const groupData = data[groupName];
     const storeButton = document.createElement('button');
-    storeButton.textContent = '存储';
-    storeButton.style.border = '2px solid #2c3e50'; 
-    storeButton.style.backgroundColor = 'rgba(44, 62, 80, 0.7)';
-    storeButton.style.color = '#ffffff';
-    storeButton.style.borderRadius = '10px';  
-    storeButton.style.width = '50px'; 
-    storeButton.style.fontWeight = 'bold';  
+    storeButton.classList.add('clear-button');
+    storeButton.textContent = '存储本组'; 
     storeButton.onclick = () => storeGroupContent(groupName,groupData);
-    groupContainer.appendChild(storeButton);
-
-     
+    groupContainer.appendChild(storeButton);    
     });
 }
  let activeContextMenu = null;
@@ -1491,10 +1476,29 @@ function playLinkContent(name,link,cover) {
         menu.classList.remove("hidden");
     });
 
-    addRowButton.addEventListener("click", function () {
-        const row = createRow("", "", "");
-        menuContent.appendChild(row);
+addRowButton.addEventListener("click", function () {
+    const row = createRow("", "", "");
+    const imgContainer = row.querySelector(".img-container");
+    const imageInput = row.querySelector(".image-input");
+    imgContainer.style.background = "url('./icons/pic.svg') center center / cover no-repeat";
+    row.insertBefore(imgContainer, row.firstChild);
+    row.insertBefore(imageInput, row.firstChild);
+    menuContent.appendChild(row);
+
+    imageInput.addEventListener("change", function () {
+        const file = imageInput.files[0];
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            imgContainer.style.background = "none";
+            const selectedImage = document.createElement("img");
+            selectedImage.src = e.target.result;
+            selectedImage.classList.add("rimg");
+            imgContainer.innerHTML = "";
+            imgContainer.appendChild(selectedImage);
+        };
+        reader.readAsDataURL(file);
     });
+});
 
     saveButton.addEventListener("click", function () {
     const rows = menuContent.getElementsByClassName("menu-row");
@@ -1574,12 +1578,29 @@ function getNewId() {
         const row = document.createElement("div");
         row.classList.add("menu-row");
 
-        const imgContainer = document.createElement("div");
-        imgContainer.classList.add("img-container");
+          const imgContainer = document.createElement("div");
+    imgContainer.classList.add("img-container");
+    imgContainer.addEventListener("click", function () {
+        imageInput.click();
+    });
 
-        const imageInput = document.createElement("input");
-        imageInput.type = "file";
-        imageInput.classList.add("image-input");
+    const imageInput = document.createElement("input");
+    imageInput.type = "file";
+    imageInput.classList.add("image-input");
+    imageInput.style.display = "none"; 
+    imageInput.addEventListener("change", function () {
+ 
+        const file = imageInput.files[0];
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const image = document.createElement("img");
+            image.src = e.target.result;
+            image.classList.add("rimg");
+            imgContainer.innerHTML = "";
+            imgContainer.appendChild(image);
+        };
+        reader.readAsDataURL(file);
+    });
 
         const linkLabel = document.createElement("label");
         linkLabel.textContent = "链接：";
