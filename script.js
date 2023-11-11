@@ -1601,25 +1601,25 @@ function getNewId() {
         };
         reader.readAsDataURL(file);
     });
+const infoinput = document.createElement("div");
+infoinput.classList.add("infoinput");
 
-        const linkLabel = document.createElement("label");
-        linkLabel.textContent = "链接：";
+const linkInput = document.createElement("input");
+linkInput.type = "text";
+linkInput.classList.add("link-input");
+linkInput.value = linkValue; 
+linkInput.placeholder = "链接"; 
 
-        const linkInput = document.createElement("input");
-        linkInput.type = "text";
-        linkInput.classList.add("link-input");
-        linkInput.value = linkValue;
-
-        const nameLabel = document.createElement("label");
-        nameLabel.textContent = "名称：";
-
-        const nameInput = document.createElement("input");
-        nameInput.type = "text";
-        nameInput.classList.add("name-input");
-        nameInput.value = nameValue;
+const nameInput = document.createElement("input");
+nameInput.type = "text";
+nameInput.classList.add("name-input");
+nameInput.value = nameValue; 
+nameInput.placeholder = "名称";
 
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "删除";
+        deleteButton.classList.add("infoinput");
+
         deleteButton.addEventListener("click", function () {
             const id = parseInt(row.dataset.id);
             const savedData = JSON.parse(localStorage.getItem("savedData")) || [];
@@ -1638,10 +1638,9 @@ function getNewId() {
 
         row.appendChild(imgContainer);  
         row.appendChild(imageInput);
-        row.appendChild(linkLabel);
-        row.appendChild(linkInput);
-        row.appendChild(nameLabel);
-        row.appendChild(nameInput);
+        row.appendChild(infoinput);
+         infoinput.appendChild(linkInput);
+         infoinput.appendChild(nameInput);
         row.appendChild(deleteButton);
 
          if (imageBase64 && isSaved) {
