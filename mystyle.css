@@ -8,7 +8,7 @@ body{height:100%;min-height: 100vh;}
 	    flex-wrap: wrap;}
 .ite {flex: 1 1 100%;
       padding: 10px;
-      box-sizing: border-box;max-width: 490px !important;
+      box-sizing: border-box;
 		}			
 .item-center {display: none;height: 0;
   width: 0;}
@@ -22,12 +22,45 @@ body{height:100%;min-height: 100vh;}
 .app{height: 100%;}
 .ite {flex: 1;padding: 10px;}
 .item-left {
-  height: 100%;width: 100%;order: 1;flex: 0 0 40%;margin:0 3% auto auto;max-width: 450px}
+  height: 100%;width: 100%;order: 1;flex: 0 0 30%;margin:0 3% auto auto;max-width: 500px}
 .item-center {order: 2;flex: 0 0 5%;}
-.item-right { height: 100%;width: 100%;order: 3;flex: 0 0 40%;margin:0 auto auto 3%;max-width: 450px}
+.item-right { height: 100%;width: 100%;order: 3;flex: 0 0 50%;margin:0 auto auto 3%;max-width: 800px;display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;}
 .container {display: flex;flex-wrap: nowrap;}
-
+ #menu {
+    position: fixed; 
+    top: 15%;
+     left: 0;
+    right: 0;
+    margin: 0 auto; 
+    width: 65%;
+    height:75%;
+    padding: 10px;
+    background-color: #e5e5e5;
+    z-index: 999;
+     border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px #aaa;border-radius: 1em;
 }
+}
+#tavr-container{max-width:500px;
+}
+@media screen and (max-width: 768px) {
+ #menu {
+    position: fixed; 
+    top: 15%;
+     left: 0;
+    right: 0;
+    margin: 0 auto; 
+    width: 90%;
+    height:70%;max-height:700px;
+    padding: 10px;
+    background-color: #e5e5e5;
+    z-index: 999;
+     border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px #aaa;border-radius: 1em;
+}}
 #programName {text-align: center;font-weight: bold; margin-bottom:1em;}
 #songInfo {text-align: center; margin-bottom:1em;}
 #recordedTime{display: none;text-align: center; margin-bottom:1em;}
@@ -212,7 +245,7 @@ input[type="range"].volume-level::-webkit-slider-thumb {filter: none !important;
   background-color: rgba(255, 255, 255, 0.7);
   width: 30%;}
 .date{display:flex;justify-content:center;align-items:center;margin-bottom:10px;}
- .station_select{display:block;width:50%;height:35px;margin:0 auto 15px auto;text-align:center; border: none;
+ .station_select{display:block;width:200px;height:35px;margin:0 auto 15px auto;text-align:center; border: none;
   border-bottom: 3px solid var(--main-color) ;
   border-radius: 5px;  background-color: rgba(255, 255, 255, 0.7);
   }
@@ -253,7 +286,7 @@ input[type="range"].volume-level::-webkit-slider-thumb {filter: none !important;
 
 
 #darkModeButton{margin:5px;width:20px;height:20px;} #toggle-menu-btn{margin:5px;padding:0;width:20px;height:20px}
-.menu-container { 
+.menu-container {
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -321,7 +354,7 @@ input[type="range"].volume-level::-webkit-slider-thumb {filter: none !important;
     text-align: center; 
 }
 .name-input{width:70px; }
-.link-input {width:70px; }
+.link-input {width:70px;margin-bottom: 5px;}
 .image-input{width:70px; }
 #menuContainer {
      height: 80%;  
@@ -331,24 +364,10 @@ input[type="range"].volume-level::-webkit-slider-thumb {filter: none !important;
     height: 15%;
     overflow-y: auto;
 }
- #menu {
-    position: fixed; 
-    top: 15%;
-     left: 0;
-    right: 0;
-    margin: 0 auto; 
-    width: 80%;
-    height:75%;
-    padding: 20px;
-    background-color: #e5e5e5;
-    z-index: 999;
-     border: 1px solid #ccc;
-    box-shadow: 0px 0px 10px #aaa;border-radius: 1em;
-}
 
-.menu-row {margin:auto;
+.menu-row {margin:auto; 
     display: inline-block;
-    padding: 3px 5px;
+    padding: 3px 3px;
     text-decoration: none;
     color: #333; 
     border: 2px solid transparent; 
@@ -359,7 +378,7 @@ input[type="range"].volume-level::-webkit-slider-thumb {filter: none !important;
 .menu-row:hover {
     background-color: #eee; 
     color: #000;  
-    border-color: #000;
+    border-color: var(--main-color);
 }
 .img-container{width:auto;height:auto;min-height:30px;min-width:30px;max-height:70px ;text-align: center; display: inline-block;margin:0.5em; cursor: pointer; position: relative;user-select: none; 
 }
@@ -663,7 +682,11 @@ width: 70%;}
 .clear-button:hover {
     background-color: var(--main-color);
 }
-
+.infoinput { justify-content: center;
+      align-items: center;
+    display: flex;
+    flex-direction: column;
+}
 //-------------------//
   .yAudio {
         max-width: 1000px;
