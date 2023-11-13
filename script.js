@@ -1086,7 +1086,7 @@
 
 	  longPressTimer = setTimeout(() => {
 		if (!isScrolling) {
-		  showContextMenu(touchStartX, touchStartY, name, link, () => saveContent(link, name, imgContainer));
+		  showContextMenu(touchStartX, touchStartY, name, link, () => saveContent(link, name, imgContainer), () => deleteImgContainer(imgContainer, groupName));
 		}
 	  }, 500);
 	}, { passive: true });
@@ -1316,7 +1316,7 @@
 
 	  longPressTimer = setTimeout(() => {
 		if (!isScrolling) {
-		  showContextMenu(touchStartX, touchStartY, name, link, () => saveContent(link, name, imgContainer));
+		  showContextMenu(touchStartX, touchStartY, name, link, () => saveContent(link, name, imgContainer), () => deleteImgContainer(imgContainer, groupName));
 		}
 	  }, 500);
 	}, { passive: true });
