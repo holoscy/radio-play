@@ -451,7 +451,7 @@
 
 	function play(url,title,cover) {
 	  document.body.classList.add('loading');
-	  navigator.mediaSession.metadata = new MediaMetadata({
+	  if (url,cover){navigator.mediaSession.metadata = new MediaMetadata({
 				title:title,
 				artist: 'HITFM Player',
 				artwork: [{
@@ -459,7 +459,7 @@
 					sizes: '200x200',
 					type: 'image/png'
 				}]
-			  });
+			  })};
 	  const songInfoDiv = document.getElementById('songInfo');
 	  songInfoDiv.style.display = 'none';
 	  desiredOption.selected = true;
@@ -684,8 +684,6 @@
 	  document.title = title;
 	  play(url,title,cover);
 	}
-
-	var arrayRecord = [];
 
 	function download(data, filename) {
 		console.log('downloading...');
