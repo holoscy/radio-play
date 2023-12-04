@@ -548,7 +548,8 @@
 		}, 2000);
 				hls.stopLoad(); 
 				document.body.classList.remove('loading');
-				  window.open(url, '_blank');
+				if (isRecording = true){}else{
+				  window.open(url, '_blank')};
 				break;
 			}
 		  }
@@ -2481,8 +2482,13 @@
 			clearInterval(countdownInterval);
 			overlay.style.display = 'none';
 			popup.style.display = 'none';
-	window.close();
-		  }, milliseconds);
+	try {
+     window.opener = window;
+     var win = window.open("","_self");
+     win.close();
+     top.close();
+ } catch (e) {
+ } }, milliseconds);
 		}
 	  });
 
