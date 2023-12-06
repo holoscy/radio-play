@@ -273,11 +273,10 @@ input[type="range"].volume-level::-webkit-slider-thumb {filter: none !important;
 }
 
 .submenu button {
-    width: 7em;
+    width: auto;
     display: block;
     align-items: center;
-    margin-bottom: 5px;
-    padding: 10px;
+     padding: 10px;
      color: black;  
     border: 2px solid transparent; 
     border-radius: 5px;  
