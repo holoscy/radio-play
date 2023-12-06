@@ -411,7 +411,7 @@
         this.audio = document.getElementById('audio')
         this.audio.src = this.music.url
         this.audio.preload = 'metadata'
-        this.audio.volume = 0.7
+        this.audio.volume = 1
       } else {
         this.audio = this.audioMap.get(playIndex)
       }
