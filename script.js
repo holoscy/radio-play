@@ -2443,6 +2443,7 @@
 	   const dynamicButton = document.createElement('button');
 	  dynamicButton.setAttribute('id', 'nelist');
 	  dynamicButton.textContent = '前往歌单页面';
+	  dynamicButton.style.width = 'auto';
 	  dynamicButton.addEventListener('click', function() {
 		window.location.href = playlistUrl;
 	  });
@@ -2482,13 +2483,8 @@
 			clearInterval(countdownInterval);
 			overlay.style.display = 'none';
 			popup.style.display = 'none';
-	try {
-     window.opener = window;
-     var win = window.open("","_self");
-     win.close();
-     top.close();
- } catch (e) {
- } }, milliseconds);
+	 window.location.href="about:blank";
+  }, milliseconds);
 		}
 	  });
 
