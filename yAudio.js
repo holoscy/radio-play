@@ -428,7 +428,7 @@ if (!originalPic.includes("param=300y300")) {
       element.querySelector('.yAudio-author').innerHTML = this.music.author
       element.querySelector('.yAudio-title').innerHTML = this.music.title
     
-      if (this.option.autoplay && !this._isMobile()) {
+      if (this.option.autoplay) {
         this.onPlay()
       }          
          
