@@ -535,10 +535,7 @@
 		  if (data.fatal) {
 			switch (data.type) {
 			  case Hls.ErrorTypes.NETWORK_ERROR:
-				console.error('Network error, trying to recover');
-				  
-			  case Hls.ErrorTypes.MEDIA_ERROR:
-				console.error('Media error, trying to recover');
+				console.error('Error, trying to recover');		
 			   const notification = document.createElement('div');
 		notification.className = 'notification';
 		notification.textContent = `尝试使用浏览器播放`;
@@ -548,8 +545,7 @@
 		}, 2000);
 				hls.stopLoad(); 
 				document.body.classList.remove('loading');
-				if (isRecording = true){}else{
-				  window.open(url, '_blank')};
+				  window.open(url, '_blank');
 				break;
 			}
 		  }
