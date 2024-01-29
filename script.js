@@ -516,7 +516,7 @@
 
 			  navigator.mediaSession.metadata = new MediaMetadata({
 				title: data.frag.title,
-				artist: '',
+				artist: 'HITFM Player',
 				artwork: [{
 					src: cover,
 					sizes: '200x200',
@@ -915,10 +915,22 @@
 				}
 			}
 		});
+		
+const subscribeModal = document.getElementById('subscribeModal');
+const close = document.getElementById('close');
+const close2 = document.getElementById('close2');
+
+
+close.addEventListener('click', () => {
+  subscribeModal.classList.add('hidden');
+});
+close2.addEventListener("click", function () {
+			menu.classList.add("hidden");
+		});
+	 
 	let db;
 	const dbName = 'Mradio';
 	const dbVersion = 1;
-
 	const request = indexedDB.open(dbName, dbVersion);
 
 	request.onerror = function (event) {
@@ -940,28 +952,87 @@
 	 const parseButton = document.querySelector('#menu button[onclick="parseM3UFromTextarea()"]');
 	 parseButton.addEventListener('click', parseM3UFromTextarea);
 
-	async function parseM3UFromTextarea() {
-		const m3uContent = document.getElementById('m3uTextarea').value;
-		const urlPattern = /^(http(s)?:\/\/)/;
-		if (urlPattern.test(m3uContent.trim())) {
-			try {
-				// Fetch the M3U file content
-				const response = await fetch(m3uContent);
-				if (response.ok) {
-					const m3uData = await response.text();
-					const parsedData = parseM3U(m3uData);
-					updateMenuContent(parsedData);
-				} else {
-					console.error('Failed to fetch the M3U file.');
-				}
-			} catch (error) {
-				console.error('An error occurred while fetching the M3U file:', error);
-			}
-		} else {
-			const parsedData = parseM3U(m3uContent);
-			updateMenuContent(parsedData);
-		}
-	}
+async function parseM3UFromTextarea() {
+    const m3uContent = document.getElementById('m3uTextarea').value;
+    const urlPattern = /^(http(s)?:\/\/)/;
+
+    function showNotification(message, duration = 2100) {
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        if (duration > 0) {
+            setTimeout(() => {
+                if (document.body.contains(notification)) {
+                    document.body.removeChild(notification);
+                }
+            }, duration);
+        }
+        return notification;
+    }
+
+    function updateNotification(notification, message, autoHide = true) {
+        if (notification) {
+            notification.textContent = message;
+            if (autoHide) {
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 3000);
+            }
+        }
+    }
+
+    if (urlPattern.test(m3uContent.trim())) {
+        let notification = showNotification('文件获取中...', 0);
+        try {
+            const response = await fetch(m3uContent);
+
+            if (!response.ok) {
+                updateNotification(notification, '获取失败');
+                return;
+            }
+
+            const contentLength = response.headers.get('content-length');
+            if (!contentLength) {
+                updateNotification(notification, '无法获取文件大小');
+                return;
+            }
+
+            const total = parseInt(contentLength, 10);
+            let loaded = 0;
+
+            const reader = response.body.getReader();
+            const stream = new ReadableStream({
+                async start(controller) {
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+                        loaded += value.byteLength;
+                        updateNotification(notification, `加载中... ${(loaded / total * 100).toFixed(2)}%`, false);
+                        controller.enqueue(value);
+                    }
+                    controller.close();
+                    reader.releaseLock();
+                }
+            });
+
+            const m3uData = await new Response(stream).text();
+            const parsedData = parseM3U(m3uData);
+            updateMenuContent(parsedData);
+            updateNotification(notification, '获取成功');
+        } catch (error) {
+            console.error('An error occurred while fetching the M3U file:', error);
+            updateNotification(notification, '获取失败');
+        }
+    } else {
+        const parsedData = parseM3U(m3uContent);
+        updateMenuContent(parsedData);
+    }
+}
+
 
 	function storeGroupContent(groupName, groupData) {
 		const transaction = db.transaction(['m3uContent'], 'readwrite');
@@ -1379,6 +1450,13 @@
 		playOption.style.marginBottom = '2px';
 		playOption.style.borderBottom = '2px solid #fff';playOption.style.cursor = 'pointer';
 		playOption.addEventListener('click', () => playnewLink(name, link));
+		
+		const potOption = document.createElement('div');
+		potOption.textContent = 'PotPlayer播放';
+		potOption.style.color = '#ffffff';
+		potOption.style.marginBottom = '2px';
+		potOption.style.borderBottom = '2px solid #fff';potOption.style.cursor = 'pointer';
+		potOption.addEventListener('click', () => pot(name,link));
 
 		const saveOption = document.createElement('div');
 		saveOption.textContent = '添加至主页';
@@ -1403,6 +1481,7 @@
 		delOption.style.borderBottom = '2px solid #fff';delOption.style.cursor = 'pointer';
 		delOption.addEventListener('click', () => onDeleteCallback(name));
 		contextMenu.appendChild(playOption);
+		contextMenu.appendChild(potOption);
 		contextMenu.appendChild(delOption);
 		contextMenu.appendChild(saveOption);
 
@@ -1422,6 +1501,13 @@
 				appTitle.textContent = title;
 				document.title = title;
 				window.open(link, "_blank");}
+				
+	function pot(name,link){
+	url = 'potplayer://' + link;
+	window.location.href = url;
+	appTitle.textContent = name;
+	}
+				
 	 function saveContent(link, title, imgContainer) {
 		const savedContent = document.getElementById('savedContent');
 		const clonedContainer = imgContainer.cloneNode(true);
@@ -1821,14 +1907,47 @@
 		menuContent.insertAdjacentElement('beforebegin', toggleButton);
 		menuContent.className = 'groupContainer';
 	}
-
-
 		 restoreDataFromLocalStorage();
 
-		 closeMenuButton.addEventListener("click", function () {
-			menu.classList.add("hidden");
-		});
-	 
+document.getElementById("addMore").addEventListener("click", function() {
+  // 创建一个新的 subcontain 容器
+  var subcontain = document.createElement("div");
+  subcontain.classList.add("subcontain");
+
+  // 在 subcontain 中添加输入框
+  var input = document.createElement("input");
+  input.setAttribute("type", "text");
+  input.setAttribute("id", "subscriptionInput");
+  input.setAttribute("placeholder", "输入订阅源");
+
+  // 在 subcontain 中添加获取按钮
+  var getButton = document.createElement("button");
+  getButton.classList.add("set");
+  getButton.setAttribute("id", "getSubscription");
+  getButton.textContent = "获取";
+
+  // 在 subcontain 中添加删除按钮
+  var delButton = document.createElement("button");
+  delButton.classList.add("set");
+  delButton.setAttribute("id", "del1");
+  delButton.textContent = "删除";
+
+  // 为删除按钮添加点击事件
+  delButton.addEventListener("click", function() {
+    // 获取父容器并将其从DOM中移除
+    var parentContainer = subcontain.parentNode;
+    parentContainer.removeChild(subcontain);
+  });
+
+  // 将输入框和按钮添加到 subcontain 中
+  subcontain.appendChild(input);
+  subcontain.appendChild(getButton);
+  subcontain.appendChild(delButton);
+
+  // 将 subcontain 添加到 modal-content 中
+  document.querySelector(".modal-content").appendChild(subcontain);
+});
+
 	  if (localStorage.getItem("backgroundImage")) {
 		var backgroundImage = localStorage.getItem("backgroundImage");
 		document.body.style.backgroundImage = `url(${backgroundImage})`;
@@ -2455,48 +2574,50 @@
 	  }
 	}
 	const openButton = document.getElementById('openButton');
-	  const overlay = document.getElementById('overlay');
-	  const popup = document.getElementById('popup');
-	  const timeInput = document.getElementById('timeInput');
-	  const setCloseTime = document.getElementById('setCloseTime');
-	  const cancelClose = document.getElementById('cancelClose');
-	  const closePopup = document.getElementById('closePopup');
-	  const countdown = document.getElementById('countdown');
-	  let countdownInterval;
+const overlay = document.getElementById('overlay');
+const popup = document.getElementById('popup');
+const timeInput = document.getElementById('timeInput');
+const setCloseTime = document.getElementById('setCloseTime');
+const cancelClose = document.getElementById('cancelClose');
+const close3 = document.getElementById('close3');
+const countdown = document.getElementById('countdown');
+let countdownInterval;
+let countdownStart;
+let closeTimeout;
 
-	  openButton.addEventListener('click', () => {
-		overlay.style.display = 'block';
-		popup.style.display = 'block';
-	  });
+openButton.addEventListener('click', () => {
+  overlay.style.display = 'block';
+  popup.style.display = 'block';
+});
 
-	  setCloseTime.addEventListener('click', () => {
-		const minutes = parseInt(timeInput.value);
-		if (!isNaN(minutes)) {
-		  const milliseconds = minutes * 60 * 1000; 
-		  countdownInterval = setInterval(updateCountdown, 1000);
-		  countdownStart = Date.now();
-		  setTimeout(() => {
-			clearInterval(countdownInterval);
-			overlay.style.display = 'none';
-			popup.style.display = 'none';
-	 window.location.href="about:blank";
-  }, milliseconds);
-		}
-	  });
+setCloseTime.addEventListener('click', () => {
+  const minutes = parseInt(timeInput.value);
+  if (!isNaN(minutes)) {
+    const milliseconds = minutes * 60 * 1000;
+    countdownStart = Date.now();
+    countdownInterval = setInterval(updateCountdown, 1000);
+    closeTimeout = setTimeout(() => {
+      clearInterval(countdownInterval);
+      overlay.style.display = 'none';
+      popup.style.display = 'none';
+      window.location.href = "about:blank";
+    }, milliseconds);
+  }
+});
 
-	  cancelClose.addEventListener('click', () => {
-		clearInterval(countdownInterval);
-		overlay.style.display = 'none';
-		popup.style.display = 'none';
-	  });
+cancelClose.addEventListener('click', () => {
+  clearInterval(countdownInterval);
+  clearTimeout(closeTimeout);
+  overlay.style.display = 'none';
+  popup.style.display = 'none';
+});
 
-	  closePopup.addEventListener('click', () => {
-		overlay.style.display = 'none';
-		popup.style.display = 'none';
-	  });
+close3.addEventListener('click', () => {
+  overlay.style.display = 'none';
+  popup.style.display = 'none';
+});
 
-	  function updateCountdown() {
-		const remainingTime = parseInt(timeInput.value * 60 - (Date.now() - countdownStart) / 1000);
-		countdown.innerHTML = `剩余时间: ${remainingTime} 秒`;
-	  }
-	  let countdownStart;
+function updateCountdown() {
+  const remainingTime = parseInt(timeInput.value * 60 - (Date.now() - countdownStart) / 1000);
+  countdown.innerHTML = `剩余时间: ${remainingTime} 秒`;
+}
