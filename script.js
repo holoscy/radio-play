@@ -186,11 +186,10 @@
 
 	function playAudio() {
 		  audio.pause();
-		document.body.classList.add('loading');
+		loadings();
 		var srcSelect = document.getElementById('src_select');
-		var value = JSON.parse(srcSelect['value']);
-		appTitle.textContent = value['name'];
-		document.title = value['name'];
+		var value = JSON.parse(srcSelect['value']);		
+		updateTitle(value['name']);
 		radio.src = value['src'];
 		radio.addEventListener('stalled', stalledHandler);
 
@@ -299,7 +298,7 @@
 
 			function stalledHandler() {
 				console.log('stalled');
-				document.body.classList.add('loading');
+				loadings();
 				stopAudio();
 				playAudio();
 			};
@@ -450,7 +449,7 @@
 	var desiredOption = selectElement.querySelector("option[value='']");
 
 	function play(url,title,cover) {
-	  document.body.classList.add('loading');
+	 loadings();
 	  if (url,cover){navigator.mediaSession.metadata = new MediaMetadata({
 				title:title,
 				artist: 'HITFM Player',
@@ -528,7 +527,7 @@
 		});
 
 		 hls.on(Hls.Events.MANIFEST_PARSED, function () {
-		  video.play()
+		  video.play();
 		});
 
 		 hls.on(Hls.Events.ERROR, function (event, data) {
@@ -641,7 +640,7 @@
 	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4418/hls.m3u8", "iHeartCountry",iheart);
 	}
 	function playip() {
-	  setPlaybackInfo("https://playerservices.streamtheworld.com/api/livestream-redirect/ACIR31_S01AAC.m3u8", "iHeartRadio Pop",iheart);
+	  setPlaybackInfo("https://playerservices.streamtheworld.com/api/livestream-redirect/ACIR31_S01AAC.m3u8", "iHeartRadio POP",iheart);
 	}
 	function playcf() {
 	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc6951/hls.m3u8", "iHeartRadio Café",iheart);
@@ -673,12 +672,24 @@
 	function playbbc6() {
 	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d320000.norewind.m3u8", "BBC Radio 6 Music",bbc);
 	}
-
+    function updateTitle(newTitle) {
+  document.title = newTitle;
+  appTitle.textContent = newTitle;
+  const loaderElement = document.querySelector('.loader');
+  if (loaderElement) {
+    loaderElement.textContent = newTitle;
+  }
+}
+function loadings() {
+     document.body.classList.add('loading');
+    setTimeout(function() {
+    document.body.classList.remove('loading');
+  }, 12000); 
+}
 	function setPlaybackInfo(url, title,cover) {
-	  document.body.classList.add('loading');
+	 loadings();
 	  inputUrl.value = url;
-	  appTitle.textContent = title;
-	  document.title = title;
+	  updateTitle(title);
 	  play(url,title,cover);
 	}
 
@@ -916,10 +927,14 @@
 			}
 		});
 		
+const subscribeButton = document.getElementById('subscribeButton');
 const subscribeModal = document.getElementById('subscribeModal');
 const close = document.getElementById('close');
 const close2 = document.getElementById('close2');
 
+subscribeButton.addEventListener('click', () => {
+  subscribeModal.classList.remove('hidden');
+});
 
 close.addEventListener('click', () => {
   subscribeModal.classList.add('hidden');
@@ -1498,8 +1513,7 @@ async function parseM3UFromTextarea() {
 	}
 	function playnewLink(name, link){
 				const title = name;
-				appTitle.textContent = title;
-				document.title = title;
+				updateTitle(title);
 				window.open(link, "_blank");}
 				
 	function pot(name,link){
@@ -1806,9 +1820,8 @@ async function parseM3UFromTextarea() {
 			if (fileExtension !== 'm3u8') {
 				stopAudio();
 				const audio = document.getElementById('video');
-				document.body.classList.add('loading');
-				appTitle.textContent = title;
-				document.title = title;
+				loadings();
+				updateTitle(title);
 				audio.src = url;
 
 				try {
@@ -2081,8 +2094,7 @@ document.getElementById("addMore").addEventListener("click", function() {
 	}
 
 	function toggleDarkMode() {
-	  var darkModeButton = document.getElementById("darkModeButton");
-
+	  const darkModeButton = document.getElementById("darkModeButton");
 	  if (isDarkMode) {
 		document.body.classList.remove("dark");
 		localStorage.setItem("themeMode", "default");
