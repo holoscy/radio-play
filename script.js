@@ -614,63 +614,64 @@
 	  spotifyLink.innerHTML = '<img src="./icons/spotify.svg" alt="Spotify Logo">';
 	  songInfoDiv.appendChild(spotifyLink);
 	}
+	let currentChannel = 'hitfm';
 	function playHitFM1() {
-	  setPlaybackInfo("https://liveop.cctv.cn/hls/cctvn/playlist.m3u8", "HITFM 央视",hitfm);
+	  setPlaybackInfo("https://liveop.cctv.cn/hls/cctvn/playlist.m3u8", "HITFM 央视",hitfm,'hitfm');
 	}
 
 	function playHitFM2() {
-	  setPlaybackInfo("https://satellitepull.cnr.cn/live/wxhitfm/playlist.m3u8", "HITFM 广州",hitfm);
+	  setPlaybackInfo("https://satellitepull.cnr.cn/live/wxhitfm/playlist.m3u8", "HITFM 广州",hitfm,'hitfm');
 	}
 
 	function playHitFM3() {
-	  setPlaybackInfo("https://satellitepull.cnr.cn/live/wxgjlxyy/playlist.m3u8", "HITFM 北京",hitfm);
+	  setPlaybackInfo("https://satellitepull.cnr.cn/live/wxgjlxyy/playlist.m3u8", "HITFM 北京",hitfm,'hitfm');
 	}
 
 	function playev() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc5953/hls.m3u8", "Evolution",iheart);
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc5953/hls.m3u8", "Evolution",iheart,'ev');
 	}
 
 	function playAT40() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4802/hls.m3u8", "AT40",iheart);
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4802/hls.m3u8", "AT40",iheart,'at40');
 	}
 	function playZ100() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc1469/hls.m3u8", "Z100",iheart);
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc1469/hls.m3u8", "Z100",iheart,'z100');
 	}
 	function playic() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4418/hls.m3u8", "iHeartCountry",iheart);
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4418/hls.m3u8", "iHeartCountry",iheart,'ic');
 	}
 	function playip() {
-	  setPlaybackInfo("https://playerservices.streamtheworld.com/api/livestream-redirect/ACIR31_S01AAC.m3u8", "iHeartRadio POP",iheart);
+	  setPlaybackInfo("https://playerservices.streamtheworld.com/api/livestream-redirect/ACIR31_S01AAC.m3u8", "iHeartRadio POP",iheart,'ip');
 	}
 	function playcf() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc6951/hls.m3u8", "iHeartRadio Café",iheart);
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc6951/hls.m3u8", "iHeartRadio Café",iheart,'cf');
 	}
 	function playhitn() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4422/hls.m3u8", "Hit Nation",iheart);
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4422/hls.m3u8", "Hit Nation",iheart,'hitn');
 	}
 	function playimf() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc5158/hls.m3u8", "iHeartRadio Music Festival",iheart);
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc5158/hls.m3u8", "iHeartRadio Music Festival",iheart,'imf');
 	}
 	function playrn() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4443/hls.m3u8", "Rock Nation",iheart);
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4443/hls.m3u8", "Rock Nation",iheart,'rn');
 	}
 	function playkiis() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc185/hls.m3u8", "102.7 KIIS-FM",iheart);
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc185/hls.m3u8", "102.7 KIIS-FM",iheart,'kiis');
 	}
 	 function playmxn() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4776/hls.m3u8", "Mix Nation",iheart);
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4776/hls.m3u8", "Mix Nation",iheart,'mxn');
 	}
 	function playalic() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc1269/hls.m3u8", "Alice 95.5",iheart);
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc1269/hls.m3u8", "Alice 95.5",iheart,'alic');
 	}
 	function playbbc1() {
-	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d320000.norewind.m3u8", "BBC Radio 1",bbc);
+	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d320000.norewind.m3u8", "BBC Radio 1",bbc,'bbc1');
 	}
 	function playbbc1x() {
-	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_1xtra/bbc_1xtra.isml/bbc_1xtra-audio%3d320000.norewind.m3u8", "BBC Radio 1Xtra",bbc);
+	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_1xtra/bbc_1xtra.isml/bbc_1xtra-audio%3d320000.norewind.m3u8", "BBC Radio 1Xtra",bbc,'bbc1x');
 	}
 	function playbbc6() {
-	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d320000.norewind.m3u8", "BBC Radio 6 Music",bbc);
+	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d320000.norewind.m3u8", "BBC Radio 6 Music",bbc,'bbc6');
 	}
     function updateTitle(newTitle) {
   document.title = newTitle;
@@ -686,11 +687,13 @@ function loadings() {
     document.body.classList.remove('loading');
   }, 12000); 
 }
-	function setPlaybackInfo(url, title,cover) {
+	function setPlaybackInfo(url,title,cover,channel) {
 	 loadings();
 	  inputUrl.value = url;
 	  updateTitle(title);
 	  play(url,title,cover);
+	  currentChannel = channel;
+	  updateProgramName(currentChannel);
 	}
 
 	function download(data, filename) {
@@ -2438,70 +2441,52 @@ document.getElementById("addMore").addEventListener("click", function() {
 			document.querySelector(".page1").style.display = "block";
 		}
 	});
-	 function getCurrentProgram() {
-		  const programSchedule = {//UTC+08:00 
-			MondayToFriday: [
-			  { start: "00:00:00", end: "06:00:00", name: "Music Flow 音乐流" },
-			  { start: "06:00:00", end: "07:00:00", name: "Morning Call 音乐叫早" },
-			  { start: "07:00:00", end: "10:00:00", name: "Morning Hits 阳光音乐早餐" },
-			  { start: "10:00:00", end: "13:00:00", name: "At Work Network 工作随身听" },
-			  { start: "13:00:00", end: "16:00:00", name: "Lazy Afternoon 慵懒下午茶" },
-			  { start: "16:00:00", end: "19:00:00", name: "Big Drive Home 开车现场秀" },
-			  { start: "19:00:00", end: "22:00:00", name: "New Music Express 新音乐速递" },
-			  { start: "22:00:00", end: "23:59:59", name: "Hit FM Dance 电音" }
-			],
-			Saturday: [
-			  { start: "00:00:00", end: "08:00:00", name: "Music Flow 音乐流" },
-			  { start: "08:00:00", end: "12:00:00", name: "Weekend Morning Show 周末早间音乐" },
-			  { start: "12:00:00", end: "14:00:00", name: "Hit the Road 在路上" },
-			  { start: "14:00:00", end: "16:00:00", name: "Soul Make 心灵制造" },
-			  { start: "16:00:00", end: "18:00:00", name: "Rock DJ 摇滚DJ" },
-			  { start: "18:00:00", end: "20:00:00", name: "Top 20 Countdown 顶尖20排行榜" },
-			  { start: "20:00:00", end: "22:00:00", name: "CTDM Chart 中国电子音乐巅峰榜" },
-			  { start: "22:00:00", end: "23:59:59", name: "Hit FM Dance 电音" }
-			],
-			Sunday: [
-			  { start: "00:00:00", end: "08:00:00", name: "Music Flow 音乐流" },
-			  { start: "08:00:00", end: "12:00:00", name: "Weekend Morning Show 周末早间音乐" },
-			  { start: "12:00:00", end: "14:00:00", name: "Rock DJ 摇滚DJ" },
-			  { start: "14:00:00", end: "16:00:00", name: "CTDM Chart 中国电子音乐巅峰榜" },
-			  { start: "16:00:00", end: "18:00:00", name: "Hit FM OST 电影原声坊" },
-			  { start: "18:00:00", end: "20:00:00", name: "Top 20 Countdown 顶尖20排行榜" },
-			  { start: "20:00:00", end: "22:00:00", name: "Hit FM Dance Carta & Co. 电音-卡塔" },
-			  { start: "22:00:00", end: "23:59:59", name: "Hit FM Dance 电音" }
-			]
-		  };
-
+	 function getCurrentProgram(channel) {
 		  const currentTime = new Date();
 		  const currentDay = currentTime.getDay(); // 0: Sunday, 1: Monday, ..., 6: Saturday
 		  const currentTimeString = currentTime.toTimeString().slice(0, 8);
+         
+         const selectedChannelSchedule = programSchedule[channel];
+  if (!selectedChannelSchedule) {
+    console.error('选定的频道不存在');
+    return " ";
+  }
+		let daySchedule;
+  switch (currentDay) {
+    case 0:
+      daySchedule = selectedChannelSchedule.Sunday;
+      break;
+    case 1:
+      daySchedule = selectedChannelSchedule.Monday;
+      break;
+    case 5:
+      daySchedule = selectedChannelSchedule.Friday;
+      break;
+    case 6:
+      daySchedule = selectedChannelSchedule.Saturday;
+      break;
+    default:
+      daySchedule = selectedChannelSchedule.TuesdayToThursday;
+  }
 
-		  let currentSchedule;
-		  if (currentDay === 0) { // Sunday
-			currentSchedule = programSchedule.Sunday;
-		  } else if (currentDay === 6) { // Saturday
-			currentSchedule = programSchedule.Saturday;
-		  } else { // Monday to Friday
-			currentSchedule = programSchedule.MondayToFriday;
-		  }
+  // 在选定的日程中查找当前时间的节目
+  for (const program of daySchedule) {
+    if (currentTimeString >= program.start && currentTimeString <= program.end) {
+      return program.name;
+    }
+  }
 
-		  for (const program of currentSchedule) {
-			if (currentTimeString >= program.start && currentTimeString <= program.end) {
-			  return program.name;
-			}
-		  }
-
-		  return "节目未知";
+		  return " ";
 		}
 
-		function updateProgramName() {
+		function updateProgramName(channel) {
 		  const programNameElement = document.getElementById("programName");
-		  const currentProgram = getCurrentProgram();
+		  const currentProgram = getCurrentProgram(channel);
 		  programNameElement.innerHTML = `ON AIR NOW <br> ${currentProgram}`;
 		}
-		updateProgramName();
-		setInterval(updateProgramName, 60000);
-		  
+		updateProgramName(currentChannel);
+        setInterval(() => updateProgramName(currentChannel), 60000);
+	  
 	document.getElementById('top20').addEventListener('click', function () {
 	  if (!hasFetched) {
 		clearAudio();
