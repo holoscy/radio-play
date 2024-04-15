@@ -569,23 +569,23 @@
 	  const at40 = document.getElementById('at40');
 	  const closeButton2 = document.getElementById('closeButton2');
 
-	  showButton.addEventListener('click', function () {
-		videoModal.style.display = 'flex';
-	  });
+	 showButton.addEventListener('click', function () {
+    videoModal.classList.add('show'); 
+});
+     closeButton.addEventListener('click', function () {
+    videoModal.classList.remove('show');
+});
 
-	  closeButton.addEventListener('click', function () {
-		 videoModal.style.display = 'none';
-	  }); 
-	  top20.addEventListener('click', function () {
-		musicModal.style.display = 'flex';
-	  });
-	  at40.addEventListener('click', function () {
-		musicModal.style.display = 'flex';
-	  });
+	 top20.addEventListener('click', function () {
+    musicModal.classList.add('show'); 
+});
+at40.addEventListener('click', function () {
+    musicModal.classList.add('show');
+});
+closeButton2.addEventListener('click', function () {
+    musicModal.classList.remove('show');
+});
 
-	  closeButton2.addEventListener('click', function () {
-		 musicModal.style.display = 'none';
-	  });
 
 	function addLinksToSongInfo(title) {
 	  const songInfoDiv = document.getElementById('songInfo');
@@ -681,12 +681,15 @@
     loaderElement.textContent = newTitle;
   }
 }
+let timeoutId;
 function loadings() {
-     document.body.classList.add('loading');
-    setTimeout(function() {
-    document.body.classList.remove('loading');
-  }, 12000); 
+    clearTimeout(timeoutId);
+    document.body.classList.add('loading');
+    timeoutId = setTimeout(function() {
+        document.body.classList.remove('loading');
+    }, 12000);
 }
+
 	function setPlaybackInfo(url,title,cover,channel) {
 	 loadings();
 	  inputUrl.value = url;
@@ -943,8 +946,12 @@ close.addEventListener('click', () => {
   subscribeModal.classList.add('hidden');
 });
 close2.addEventListener("click", function () {
-			menu.classList.add("hidden");
-		});
+    menu.style.opacity = 0;
+    menu.style.transform = 'translateY(-20px)';
+    setTimeout(() => {
+        menu.classList.add("hidden");
+    }, 500);
+});
 	 
 	let db;
 	const dbName = 'Mradio';
@@ -1128,12 +1135,21 @@ async function parseM3UFromTextarea() {
 	groupButton.textContent = groupName;
 
 	groupButton.addEventListener('click', function() {
-		if (groupContainer.style.display === 'none' || groupContainer.style.display === '') {
-			groupContainer.style.display = 'block';
-		} else {
-			groupContainer.style.display = 'none';
-		}
-	});
+    if (groupContainer.style.maxHeight === '0px' || groupContainer.style.maxHeight === '') {
+        groupContainer.style.display = 'block';
+        window.getComputedStyle(groupContainer).height;        
+        const scrollHeight = groupContainer.scrollHeight + 'px';
+        groupContainer.style.maxHeight = scrollHeight;
+        groupContainer.style.padding = '10px'; 
+    } else {
+        groupContainer.style.maxHeight = '0px';
+        groupContainer.style.padding = '0px';
+        setTimeout(() => {
+            groupContainer.style.display = 'none';
+        }, 500);
+    }
+});
+
 	menuContent2.appendChild(groupButton);
 
 			 groupData.forEach(({ tvgLogo, name, link }) => {
@@ -1358,12 +1374,22 @@ async function parseM3UFromTextarea() {
 	groupButton.textContent = groupName;
 
 	groupButton.addEventListener('click', function() {
-		if (groupContainer.style.display === 'none' || groupContainer.style.display === '') {
-			groupContainer.style.display = 'block';
-		} else {
-			groupContainer.style.display = 'none';
-		}
-	});
+    if (groupContainer.style.maxHeight === '0px' || groupContainer.style.maxHeight === '') {
+        groupContainer.style.display = 'block';
+        window.getComputedStyle(groupContainer).height;
+        
+        const scrollHeight = groupContainer.scrollHeight + 'px';
+        groupContainer.style.maxHeight = scrollHeight;
+        groupContainer.style.padding = '10px';  
+    } else {
+        groupContainer.style.maxHeight = '0px';
+        groupContainer.style.padding = '0px';
+        setTimeout(() => {
+            groupContainer.style.display = 'none';
+        }, 500);
+    }
+});
+
 	menuContent2.appendChild(groupButton);
 			data[groupName].forEach(({ tvgLogo, name, link }) => {
 				const imgContainer = document.createElement('div');
@@ -1627,8 +1653,13 @@ async function parseM3UFromTextarea() {
 		 playmore(link, title,cover);
 	  }
 		openMenuButton.addEventListener("click", function () {
-			menu.classList.remove("hidden");
-		});
+    menu.classList.remove("hidden");
+    setTimeout(() => {
+        menu.style.opacity = 1;
+        menu.style.transform = 'translateY(0)';
+    }, 10);
+});
+
 
 	addRowButton.addEventListener("click", function () {
 		const row = createRow("", "", "");
@@ -1903,25 +1934,44 @@ async function parseM3UFromTextarea() {
 		});
 
 		const toggleButton = document.createElement('div');
-		toggleButton.className = 'groupButton';
-		toggleButton.textContent = '主页电台';
-		toggleButton.addEventListener('click', function () {
-			if (menuContent.style.display === 'none' || menuContent.style.display === '') {
-				menuContent.style.display = 'block';
-				localStorage.setItem('menuContentIsExpanded', 'true');
-			} else {
-				menuContent.style.display = 'none';
-				localStorage.setItem('menuContentIsExpanded', 'false');
-			}
-		});
-		const isMenuExpanded = localStorage.getItem('menuContentIsExpanded');
-		if (isMenuExpanded === 'true') {
-			menuContent.style.display = 'block';
-		} else {
-			menuContent.style.display = 'none';
-		}
-		menuContent.insertAdjacentElement('beforebegin', toggleButton);
-		menuContent.className = 'groupContainer';
+toggleButton.className = 'groupButton';
+toggleButton.textContent = '主页电台';
+menuContent.className = 'groupContainer';
+menuContent.style.overflow = 'hidden';
+menuContent.style.transition = 'max-height 0.5s ease, padding 0.5s ease';
+menuContent.style.maxHeight = '0'; 
+menuContent.style.padding = '0';
+
+const isMenuExpanded = localStorage.getItem('menuContentIsExpanded');
+if (isMenuExpanded === 'true') {
+    menuContent.style.maxHeight = 'none'; 
+    menuContent.style.padding = '10px';
+    requestAnimationFrame(() => {
+        menuContent.style.maxHeight = menuContent.scrollHeight + 'px';
+    });
+} else {
+    menuContent.style.maxHeight = '0';
+    menuContent.style.padding = '0';
+}
+
+const observer = new MutationObserver((mutations) => {
+    if (menuContent.style.maxHeight !== '0px') {
+        menuContent.style.maxHeight = menuContent.scrollHeight + 'px';
+    }
+});
+observer.observe(menuContent, { childList: true, subtree: true });
+toggleButton.addEventListener('click', function () {
+    if (menuContent.style.maxHeight === '0px' || menuContent.style.maxHeight === '') {
+        menuContent.style.maxHeight = menuContent.scrollHeight + 'px'; 
+        menuContent.style.padding = '10px';
+        localStorage.setItem('menuContentIsExpanded', 'true');
+    } else {
+        menuContent.style.maxHeight = '0';
+        menuContent.style.padding = '0';
+        localStorage.setItem('menuContentIsExpanded', 'false');
+    }
+});
+menuContent.insertAdjacentElement('beforebegin', toggleButton);
 	}
 		 restoreDataFromLocalStorage();
 
@@ -2049,19 +2099,17 @@ document.getElementById("addMore").addEventListener("click", function() {
 	localStorage.removeItem("selectedOptionIndex");
 
 	  var toggleMenuBtn = document.getElementById("toggle-menu-btn");
-	  var submenuPopup = document.getElementById("submenu-popup");
-
-	  toggleMenuBtn.addEventListener("click", function(e) {
-		e.stopPropagation();
-		submenuPopup.classList.toggle("show");
-	  });
-	  document.addEventListener("click", function() {
-		submenuPopup.classList.remove("show");
-	  });
-	  submenuPopup.addEventListener("click", function(e) {
-		e.stopPropagation();
-	  });
-	  
+var submenuPopup = document.getElementById("submenu-popup");
+toggleMenuBtn.addEventListener("click", function(e) {
+    e.stopPropagation();
+    submenuPopup.classList.toggle("show");
+});
+document.addEventListener("click", function() {
+    submenuPopup.classList.remove("show");
+});
+submenuPopup.addEventListener("click", function(e) {
+    e.stopPropagation();
+});  
 	  // 切换主题模式
 	  var darkModeButton = document.getElementById("darkModeButton");    
 	  darkModeButton.addEventListener("click", function() {
