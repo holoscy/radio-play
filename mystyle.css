@@ -445,6 +445,19 @@ body.loading::after {
     height: 17%;
     overflow-y: auto;
 }
+#menuContainer::-webkit-scrollbar {
+    width: 6px;
+}
+#menuContainer::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+#menuContainer::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+#menuContainer::-webkit-scrollbar-thumb:hover {
+    background-color: var(--main-color);
+}
 
 .menu-row {margin:auto; 
     display: inline-block;
@@ -646,7 +659,7 @@ width: 70%;}
 
 .groupContainer {
     user-select: none;
-    overflow: hidden;
+    overflow: auto;
     padding: 0;
     max-height: 0;
     border: 1px solid #ccc;
