@@ -537,14 +537,14 @@
 				console.error('Error, trying to recover');		
 			   const notification = document.createElement('div');
 		notification.className = 'notification';
-		notification.textContent = `尝试使用浏览器播放`;
+		notification.textContent = `尝试默认播放方式`;
 		 document.body.appendChild(notification);
 		 setTimeout(() => {
 			document.body.removeChild(notification);
 		}, 2000);
 				hls.stopLoad(); 
 				document.body.classList.remove('loading');
-				  window.open(url, '_blank');
+				 window.openLink(title, url);
 				break;
 			}
 		  }
@@ -1501,6 +1501,20 @@ async function parseM3UFromTextarea() {
 		potOption.style.marginBottom = '2px';
 		potOption.style.borderBottom = '2px solid #fff';potOption.style.cursor = 'pointer';
 		potOption.addEventListener('click', () => pot(name,link));
+		
+		const vlcOption = document.createElement('div');
+		vlcOption.textContent = 'VLC播放';
+		vlcOption.style.color = '#ffffff';
+		vlcOption.style.marginBottom = '2px';
+		vlcOption.style.borderBottom = '2px solid #fff';potOption.style.cursor = 'pointer';
+		vlcOption.addEventListener('click', () => vlc(name,link));
+		
+		const mpvOption = document.createElement('div');
+		mpvOption.textContent = 'MPV播放';
+		mpvOption.style.color = '#ffffff';
+		mpvOption.style.marginBottom = '2px';
+		mpvOption.style.borderBottom = '2px solid #fff';mpvOption.style.cursor = 'pointer';
+		mpvOption.addEventListener('click', () => mpv(name,link));
 
 		const saveOption = document.createElement('div');
 		saveOption.textContent = '添加至主页';
@@ -1516,8 +1530,7 @@ async function parseM3UFromTextarea() {
 			document.body.removeChild(notification);
 		}, 1000);
 	});
-
-	   
+   
 		const delOption = document.createElement('div');
 		delOption.textContent = '删除';
 		delOption.style.color = '#ffffff';
@@ -1526,6 +1539,8 @@ async function parseM3UFromTextarea() {
 		delOption.addEventListener('click', () => onDeleteCallback(name));
 		contextMenu.appendChild(playOption);
 		contextMenu.appendChild(potOption);
+		contextMenu.appendChild(vlcOption);
+		contextMenu.appendChild(mpvOption);
 		contextMenu.appendChild(delOption);
 		contextMenu.appendChild(saveOption);
 
@@ -1550,11 +1565,46 @@ async function parseM3UFromTextarea() {
 	window.location.href = url;
 	appTitle.textContent = name;
 	}
-				
+	function vlc(name,link){
+	url = 'vlc://' + link;
+	window.location.href = url;
+	appTitle.textContent = name;
+	}
+	function mpv(name,link){
+	url = 'mpv://"' + link + '"';
+	window.location.href = url;
+	appTitle.textContent = name;
+	}
+			const dfselect = document.getElementById('dfex');
+    dfselect.value = localStorage.getItem('defaultPlayer') || '新标签页';
+
+    dfselect.addEventListener('change', function() {
+        const choice = dfselect.value;
+        localStorage.setItem('defaultPlayer', choice);
+    });
+
+    window.openLink = function(name, link) {
+        const choice = dfselect.value;
+        switch (choice) {
+            case '新标签页':
+                window.open(link, '_blank');
+                break;
+            case 'Potplayer':
+                pot(name, link);
+                break;
+            case 'Vlc':
+                vlc(name, link);
+                break;
+            case 'Mpv':
+                mpv(name, link);
+                break;
+            default:
+                window.open(link, '_blank');
+        }
+    }	
 	 function saveContent(link, title, imgContainer) {
 		const savedContent = document.getElementById('savedContent');
 		const clonedContainer = imgContainer.cloneNode(true);
-
 		// Attach the click event listener to the cloned container
 		const image = clonedContainer.querySelector('img');
 		const nameElement = clonedContainer.querySelector('p');
@@ -1564,7 +1614,6 @@ async function parseM3UFromTextarea() {
 		image.onclick = () => playmore(link, title,cover);
 
 		savedContent.appendChild(clonedContainer);
-
 		// Save data to localStorage
 		saveToLocalStorage(link, title, imgContainer.innerHTML);
 	}
@@ -1875,16 +1924,16 @@ async function parseM3UFromTextarea() {
 						}).catch(error => {//302跳转非直链m3u8无法使用hls.js播放
 						 const notification = document.createElement('div');
 		notification.className = 'notification';
-		notification.textContent = `尝试使用浏览器播放`;
+		notification.textContent = `尝试默认播放方式`;
 		 document.body.appendChild(notification);
 		 setTimeout(() => {
 			document.body.removeChild(notification);
 		}, 1000);
-					 window.open(url, "_blank");
+		window.openLink(title, url);
 						});
 					}
 				} catch (error) {
-					 window.open(url, "_blank");
+		window.openLink(title, url);
 				}
 			} else {
 		   setPlaybackInfo(url, title,cover);
@@ -2631,8 +2680,31 @@ let countdownStart;
 let closeTimeout;
 
 openButton.addEventListener('click', () => {
-  overlay.style.display = 'block';
-  popup.style.display = 'block';
+    overlay.style.display = 'block';
+    popup.style.display = 'block';
+    setTimeout(() => {
+        overlay.style.opacity = '1';
+        popup.style.opacity = '1';
+    }, 10);
+});
+
+function closePopup() {
+    overlay.style.opacity = '0';
+    popup.style.opacity = '0';
+    setTimeout(() => {
+        overlay.style.display = 'none';
+        popup.style.display = 'none';
+    }, 500);
+}
+
+cancelClose.addEventListener('click', () => {
+    clearInterval(countdownInterval);
+    clearTimeout(closeTimeout);
+    closePopup();
+});
+
+close3.addEventListener('click', () => {
+    closePopup();
 });
 
 setCloseTime.addEventListener('click', () => {
@@ -2650,17 +2722,6 @@ setCloseTime.addEventListener('click', () => {
   }
 });
 
-cancelClose.addEventListener('click', () => {
-  clearInterval(countdownInterval);
-  clearTimeout(closeTimeout);
-  overlay.style.display = 'none';
-  popup.style.display = 'none';
-});
-
-close3.addEventListener('click', () => {
-  overlay.style.display = 'none';
-  popup.style.display = 'none';
-});
 
 function updateCountdown() {
   const remainingTime = parseInt(timeInput.value * 60 - (Date.now() - countdownStart) / 1000);
