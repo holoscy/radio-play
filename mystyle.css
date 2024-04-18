@@ -445,21 +445,7 @@ body.loading::after {
     height: 17%;
     overflow-y: auto;
 }
-#menuContainer::-webkit-scrollbar,#btContainer::-webkit-scrollbar,
-.groupContainer::-webkit-scrollbar {
-    width: 6px;
-}
-#menuContainer::-webkit-scrollbar-track,#btContainer::-webkit-scrollbar-track,
-.groupContainer::-webkit-scrollbar-track {
-    background-color: transparent;
-}
-#menuContainer::-webkit-scrollbar-thumb,#btContainer::-webkit-scrollbar-thumb,
-.groupContainer::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    border-radius: 10px;
-}
-#menuContainer::-webkit-scrollbar-thumb:hover,#btContainer::-webkit-scrollbar-thumb:hover,
-.groupContainer::-webkit-scrollbar-thumb:hover {
+
     background-color: var(--main-color);
 }
 
