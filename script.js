@@ -434,6 +434,15 @@
 	  spotifyLink.style.userSelect = 'none';
 	  spotifyLink.innerHTML = '<img src="./icons/spotify.svg" alt="spotify Logo">';
 	  info.appendChild(spotifyLink);
+	   const dlLink = document.createElement('a');
+	  dlLink.className = 'playlist_item__dl';
+	  dlLink.target = '_blank'; 
+      let baURL = "https://tool.liumingye.cn/music/#/search/D/song/";
+      let fiURL = baURL + encodeURIComponent(removeSymbols(data['song'] + ' ' + data['singer']));
+	  dlLink.href = fiURL;
+	  dlLink.style.userSelect = 'none';
+	  dlLink.innerHTML = '<img src="./icons/dl.svg" alt="dl Logo">';
+	  info.appendChild(dlLink);
 		}
 		return result;
 	}
@@ -613,6 +622,16 @@ closeButton2.addEventListener('click', function () {
 	  spotifyLink.style.userSelect = 'none';
 	  spotifyLink.innerHTML = '<img src="./icons/spotify.svg" alt="Spotify Logo">';
 	  songInfoDiv.appendChild(spotifyLink);
+	  const dlLink = document.createElement('a');
+	  dlLink.className = 'playlist_item__dl';
+	  dlLink.target = '_blank'; 
+	  let netitle = title.replace(/\//g, '');
+      let baURL = "https://tool.liumingye.cn/music/#/search/D/song/";
+      let fiURL = baURL + encodeURIComponent(netitle);
+	  dlLink.href = fiURL;
+	  dlLink.style.userSelect = 'none';
+	  dlLink.innerHTML = '<img src="./icons/dl.svg" alt="dl Logo">';
+	  songInfoDiv.appendChild(dlLink);
 	}
 	let currentChannel = 'hitfm';
 	function playHitFM1() {
@@ -1506,7 +1525,7 @@ async function parseM3UFromTextarea() {
 		vlcOption.textContent = 'VLC播放';
 		vlcOption.style.color = '#ffffff';
 		vlcOption.style.marginBottom = '2px';
-		vlcOption.style.borderBottom = '2px solid #fff';potOption.style.cursor = 'pointer';
+		vlcOption.style.borderBottom = '2px solid #fff';vlcOption.style.cursor = 'pointer';
 		vlcOption.addEventListener('click', () => vlc(name,link));
 		
 		const mpvOption = document.createElement('div');
@@ -2230,24 +2249,29 @@ submenuPopup.addEventListener("click", function(e) {
 	//dom end
 
 			   function goToWebpage() {
-	  const url = "https://space.bilibili.com/1090328045/search/video?keyword=ost"
-
+	  const url = "https://space.bilibili.com/1090328045/video"
 	 window.location.href = url;
 	}
 			 function goToWebpage2() {
 	  const url = "https://www.acfun.cn/u/633603";
 		window.location.href = url;
-	}
-	 
-			 function updateProgramLink() {
+	}	 
+			 function goToWebpage3() {
 	  const selectedDate = document.getElementById("datePicker").value;
 	   const url = `https://www.radio.cn/pc-portal/sanji/passProgram.html?channel_name=662&program_name=undefined&date_checked=${selectedDate}`;
 		window.location.href = url;
 	}
 		  function gotoURL() {
-		const url = "https://music.ghxi.com/";
-		window.open(url, "_blank");
-	}
+    const input = document.getElementById('searchInput').value;
+    const sanitizedInput = input.replace(/\//g, '');  
+    const chineseRegex = /^[\u4e00-\u9fa5]+$/;
+    const baseURL = chineseRegex.test(sanitizedInput) ?
+        "https://tool.liumingye.cn/music/#/search/B/song/" :
+        "https://tool.liumingye.cn/music/#/search/D/song/";
+    const finalURL = baseURL + encodeURIComponent(sanitizedInput);
+    window.open(finalURL, '_blank');
+}
+
 	  const mainColorInput = document.getElementById('main-color');
 	  const savedColor = localStorage.getItem('mainColor');
 	  if (savedColor) {
