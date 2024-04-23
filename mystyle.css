@@ -170,6 +170,7 @@ button.rec {padding:0;width:30px;height:35px; margin-left:auto; margin-right:0;
 {margin-left: 8px;display:inline-block;background:center no-repeat;  position: relative;width: 20px;top: 4px;transition: 1s;}
 .playlist_item__netease img {width: 20px;position: relative;top: 4px;margin-left: 2px;transition: 1s;}
 .playlist_item__spotify img {width: 16px;position: relative;top: 2px;margin-left: 2px;transition: 1s;}
+.playlist_item__dl img {width: 18px;position: relative;top: 3px;margin-left: 2px;transition: 1s;}
 p{color:black;font-size: 12px;font-weight: bold;margin-bottom:0;margin-top:5px; text-align:center;white-space: nowrap;  overflow: hidden;  
 text-overflow: clip;transition: 1s; }	
 
@@ -267,9 +268,15 @@ input[type="range"].volume-level::-webkit-slider-thumb {filter: none !important;
 [type="date"]::-webkit-calendar-picker-indicator {
   opacity: 0;
 }
-.date input{ border: none;
+.date input{ border: none;height:20px;  border-radius:3px;
   border-bottom: 2px solid var(--main-color) ;
-  border-radius: 5px;
+  border-right: 1px solid var(--main-color) ;
+  padding: 3px 5px;
+  background-color: rgba(255, 255, 255, 0.7);
+  width: 30%;}
+ #searchInput{ border: none;height:20px; border-radius:3px;
+  border-bottom: 2px solid var(--main-color) ;
+  border-left: 1px solid var(--main-color) ;
   padding: 3px 5px;
   background-color: rgba(255, 255, 255, 0.7);
   width: 30%;}
@@ -445,7 +452,21 @@ body.loading::after {
     height: 17%;
     overflow-y: auto;
 }
-
+#menuContainer::-webkit-scrollbar,#btContainer::-webkit-scrollbar,
+.groupContainer::-webkit-scrollbar {
+    width: 6px;
+}
+#menuContainer::-webkit-scrollbar-track,#btContainer::-webkit-scrollbar-track,
+.groupContainer::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+#menuContainer::-webkit-scrollbar-thumb,#btContainer::-webkit-scrollbar-thumb,
+.groupContainer::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+#menuContainer::-webkit-scrollbar-thumb:hover,#btContainer::-webkit-scrollbar-thumb:hover,
+.groupContainer::-webkit-scrollbar-thumb:hover {
     background-color: var(--main-color);
 }
 
@@ -677,7 +698,7 @@ width: 70%;}
 }
 
 .link-button {
-  width: 100px;
+  width: 80px;
   height: 40px;
   position: relative;
   overflow: hidden;
@@ -694,6 +715,24 @@ width: 70%;}
   -webkit-user-select: none;
   touch-action: manipulation;
   border-radius: 10px;
+}.s-button {
+  width: 50px;
+  height: 30px;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #424242; 
+  color: black;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 2em; 
+   text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.6);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  border-radius: 8px;
 }
 
 .link-button span:first-child {
