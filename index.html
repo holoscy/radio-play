@@ -98,18 +98,12 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
      <div id="programName">Loading...长时间看到此消息则表示浏览器不支持</div>
      <div id="songInfo"></div>
 
-<div id="content-container">
-    <div class="date">
-     <span for="datepicker" >Date</span>
-<input type="date" name="datepicker" id="datePicker"> 
-     
-     </div>
+<div id="content-container">       
+    <div class="date"><button class="s-button" onclick="goToWebpage3()" role="button"><span class="text">往期</span></button>
+<input type="date" name="datepicker" id="datePicker">  <input type="text" id="searchInput" placeholder="歌曲名"><button class="s-button" onclick="gotoURL()" role="button"><span class="text">搜索</span></button>   
+     </div> 
        <div class="player">
-       <button class="link-button" onclick="goToWebpage()" role="button"><span class="text">OST</span><span>Bilibili</span></button>
-       <button class="link-button" onclick="updateProgramLink()" role="button"><span class="text">往期节目</span><span>云听</span></button>
-       <button class="link-button" onclick="gotoURL()" role="button"><span class="text">下载歌曲</span><span>果核</span></button>
-       </div> 
-       <div class="player">
+       <button class="link-button" onclick="goToWebpage()" role="button"><span class="text">HitFMLive</span><span>Bilibili</span></button>
        <button class="link-button" id="top20" role="button"><span class="text">TOP 20</span><span>网易云</span></button>
        <button class="link-button" onclick="goToWebpage2()" role="button"><span class="text">TOP MV</span><span>Acfun</span></button>
        <button class="link-button" id="at40" role="button"><span class="text">AT 40</span><span>网易云</span></button>
@@ -186,15 +180,10 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
     </div>
      <div class="page about">
 <a href="https://greasyfork.org/zh-CN/scripts/470185" >云听网页节目HD下载</a><br>
-     <p class="t"> 自定义数据及添加的电台数据使用本地存储 <br>备份导出导入的数据包括1.自定义设置<br>和2.添加到主页的电台数据<br>部分电台有ip限制，开启ipv6的支持</p><hr><p class="t">自定义电台<br> 由于部分浏览器安全限制，'不能'<br>在https下播放http的m3u8链接，图片<br>解决方法1.把http改为https<br>(部分链接只支持http，注意关闭浏览器的<br>http自动升级为https功能，否则<br>会播放失败，手机浏览器可以在<br>flags选项中的Insecure origins treated<br> as secure填入允许的http域名
-) 或<br>2. 对当前网站设置允许http不安全内容</p><hr><p class="t">报错的链接会使用默认方式打开<br>电脑浏览器使用新标签页需要安装<br>hls播放扩展插件：<br><a href="https://chrome.google.com/webstore/detail/native-mpeg-dash-%2B-hls-pl/cjfbmleiaobegagekpmlhmaadepdeedn">chrome</a>/<a href="https://addons.mozilla.org/en-US/firefox/addon/native-mpeg-dash-hls-playback/">mozilla</a> addons<br>(插件兼容性差，看电视建议使用专业播放器)</p><hr><p class="t">m3u解析格式: #EXTINF:  tvg-logo<br>="图片链接" group-title<br>="分组名",电台名 
-电台链接<br>比如项目: <a href="https://m3u.ibert.me/">iptv-sources
-</a><br>推荐播放源1<a href="https://m3u.ibert.me/y_g.m3u">@YanG-1989</a><br>播放源2（地方台）<a href="https://raw.githubusercontent.com/zbefine/iptv/main/iptv.m3u">@zbefine</a><br>播放源3:<a href="http://live.cooltv.top/tv.php">@goolguy007</a></p><hr> <p class="t">yAudio音频播放器来自<a href="https://github.com/ZHOUYUANN/yAudio" > @ZHOUYUANN </a></p><hr><p class="t">网易云音乐推荐脚本</p>
-<a href="https://greasyfork.org/zh-CN/scripts/406054" >1.显示完整歌单</a>
-<a href="https://greasyfork.org/zh-CN/scripts/453804" >2.MyFreeMP3扩展
-</a><br>
-<a href="https://greasyfork.org/zh-CN/scripts/33046" >3.直接下载</a>
- <a href="https://greasyfork.org/zh-CN/scripts/406821" >4.主题:扁平风格</a><br>
+     <p class="t"> 自定义数据及添加的电台数据使用本地存储 <br>备份的数据包括1.自定义设置<br>和2.添加到主页的电台数据</p><hr><p class="t">自定义电台<br>部分电台有地域限制或ipv6<br>国外电台使用代理更流畅<br>部分浏览器安全限制，'不能'<br>在https下访问http的内容。解决方法<br>1.把http改为https<br>(部分链接只支持http，注意关闭浏览器的<br>http自动升级为https功能）
+<br>2. PC对当前网站设置允许http不安全内容<br>手机浏览器修改flags选项中的<br> Insecure origins treated as secure</p><hr><p class="t">报错的链接会使用默认方式打开<br>若使用新标签页，电脑浏览器需要安装<br>hls播放扩展插件：<br><a href="https://chrome.google.com/webstore/detail/native-mpeg-dash-%2B-hls-pl/cjfbmleiaobegagekpmlhmaadepdeedn">chrome</a>/<a href="https://addons.mozilla.org/en-US/firefox/addon/native-mpeg-dash-hls-playback/">mozilla</a> addons<br>专业播放器若无法调用，<br>参考<a href="https://greasyfork.org/zh-CN/scripts/444056-play-with-mpv">此脚本</a>设置URL Protocol</p><hr><p class="t">直播源使用m3u格式<br>比如项目: <a href="https://m3u.ibert.me/">iptv-sources
+</a><br>推荐播放源1<a href="https://m3u.ibert.me/y_g.m3u">@YanG-1989</a><br>播放源2(地方台):<a href="https://huangsuming.github.io/iptv/list/tvlist.txt">@huangsuming</a><br>播放源3(广播):<a href="http://live.cooltv.top/tv.php">@goolguy007</a><br>播放源4<a href="https://m3u.ibert.me/ycl_iptv.m3u">@YueChan</a></p><hr> <p class="t">yAudio音频播放器来自<a href="https://github.com/ZHOUYUANN/yAudio" > @ZHOUYUANN </a></p><hr><p class="t">网易云音乐推荐脚本</p>
+<a href="https://greasyfork.org/zh-CN/scripts/406054" >1.显示完整歌单</a><a href="https://greasyfork.org/zh-CN/scripts/453804" >2.MyFreeMP3扩展</a><a href="https://greasyfork.org/zh-CN/scripts/33046" >3.直接下载</a><a href="https://greasyfork.org/zh-CN/scripts/406821" >4.主题:扁平风格</a><br>
         <button id="about-btn">关于</button>
     </div>
 </div>
