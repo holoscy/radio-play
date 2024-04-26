@@ -1,0 +1,33 @@
+{"name":"HITFM Player",
+"short_name":"HITFM",
+"id":"/manifest.json",
+"icons":[{
+     "src":"./icons/hitfmany.png",
+     "sizes":"512x512",
+     "type":"image/png",
+     "purpose":"any"
+},
+{
+     "src":"./icons/hitfm.png",
+     "sizes":"512x512",
+     "type":"image/png",
+     "purpose":"maskable"
+},{
+     "src":"./icons/hitfmany2.png",
+     "sizes":"256x256",
+     "type":"image/png",
+     "purpose":"any"
+},
+{
+     "src":"./icons/hitfm2.png",
+     "sizes":"256x256",
+     "type":"image/png",
+     "purpose":"maskable"
+}],
+"start_url": "https://darkduck9.github.io/radio-play/",
+"background_color":"black",
+"display":"standalone",
+"orientation":"portrait",
+"display_override": ["window-controls-overlay"]
+
+}
