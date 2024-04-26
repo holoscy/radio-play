@@ -1,6 +1,6 @@
 {"name":"HITFM Player",
 "short_name":"HITFM",
-"id":"/manifest.json",
+"id":"/radio-play/",
 "icons":[{
      "src":"./icons/hitfmany.png",
      "sizes":"512x512",
@@ -24,7 +24,7 @@
      "type":"image/png",
      "purpose":"maskable"
 }],
-"start_url": "https://darkduck9.github.io/radio-play/",
+"start_url": "/radio-play/",
 "background_color":"black",
 "display":"standalone",
 "orientation":"portrait",
