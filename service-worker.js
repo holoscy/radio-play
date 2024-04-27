@@ -9,11 +9,11 @@ if (workbox) {
             cacheName: 'images-cache',
             plugins: [
                 new workbox.expiration.ExpirationPlugin({
-                    maxEntries: 10000,
+                    maxEntries: 6000,
                     maxAgeSeconds: 30 * 24 * 60 * 60,
                 }),
                 new workbox.cacheableResponse.CacheableResponsePlugin({
-                    statuses: [0, 200],
+                    statuses: [200],
                 })
             ]
         })
@@ -29,7 +29,7 @@ if (workbox) {
                     maxAgeSeconds: 30 * 24 * 60 * 60,
                 }),
                 new workbox.cacheableResponse.CacheableResponsePlugin({
-                    statuses: [0, 200],
+                    statuses: [200],
                 })
             ]
         })
