@@ -2571,51 +2571,56 @@ submenuPopup.addEventListener("click", function(e) {
 			document.querySelector(".page1").style.display = "block";
 		}
 	});
-	 function getCurrentProgram(channel) {
-		  const currentTime = new Date();
-		  const currentDay = currentTime.getDay(); // 0: Sunday, 1: Monday, ..., 6: Saturday
-		  const currentTimeString = currentTime.toTimeString().slice(0, 8);
-         
-         const selectedChannelSchedule = programSchedule[channel];
-  if (!selectedChannelSchedule) {
-    console.error('选定的频道不存在');
-    return " ";
-  }
-		let daySchedule;
-  switch (currentDay) {
-    case 0:
-      daySchedule = selectedChannelSchedule.Sunday;
-      break;
-    case 1:
-      daySchedule = selectedChannelSchedule.Monday;
-      break;
-    case 5:
-      daySchedule = selectedChannelSchedule.Friday;
-      break;
-    case 6:
-      daySchedule = selectedChannelSchedule.Saturday;
-      break;
-    default:
-      daySchedule = selectedChannelSchedule.TuesdayToThursday;
-  }
-
-  // 在选定的日程中查找当前时间的节目
-  for (const program of daySchedule) {
-    if (currentTimeString >= program.start && currentTimeString <= program.end) {
-      return program.name;
+	
+	dayjs.extend(window.dayjs_plugin_utc);
+    dayjs.extend(window.dayjs_plugin_timezone);
+    
+	function getCurrentProgram(channel) {
+    // 使用 Day.js 获取并转换时间
+    const currentTime = dayjs().tz('Asia/Shanghai');
+    const currentDay = currentTime.day(); // Day.js: 0: Sunday, 1: Monday, ..., 6: Saturday
+    const currentTimeString = currentTime.format('HH:mm:ss');
+    
+    const selectedChannelSchedule = programSchedule[channel];
+    if (!selectedChannelSchedule) {
+        console.error('选定的频道不存在');
+        return " ";
     }
-  }
 
-		  return " ";
-		}
+    let daySchedule;
+    switch (currentDay) {
+        case 0:
+            daySchedule = selectedChannelSchedule.Sunday;
+            break;
+        case 1:
+            daySchedule = selectedChannelSchedule.Monday;
+            break;
+        case 5:
+            daySchedule = selectedChannelSchedule.Friday;
+            break;
+        case 6:
+            daySchedule = selectedChannelSchedule.Saturday;
+            break;
+        default:
+            daySchedule = selectedChannelSchedule.TuesdayToThursday;
+    }
 
-		function updateProgramName(channel) {
-		  const programNameElement = document.getElementById("programName");
-		  const currentProgram = getCurrentProgram(channel);
-		  programNameElement.innerHTML = `ON AIR NOW <br> ${currentProgram}`;
-		}
-		updateProgramName(currentChannel);
-        setInterval(() => updateProgramName(currentChannel), 60000);
+    for (const program of daySchedule) {
+        if (currentTimeString >= program.start && currentTimeString <= program.end) {
+            return program.name;
+        }
+    }
+
+    return " ";
+}
+
+function updateProgramName(channel) {
+    const programNameElement = document.getElementById("programName");
+    const currentProgram = getCurrentProgram(channel);
+    programNameElement.innerHTML = `ON AIR NOW <br> ${currentProgram}`;
+}
+updateProgramName(currentChannel);
+setInterval(() => updateProgramName(currentChannel), 60000);
 	  
 	document.getElementById('top20').addEventListener('click', function () {
 	  if (!hasFetched) {
