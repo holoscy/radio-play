@@ -168,7 +168,6 @@ const programSchedule = {//UTC+08:00
 			  { start: "08:00:00", end: "12:00:00", name: "Brooke Taylor" },
 			  { start: "12:00:00", end: "18:00:00", name: "After MidNite with Granger Smith" },
 			  { start: "18:00:00", end: "22:00:00", name: "The Bobby Bones Show" },
-			  { start: "22:00:00", end: "23:00:00", name: "Afrojack: Jacked Radio" },
 			  { start: "22:00:00", end: "23:59:59", name: "Billy Greenwood" }
 		],	  
 			  Friday: [			  
@@ -343,7 +342,6 @@ const programSchedule = {//UTC+08:00
 	          { start: "05:00:00", end: "09:00:00", name: "Big Rig" },
 			  { start: "09:00:00", end: "14:00:00", name: "Klinger" },
 			  { start: "14:00:00", end: "20:00:00", name: "Shroom" },
-			  { start: "18:00:00", end: "23:00:00", name: "Johnjay And Rich" },
 			  { start: "20:00:00", end: "23:59:59", name: "Gregg Stone" }				  
 			],
 			  Monday: [			  
@@ -358,7 +356,6 @@ const programSchedule = {//UTC+08:00
 	          { start: "05:00:00", end: "09:00:00", name: "Big Rig" },
 			  { start: "09:00:00", end: "14:00:00", name: "Klinger" },
 			  { start: "14:00:00", end: "20:00:00", name: "Shroom" },
-			  { start: "18:00:00", end: "23:00:00", name: "Johnjay And Rich" },
 			  { start: "20:00:00", end: "23:59:59", name: "Gregg Stone" }					 
 			],
 			Saturday: [			  
