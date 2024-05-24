@@ -1002,7 +1002,7 @@ close2.addEventListener("click", function () {
 		displayStoredContent();
 	};
 
-	 const parseButton = document.querySelector('#menu button[onclick="parseM3UFromTextarea()"]');
+	 const parseButton = document.getElementById('parseM3U');
 	 parseButton.addEventListener('click', parseM3UFromTextarea);
 
 async function parseM3UFromTextarea() {
@@ -2054,23 +2054,26 @@ menuContent.insertAdjacentElement('beforebegin', toggleButton);
 
 document.getElementById("addMore").addEventListener("click", function() {
   // 创建一个新的 subcontain 容器
-  var subcontain = document.createElement("div");
+  const subcontain0 = document.createElement("div");
+  subcontain0.classList.add("subcontain0");
+  const subcontain = document.createElement("div");
   subcontain.classList.add("subcontain");
 
   // 在 subcontain 中添加输入框
-  var input = document.createElement("input");
-  input.setAttribute("type", "text");
-  input.setAttribute("id", "subscriptionInput");
-  input.setAttribute("placeholder", "输入订阅源");
-
-  // 在 subcontain 中添加获取按钮
-  var getButton = document.createElement("button");
-  getButton.classList.add("set");
-  getButton.setAttribute("id", "getSubscription");
-  getButton.textContent = "获取";
-
+  const input_N = document.createElement("input");
+  input_N.setAttribute("type", "text");
+  input_N.setAttribute("id", "sub_N");
+  input_N.setAttribute("placeholder", "订阅名称");
+  const input_L = document.createElement("input");
+  input_L.setAttribute("type", "text");
+  input_L.setAttribute("id", "sub_L");
+  input_L.setAttribute("placeholder", "订阅链接");
+  const saButton = document.createElement("button");
+  saButton.classList.add("set");
+  saButton.setAttribute("id", "sav");
+  saButton.textContent = "保存";
   // 在 subcontain 中添加删除按钮
-  var delButton = document.createElement("button");
+  const delButton = document.createElement("button");
   delButton.classList.add("set");
   delButton.setAttribute("id", "del1");
   delButton.textContent = "删除";
@@ -2078,17 +2081,17 @@ document.getElementById("addMore").addEventListener("click", function() {
   // 为删除按钮添加点击事件
   delButton.addEventListener("click", function() {
     // 获取父容器并将其从DOM中移除
-    var parentContainer = subcontain.parentNode;
+    const parentContainer = subcontain.parentNode;
     parentContainer.removeChild(subcontain);
   });
 
   // 将输入框和按钮添加到 subcontain 中
-  subcontain.appendChild(input);
-  subcontain.appendChild(getButton);
+  subcontain.appendChild(input_N);
+  subcontain.appendChild(input_L);
+  subcontain.appendChild(saButton);
   subcontain.appendChild(delButton);
 
-  // 将 subcontain 添加到 modal-content 中
-  document.querySelector(".modal-content").appendChild(subcontain);
+  document.querySelector(".subcontain0").appendChild(subcontain);
 });
 
 	  if (localStorage.getItem("backgroundImage")) {
@@ -2571,51 +2574,56 @@ submenuPopup.addEventListener("click", function(e) {
 			document.querySelector(".page1").style.display = "block";
 		}
 	});
-	 function getCurrentProgram(channel) {
-		  const currentTime = new Date();
-		  const currentDay = currentTime.getDay(); // 0: Sunday, 1: Monday, ..., 6: Saturday
-		  const currentTimeString = currentTime.toTimeString().slice(0, 8);
-         
-         const selectedChannelSchedule = programSchedule[channel];
-  if (!selectedChannelSchedule) {
-    console.error('选定的频道不存在');
-    return " ";
-  }
-		let daySchedule;
-  switch (currentDay) {
-    case 0:
-      daySchedule = selectedChannelSchedule.Sunday;
-      break;
-    case 1:
-      daySchedule = selectedChannelSchedule.Monday;
-      break;
-    case 5:
-      daySchedule = selectedChannelSchedule.Friday;
-      break;
-    case 6:
-      daySchedule = selectedChannelSchedule.Saturday;
-      break;
-    default:
-      daySchedule = selectedChannelSchedule.TuesdayToThursday;
-  }
-
-  // 在选定的日程中查找当前时间的节目
-  for (const program of daySchedule) {
-    if (currentTimeString >= program.start && currentTimeString <= program.end) {
-      return program.name;
+	
+	dayjs.extend(window.dayjs_plugin_utc);
+    dayjs.extend(window.dayjs_plugin_timezone);
+    
+	function getCurrentProgram(channel) {
+    // 使用 Day.js 获取并转换时间
+    const currentTime = dayjs().tz('Asia/Shanghai');
+    const currentDay = currentTime.day(); // Day.js: 0: Sunday, 1: Monday, ..., 6: Saturday
+    const currentTimeString = currentTime.format('HH:mm:ss');
+    
+    const selectedChannelSchedule = programSchedule[channel];
+    if (!selectedChannelSchedule) {
+        console.error('选定的频道不存在');
+        return " ";
     }
-  }
 
-		  return " ";
-		}
+    let daySchedule;
+    switch (currentDay) {
+        case 0:
+            daySchedule = selectedChannelSchedule.Sunday;
+            break;
+        case 1:
+            daySchedule = selectedChannelSchedule.Monday;
+            break;
+        case 5:
+            daySchedule = selectedChannelSchedule.Friday;
+            break;
+        case 6:
+            daySchedule = selectedChannelSchedule.Saturday;
+            break;
+        default:
+            daySchedule = selectedChannelSchedule.TuesdayToThursday;
+    }
 
-		function updateProgramName(channel) {
-		  const programNameElement = document.getElementById("programName");
-		  const currentProgram = getCurrentProgram(channel);
-		  programNameElement.innerHTML = `ON AIR NOW <br> ${currentProgram}`;
-		}
-		updateProgramName(currentChannel);
-        setInterval(() => updateProgramName(currentChannel), 60000);
+    for (const program of daySchedule) {
+        if (currentTimeString >= program.start && currentTimeString <= program.end) {
+            return program.name;
+        }
+    }
+
+    return " ";
+}
+
+function updateProgramName(channel) {
+    const programNameElement = document.getElementById("programName");
+    const currentProgram = getCurrentProgram(channel);
+    programNameElement.innerHTML = `ON AIR NOW <br> ${currentProgram}`;
+}
+updateProgramName(currentChannel);
+setInterval(() => updateProgramName(currentChannel), 60000);
 	  
 	document.getElementById('top20').addEventListener('click', function () {
 	  if (!hasFetched) {
@@ -2754,7 +2762,6 @@ setCloseTime.addEventListener('click', () => {
     }, milliseconds);
   }
 });
-
 
 function updateCountdown() {
   const remainingTime = parseInt(timeInput.value * 60 - (Date.now() - countdownStart) / 1000);

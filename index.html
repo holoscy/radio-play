@@ -11,7 +11,10 @@
 <script src="https://cdn.bootcdn.net/ajax/libs/hls.js/1.4.0/hls.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/axios/1.3.6/axios.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/workbox-sw/7.0.0/workbox-sw.min.js" crossorigin="anonymous"></script>
-  <script src="./program.js"></script>
+<script src="https://unpkg.com/dayjs@1.11.11/dayjs.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/dayjs@1.11.11/plugin/utc.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/dayjs@1.11.11/plugin/timezone.js" crossorigin="anonymous"></script>
+<script src="./program.js"></script>
   </head>
 <body class="loading">
 <div class="loader">
@@ -235,7 +238,7 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
         <div id="btContainer">  
     <label for="m3uTextarea">链接/文本:</label>
     <input id="m3uTextarea" rows="10" placeholder="Paste raw url/text"></input>
-    <button class="set" onclick="parseM3UFromTextarea()">解析m3u</button>
+    <button class="set" id="parseM3U">解析m3u</button>
     <button class="set" id="exportM3uFile">导出m3u</button>
     <button class="set" id="reM3uFile">导入m3u</button>
      <button class="set" id="addRowButton">添加单个</button>
@@ -245,7 +248,7 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
   </div>
 <div id="subscribeModal" class="modal hidden">
   <div class="modal-content"><span class="close" id="close">&times;</span>
-   
+    <div class="subcontain0"></div><hr class="hr">
     <button class="set" id="addMore">添加订阅</button>
     <button class="set" id="updateSources">更新订阅</button>      
   </div>
