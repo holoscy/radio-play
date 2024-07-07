@@ -14,13 +14,14 @@
 <script src="https://unpkg.com/dayjs@1.11.11/dayjs.min.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/dayjs@1.11.11/plugin/utc.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/dayjs@1.11.11/plugin/timezone.js" crossorigin="anonymous"></script>
-<script src="./program.js"></script>
+ <script src="./program.js"></script>
   </head>
 <body class="loading">
 <div class="loader">
   HIT FM
 </div>
 <div class="app">
+  <div class="bar"></div>
     <h1 class="player_title">HIT FM </h1>
     <div class="player" >
         <button class="control mute-button" style="margin-left:auto;margin-right:5px"></button>
@@ -161,9 +162,9 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
         <div class="page page2">
         <label for="bg-position-select">背景图位置</label>
         <select id="bg-position-select">
-            <option value="top">顶部</option>
-            <option value="center">居中</option>
-            <option value="bottom">底部</option>
+    <option value="top">顶部</option>
+    <option value="center">居中</option>
+    <option value="bottom">底部</option>
         </select><br>
         
         <label for="blur-slider">背景模糊</label> 
@@ -203,7 +204,12 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
   <button class="set" id="cancelClose">取消计时</button>
   <p class="t" id="countdown">剩余时间: </p>
 </div>
-
+<div id="songListContainer" style="display:none;">
+    <iframe id="songListFrame" src="" width="100%" height="80%" frameborder="0"></iframe>
+       <div id="songListHeader">
+        <button onclick="closeSongList()">关闭</button>
+    </div>
+</div>
 <div id="musicModal"> <div id="musiccontain"> 
 <div class="yAudio" id="yAudio"></div>
     <script src="./yAudio.js"></script>
