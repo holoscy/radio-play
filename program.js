@@ -283,8 +283,9 @@ const programSchedule = {//UTC+08:00
 	          { start: "00:00:00", end: "01:00:00", name: "American Top 40" },
 	          { start: "01:00:00", end: "05:00:00", name: "EJ" },
 			  { start: "05:00:00", end: "09:00:00", name: "Kayla" },
-			  { start: "19:00:00", end: "13:00:00", name: "The Vibe with Tanya & EJ" },
-			  { start: "13:00:00", end: "17:00:00", name: "Saturday Night Party" },
+			  { start: "09:00:00", end: "13:00:00", name: "The Vibe with Tanya & EJ" },
+			  { start: "13:00:00", end: "15:00:00", name: "Saturday Night Party with Chuey Martinez" },
+			  { start: "15:00:00", end: "17:00:00", name: "Saturday Night Party" },
 			  { start: "17:00:00", end: "23:00:00", name: "Frankie V" },
 			  { start: "23:00:00", end: "23:59:59", name: "American Top 40" }			
 			]
@@ -320,7 +321,7 @@ const programSchedule = {//UTC+08:00
 	          { start: "00:00:00", end: "03:00:00", name: "Ryan Seacrest" },
 	          { start: "03:00:00", end: "08:00:00", name: "Clint Girlie" },
 			  { start: "08:00:00", end: "13:00:00", name: "Chris Davis" },
-			   { start: "13:00:00", end: "19:00:00", name: "Denise Plante" },
+			  { start: "13:00:00", end: "19:00:00", name: "Denise Plante" },
 			  { start: "19:00:00", end: "21:00:00", name: "Haze" },
 			  { start: "21:00:00", end: "23:00:00", name: "Mario's iHeartRadio Countdown" },
 			  { start: "23:00:00", end: "23:59:59", name: "Jennie James" }	 
@@ -430,6 +431,25 @@ const programSchedule = {//UTC+08:00
 			],
 			Sunday: [			  
 	          { start: "00:00:00", end: "23:59:59", name: "Mellow Classic Rock" }, 
+			]
+			},
+'0':   {
+		TuesdayToThursday: [			  
+	          { start: "00:00:00", end: "23:59:59", name: " " },
+	          		  
+			],
+			  Monday: [			  
+	       { start: "00:00:00", end: "23:59:59", name: " " },
+	          
+		],	  
+			  Friday: [			  
+	         { start: "00:00:00", end: "23:59:59", name: " " },	 
+			],
+			Saturday: [			  
+	         { start: "00:00:00", end: "23:59:59", name: " " },
+			],
+			Sunday: [			  
+	          { start: "00:00:00", end: "23:59:59", name: " " }, 
 			]
 			},
 		
