@@ -12,6 +12,10 @@
             console.log('Service Worker registration failed:', error);
         });
 }
+function themeWindow(titleColor) {
+	document.querySelector("meta[name=theme-color]").setAttribute('content', titleColor);
+  }
+
 			var radio = null;
 			var player = radio;
 			var playButton = player;
@@ -466,112 +470,174 @@
 
 	var desiredOption = selectElement.querySelector("option[value='']");
 
-	function play(url,title,cover) {
-	 loadings();
-	  if (url,cover){navigator.mediaSession.metadata = new MediaMetadata({
-				title:title,
-				artist: 'HITFM Player',
-				artwork: [{
-					src: cover,
-					sizes: '200x200',
-					type: 'image/png'
-				}]
-			  })};
-	  const songInfoDiv = document.getElementById('songInfo');
-	  songInfoDiv.style.display = 'none';
-	  desiredOption.selected = true;
-	  audio.pause();
-	  if (currentHls) {
-		currentHls.destroy();
-	  }
-	  if (currentRequest !== null) {
-		clearTimeout(currentRequest);
-	  }
-	  if (Hls.isSupported()) {
-		const hls = new Hls();
-		currentHls = hls;
+function play(url, title, cover) {
+  loadings();
+  if (url && cover) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: title,
+      artist: 'HITFM Player',
+      artwork: [{
+        src: cover,
+        sizes: '200x200',
+        type: 'image/png'
+      }]
+    });
+  }
 
-		hls.loadSource(url);
-		 hls.attachMedia(video);
-	   
-		hls.on(Hls.Events.FRAG_PARSING_METADATA, function (event, data) {
-		  if (data) {
-			if (data.frag.title.includes("url=")) {
-			  // Extract title and artist information from the data string
-			  const titleMatch = data.frag.title.match(/title="([^"]*)"/);
-			  const artistMatch = data.frag.title.match(/artist="([^"]*)"/);
+  const songInfoDiv = document.getElementById('songInfo');
+  songInfoDiv.style.display = 'none';
+  desiredOption.selected = true;
+  audio.pause();
 
-			  songInfoDiv.style.display = 'block';
+  if (currentHls) {
+    currentHls.destroy();
+  }
+  if (currentRequest !== null) {
+    clearTimeout(currentRequest);
+  }
 
-			  let songInfo = "";
-			  if (artistMatch && artistMatch[1].trim() !== "") {
-				songInfo += artistMatch[1].trim();
-			  }
-			  if (titleMatch && titleMatch[1].trim() !== "") {
-				if (songInfo !== "") {
-				  songInfo += " - ";
-				}
-				songInfo += titleMatch[1].trim();
-			  }
-			  songInfoDiv.textContent = songInfo;
-			  addLinksToSongInfo(songInfo);
+  if (Hls.isSupported()) {
+    const hls = new Hls();
+    currentHls = hls;
 
-			  navigator.mediaSession.metadata = new MediaMetadata({
-				title: titleMatch ? titleMatch[1].trim() : '',
-				artist: artistMatch ? artistMatch[1].trim() : '',
-				artwork: [{
-					src: cover,
-					sizes: '200x200',
-					type: 'image/png'
-				}]
-			  });
-			} else {
-			  // If "url=" is not present, display the entire data
-			  songInfoDiv.style.display = 'block';
-			  songInfoDiv.textContent = data.frag.title;
-			  addLinksToSongInfo(data.frag.title);
+    hls.loadSource(url);
+    hls.attachMedia(video);
 
-			  navigator.mediaSession.metadata = new MediaMetadata({
-				title: data.frag.title,
-				artist: 'HITFM Player',
-				artwork: [{
-					src: cover,
-					sizes: '200x200',
-					type: 'image/png'
-				}]
-			  });
-			}
-		  }
-		});
+    hls.on(Hls.Events.FRAG_PARSING_METADATA, function (event, data) {
+      if (data) {
+        if (data.frag.title.includes("url=")) {
+          const titleMatch = data.frag.title.match(/title="([^"]*)"/);
+          const artistMatch = data.frag.title.match(/artist="([^"]*)"/);
 
-		 hls.on(Hls.Events.MANIFEST_PARSED, function () {
-		  video.play();
-		});
+          songInfoDiv.style.display = 'block';
 
-		 hls.on(Hls.Events.ERROR, function (event, data) {
-		  if (data.fatal) {
-			switch (data.type) {
-			  case Hls.ErrorTypes.NETWORK_ERROR:
-				console.error('Error, trying to recover');		
-			   const notification = document.createElement('div');
-		notification.className = 'notification';
-		notification.textContent = `尝试默认播放方式`;
-		 document.body.appendChild(notification);
-		 setTimeout(() => {
-			document.body.removeChild(notification);
-		}, 2000);
-				hls.stopLoad(); 
-				document.body.classList.remove('loading');
-				 window.openLink(title, url);
-				break;
-			}
-		  }
-		});
-	  } else {
-		alert('只有m3u8能触发播放，其他格式需要在自定义电台创建按钮播放');
-	  }
-	}
-	 
+          let songInfo = "";
+          if (artistMatch && artistMatch[1].trim() !== "") {
+            songInfo += artistMatch[1].trim();
+          }
+          if (titleMatch && titleMatch[1].trim() !== "") {
+            if (songInfo !== "") {
+              songInfo += " - ";
+            }
+            songInfo += titleMatch[1].trim();
+          }
+          songInfoDiv.textContent = songInfo;
+          addLinksToSongInfo(songInfo);
+
+          navigator.mediaSession.metadata = new MediaMetadata({
+            title: titleMatch ? titleMatch[1].trim() : '',
+            artist: artistMatch ? artistMatch[1].trim() : '',
+            artwork: [{
+              src: cover,
+              sizes: '200x200',
+              type: 'image/png'
+            }]
+          });
+        } else {
+          songInfoDiv.style.display = 'block';
+          songInfoDiv.textContent = data.frag.title;
+          addLinksToSongInfo(data.frag.title);
+
+          navigator.mediaSession.metadata = new MediaMetadata({
+            title: data.frag.title,
+            artist: 'HITFM Player',
+            artwork: [{
+              src: cover,
+              sizes: '200x200',
+              type: 'image/png'
+            }]
+          });
+        }
+      }
+    });
+
+    hls.on(Hls.Events.MANIFEST_PARSED, function () {
+      video.play();
+    });
+
+    let retryCount = 0;
+    const maxRetries = 2;
+    const retryDelay = 3000; // 3 seconds
+
+    hls.on(Hls.Events.ERROR, function (event, data) {
+      if (data.fatal) {
+        switch (data.type) {
+          case Hls.ErrorTypes.NETWORK_ERROR:
+            console.error(`Network error (${data.details}), trying to recover`);
+            handleNetworkError(`网络错误 (${data.details})，尝试恢复播放`);
+            break;
+          case Hls.ErrorTypes.MEDIA_ERROR:
+            console.error('Media error, attempting to recover');
+            hls.recoverMediaError();
+            break;
+          default:
+            console.error(`An unrecoverable error (${data.details}) occurred, stopping load`);
+            handleUnrecoverableError(`不可恢复的错误 (${data.details})，停止加载`);
+            break;
+        }
+      }
+    });
+
+    function handleNetworkError(message) {
+      const notification = document.createElement('div');
+      notification.className = 'notification';
+      notification.textContent = message;
+      document.body.appendChild(notification);
+      setTimeout(() => {
+        document.body.removeChild(notification);
+      }, 2000);
+
+      if (navigator.onLine) {
+        if (retryCount < maxRetries) {
+          retryCount++;
+          console.log(`Retry attempt ${retryCount} of ${maxRetries}`);
+          setTimeout(() => {
+            hls.startLoad(); // Try to reload the media
+          }, retryDelay);
+        } else {
+          handleUnrecoverableError(`重试次数超过上限，停止加载`);
+        }
+      } else {
+          handleUnrecoverableError(`离线状态，等待网络重新连接...`);
+        window.addEventListener('online', handleNetworkReconnect);
+      }
+    }
+
+    function handleNetworkReconnect() {
+      handleNetworkError(`网络已重新连接，尝试重新加载媒体`);
+      window.removeEventListener('online', handleNetworkReconnect);
+      hls.startLoad();
+    }
+
+    function handleUnrecoverableError(message) {
+     const notification = document.createElement('div');
+      notification.className = 'notification';
+      notification.textContent = message;
+      document.body.appendChild(notification);
+      setTimeout(() => {
+        document.body.removeChild(notification);
+      }, 2000);
+      hls.stopLoad();
+      document.body.classList.remove('loading');
+      window.openLink(title, url);
+    }
+
+    // To reset retryCount on successful load
+    hls.on(Hls.Events.MANIFEST_PARSED, function () {
+      retryCount = 0;
+    });
+    hls.on(Hls.Events.LEVEL_LOADED, function () {
+      retryCount = 0;
+    });
+    hls.on(Hls.Events.FRAG_LOADED, function () {
+      retryCount = 0;
+    });
+
+  } else {
+    alert('只有m3u8能触发播放，其他格式需要在自定义电台创建按钮播放');
+  }
+}
+
 	function cplay() {
 			const url = inputUrl.value;
 			 play(url);
@@ -656,50 +722,50 @@ closeButton2.addEventListener('click', function () {
 	}
 
 	function playev() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc5953/hls.m3u8", "Evolution",iheart,'ev');
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc5953/hls.m3u8", "Evolution",iheart,'ev','5953');
 	}
 
 	function playAT40() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4802/hls.m3u8", "AT40",iheart,'at40');
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4802/hls.m3u8", "AT40",iheart,'at40','4802');
 	}
 	function playZ100() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc1469/hls.m3u8", "Z100",iheart,'z100');
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc1469/hls.m3u8", "Z100",iheart,'z100','1469');
 	}
 	function playic() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4418/hls.m3u8", "iHeartCountry",iheart,'ic');
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4418/hls.m3u8", "iHeartCountry",iheart,'ic','4418');
 	}
 	function playip() {
-	  setPlaybackInfo("https://playerservices.streamtheworld.com/api/livestream-redirect/ACIR31_S01AAC.m3u8", "iHeartRadio POP",iheart,'ip');
+	  setPlaybackInfo("https://playerservices.streamtheworld.com/api/livestream-redirect/ACIR31_S01AAC.m3u8", "iHeartRadio POP",iheart,'ip','8167');
 	}
 	function playcf() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc6951/hls.m3u8", "iHeartRadio Café",iheart,'cf');
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc6951/hls.m3u8", "iHeartRadio Café",iheart,'cf','6951');
 	}
 	function playhitn() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4422/hls.m3u8", "Hit Nation",iheart,'hitn');
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4422/hls.m3u8", "Hit Nation",iheart,'hitn','4422');
 	}
 	function playimf() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc5158/hls.m3u8", "iHeartRadio Music Festival",iheart,'imf');
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc5158/hls.m3u8", "iHeartRadio Music Festival",iheart,'imf','5158');
 	}
 	function playrn() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4443/hls.m3u8", "Rock Nation",iheart,'rn');
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4443/hls.m3u8", "Rock Nation",iheart,'rn','4443');
 	}
 	function playkiis() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc185/hls.m3u8", "102.7 KIIS-FM",iheart,'kiis');
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc185/hls.m3u8", "102.7 KIIS-FM",iheart,'kiis','185');
 	}
 	 function playmxn() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4776/hls.m3u8", "Mix Nation",iheart,'mxn');
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4776/hls.m3u8", "Mix Nation",iheart,'mxn','4776');
 	}
 	function playalic() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc1269/hls.m3u8", "Alice 95.5",iheart,'alic');
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc1269/hls.m3u8", "Alice 95.5",iheart,'alic','1269');
 	}
 	function playbbc1() {
-	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d320000.norewind.m3u8", "BBC Radio 1",bbc,'bbc1');
+	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d320000.norewind.m3u8", "BBC Radio 1",bbc,'0','bbc_radio_one');
 	}
 	function playbbc1x() {
-	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_1xtra/bbc_1xtra.isml/bbc_1xtra-audio%3d320000.norewind.m3u8", "BBC Radio 1Xtra",bbc,'bbc1x');
+	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_1xtra/bbc_1xtra.isml/bbc_1xtra-audio%3d320000.norewind.m3u8", "BBC Radio 1Xtra",bbc,'0','bbc_1xtra');
 	}
 	function playbbc6() {
-	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d320000.norewind.m3u8", "BBC Radio 6 Music",bbc,'bbc6');
+	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d320000.norewind.m3u8", "BBC Radio 6 Music",bbc,'0','bbc_6music');
 	}
     function updateTitle(newTitle) {
   document.title = newTitle;
@@ -717,14 +783,15 @@ function loadings() {
         document.body.classList.remove('loading');
     }, 12000);
 }
-
-	function setPlaybackInfo(url,title,cover,channel) {
+ let ihId;
+	function setPlaybackInfo(url,title,cover,channel,id) {
 	 loadings();
 	  inputUrl.value = url;
 	  updateTitle(title);
 	  play(url,title,cover);
 	  currentChannel = channel;
 	  updateProgramName(currentChannel);
+	  ihId = id;
 	}
 
 	function download(data, filename) {
@@ -904,8 +971,8 @@ function loadings() {
 	savedContainer.addEventListener("mouseleave", () => {
 	  savedContainer.style.overflowY = "hidden";  
 	});
-	 
-	document.addEventListener("DOMContentLoaded", function() {  
+	
+	document.addEventListener("DOMContentLoaded", function() { 
 		const openMenuButton = document.getElementById("openMenuButton");
 		const menu = document.getElementById("menu");
 		const menuContent = document.getElementById("menuContent");
@@ -2140,7 +2207,7 @@ document.getElementById("addMore").addEventListener("click", function() {
 		document.body.style.backgroundImage = "";
 		localStorage.removeItem("backgroundImage");
 	  });
-	var bgPositionSelect = document.getElementById("bg-position-select");
+		var bgPositionSelect = document.getElementById("bg-position-select");
 		  if (localStorage.getItem("bgPosition")) {
 			var storedPosition = localStorage.getItem("bgPosition");
 			bgPositionSelect.value = storedPosition;
@@ -2257,6 +2324,7 @@ submenuPopup.addEventListener("click", function(e) {
 	  darkModeButton.style.backgroundSize = "100%"; 
 	}
 	  checkThemeMode();
+
 	});
 	//dom end
 
@@ -2586,7 +2654,6 @@ submenuPopup.addEventListener("click", function(e) {
     
     const selectedChannelSchedule = programSchedule[channel];
     if (!selectedChannelSchedule) {
-        console.error('选定的频道不存在');
         return " ";
     }
 
@@ -2616,11 +2683,33 @@ submenuPopup.addEventListener("click", function(e) {
 
     return " ";
 }
-
+function openSongList() {
+    const songListContainer = document.getElementById('songListContainer');
+    const songListFrame = document.getElementById('songListFrame');
+    
+     if (/^\d+$/.test(ihId)) {
+        songListFrame.src = `ihsi.html?streamId=${ihId}`;
+        songListContainer.style.display = 'block';
+    } else if (/bbc/i.test(ihId)) {
+        songListFrame.src = `bbcsi.html?streamId=${ihId}`;
+        songListContainer.style.display = 'block';
+    } else {
+        console.log('Invalid stream ID format. SongList not available.');
+        return;
+    }
+}
+function closeSongList() {
+    document.getElementById('songListContainer').style.display = 'none';
+    document.getElementById('songListFrame').src = '';
+}
 function updateProgramName(channel) {
     const programNameElement = document.getElementById("programName");
     const currentProgram = getCurrentProgram(channel);
-    programNameElement.innerHTML = `ON AIR NOW <br> ${currentProgram}`;
+    programNameElement.innerHTML = `
+        ON AIR NOW <br> 
+        ${currentProgram}
+        <button onclick="openSongList()"> <img src="./icons/list.svg" style="width:20px;padding:none;";></button>
+    `;
 }
 updateProgramName(currentChannel);
 setInterval(() => updateProgramName(currentChannel), 60000);

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BBC Radio - Now Playing</title>
+<script src="https://unpkg.com/dayjs@1.11.11/dayjs.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/1.3.6/axios.min.js" crossorigin="anonymous"></script>
+    <style>
+        body { transition: background-color 0.3s, color 0.3s;font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .song { transition: background-color 0.3s, border-color 0.3s;border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; display: flex; align-items: center; }
+        .song img { width: 100px; height: 100px; margin-right: 20px;border-radius: 10px; }
+        .song-info { flex-grow: 1; }
+        .now-playing { background-color: #e6f3ff; }
+        .time { font-size: 0.8em; color: #666;  transition: color 0.3s;}
+    </style>
+</head>
+<body>
+    <h1>BBC Radio - Recent Tracks</h1>
+    <div id="songList"></div>
+
+    <script>
+    const urlParams = new URLSearchParams(window.location.search);
+   const ihId = urlParams.get('streamId');
+        const apiUrl = 'https://rms.api.bbc.co.uk/v2/services/' + ihId +'/segments/latest?offset=0&limit=6';
+        const corsProxyUrl = 'https://tezworker.chatgpt-api.workers.dev/?';
+        const songList = document.getElementById('songList');
+
+        function fetchSongs() {
+            axios.get(corsProxyUrl + apiUrl)
+                .then(response => {
+                    const songs = response.data.data;
+                    updateSongList(songs);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+
+        function updateSongList(songs) {
+            songList.innerHTML = '';
+            
+            songs.forEach(song => {
+                const songElement = document.createElement('div');
+                songElement.className = 'song';
+                if (song.offset.now_playing) {
+                    songElement.classList.add('now-playing');
+                }
+                
+                const imageUrl = song.image_url.replace('{recipe}', '320x320');
+                
+                songElement.innerHTML = `
+                    <img src="${imageUrl}" alt="${song.titles.primary}">
+                    <div class="song-info">
+                        <h2>${song.titles.primary}</h2>
+                        <p>${song.titles.secondary}</p>
+                        <p class="time">${song.offset.label}</p>
+                    </div>
+                `;
+                songList.appendChild(songElement);
+            });
+        }
+
+        // 初始获取数据
+        fetchSongs();
+
+        // 每30秒更新一次数据
+        setInterval(fetchSongs, 30000);
+    </script>
+</body>
+</html>

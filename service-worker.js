@@ -1,6 +1,6 @@
 importScripts('https://cdn.bootcdn.net/ajax/libs/workbox-sw/7.0.0/workbox-sw.min.js');
 
-const version = 'v0.2';
+const version = 'v0.3';
 
 if (workbox) {
     workbox.routing.registerRoute(
