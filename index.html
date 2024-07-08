@@ -57,49 +57,98 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
             <polygon class="triangle" id="XMLID_18_" fill="none" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="73.5,62.5 148.5,105.8 73.5,149.1"/>
         </svg>
 </button>
-<button class="switch" onclick="showPage()">
-  <?xml version="1.0" encoding="UTF-8"?>
-<svg  xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 733.29 800"><defs> <style>.cls-15 {fill: #0f0f0f;}</style></defs><path class="cls-15" d="m590.53,57.2c-13.04-13.09-13.04-34.3,0-47.39,13.04-13.09,34.19-13.09,47.23,0l75.72,75.98.44.45c25.88,26.17,25.82,68.44-.18,94.54l-75.82,76.08c-13.03,13.08-34.16,13.08-47.19,0-13.03-13.08-13.03-34.28,0-47.36l42.68-42.83H133.35c-18.41,0-33.33,14.92-33.33,33.33v233.33c0,18.41-14.92,33.33-33.33,33.33s-33.33-14.92-33.33-33.33v-233.33c0-55.23,44.77-100,100-100h499.83l-42.65-42.8Z"/><path class="cls-15" d="m700.02,366.67c0-18.41-14.92-33.33-33.33-33.33s-33.33,14.92-33.33,33.33v233.33c0,18.41-14.92,33.33-33.33,33.33H100.11l42.65-42.8c13.04-13.09,13.04-34.3,0-47.39-13.04-13.08-34.18-13.08-47.23,0l-75.72,75.99-.44.44c-25.89,26.17-25.83,68.44.18,94.54l75.82,76.08c13.03,13.08,34.16,13.08,47.19,0,13.03-13.08,13.03-34.28,0-47.36l-42.69-42.83h500.15c55.23,0,100-44.77,100-100v-233.33Z"/>
-</svg>
-</button>
+
 </div>
 
-<div id="rpage1" class="rpage rpage1 fadeIn">
-   <div class="player">
-    <button class="df-button" onclick="playHitFM1()" style="background-image: url(./icons/hit官网.png)"></button>
-    <button class="df-button" onclick="playHitFM2()" style="background-image: url(./icons/hit广州.png)"></button>
-    <button class="df-button" onclick="playHitFM3()" style="background-image: url(./icons/hit北京.png)"></button>  
-</div>
-<div class="player">   
-    <button class="df-button" onclick="playev()" style="background-image: url(./icons/ev.png)"></button>    
-    <button class="df-button" onclick="playAT40()" style="background-image: url(./icons/at40.png)"></button>
-    <button class="df-button" onclick="playhitn()" style="background-image: url(./icons/hitn.png)"></button>
-</div>
-<div class="player">   
-    <button class="df-button" onclick="playic()" style="background-image: url(./icons/ic.png)"></button>
-    <button class="df-button" onclick="playip()" style="background-image: url(./icons/ip.png)"></button>    
-    <button class="df-button" onclick="playcf()" style="background-image: url(./icons/cf.png)"></button>
+<div id="radio-container">
+  <div id="rpage1" class="rpage active">
+    <div class="radio-grid">
+      <div class="radio-button" onclick="playHitFM1()" data-image="./icons/hitfmany.png">
+        <div class="radio-icon"></div>
+        <span class="radio-name">Hit FM 官网</span>
+      </div>
+      <div class="radio-button" onclick="playHitFM2()" data-image="./icons/hitfmany.png">
+        <div class="radio-icon"></div>
+        <span class="radio-name">Hit FM 广州</span>
+      </div>
+      <div class="radio-button" onclick="playHitFM3()" data-image="./icons/hitfmany.png">
+        <div class="radio-icon"></div>
+        <span class="radio-name">Hit FM 北京</span>
+        </div>
+      <div class="radio-button" onclick="playev()" data-image="./icons/evo.webp">
+        <div class="radio-icon"></div>
+        <span class="radio-name">Evolution</span>
+      </div>
+      <div class="radio-button" onclick="playAT40()" data-image="./icons/at40.webp">
+        <div class="radio-icon"></div>
+        <span class="radio-name">AT40</span>
+      </div>
+      <div class="radio-button" onclick="playhitn()" data-image="./icons/hitn.webp">
+        <div class="radio-icon"></div>
+        <span class="radio-name">Hit Nation</span>
+        </div>
+              <div class="radio-button" onclick="playic()" data-image="./icons/ic.webp">
+        <div class="radio-icon"></div>
+        <span class="radio-name">iHeartCountry</span>
+      </div>
+      <div class="radio-button" onclick="playip()" data-image="./icons/ip.webp">
+        <div class="radio-icon"></div>
+        <span class="radio-name">iHeartRadio POP</span>
+      </div>
+      <div class="radio-button" onclick="playcf()" data-image="./icons/ihc.webp">
+        <div class="radio-icon"></div>
+        <span class="radio-name">iHeartRadio Café</span>
+      </div>
+      <!-- 添加其他按钮，格式类似 -->
+    </div>
+  </div>
+  
+  <div id="rpage2" class="rpage">
+    <div class="radio-grid">
+      <div class="radio-button" onclick="playZ100()" data-image="./icons/z100.webp">
+        <div class="radio-icon"></div>
+        <span class="radio-name">Z100</span>
+      </div>
+           <div class="radio-button" onclick="playkiis()" data-image="./icons/kiis.webp">
+        <div class="radio-icon"></div>
+        <span class="radio-name">102.7 KIIS-FM</span>
+      </div> 
+          <div class="radio-button" onclick="playalic()" data-image="./icons/alic.webp">
+        <div class="radio-icon"></div>
+        <span class="radio-name">Alice 95.5</span>
+      </div>      <div class="radio-button" onclick="playrn()" data-image="./icons/rn.webp">
+        <div class="radio-icon"></div>
+        <span class="radio-name">Rock Nation</span>
+      </div>
+           <div class="radio-button" onclick="playmxn()" data-image="./icons/mixn.webp">
+        <div class="radio-icon"></div>
+        <span class="radio-name">Mix Nation</span>
+      </div> 
+          <div class="radio-button" onclick="playimf()" data-image="./icons/imf.webp">
+        <div class="radio-icon"></div>
+        <span class="radio-name">iHeartRadio Music Festival</span>
+      </div>      <div class="radio-button" onclick="playbbc1()" data-image="./icons/bbc1.svg">
+        <div class="radio-icon"></div>
+        <span class="radio-name">BBC Radio 1</span>
+      </div>
+           <div class="radio-button" onclick="playbbc1x()" data-image="./icons/bbc1x.svg">
+        <div class="radio-icon"></div>
+        <span class="radio-name">BBC Radio 1Xtra</span>
+      </div> 
+          <div class="radio-button" onclick="playbbc6()" data-image="./icons/bbc6.svg">
+        <div class="radio-icon"></div>
+        <span class="radio-name">BBC Radio 6 Music</span>
+      </div>
+      <!-- 添加其他按钮，格式类似 -->
+    </div></div>
+ 
 </div>
 
- </div>
-<div id="rpage2" class="rpage fadeOut">
-
-   <div class="player">
-    <button class="df-button" onclick="playZ100()" style="background-image: url(./icons/z100.png)"></button>
-    <button class="df-button" onclick="playkiis()" style="background-image: url(./icons/kiis.png)"></button>
-    <button class="df-button" onclick="playalic()" style="background-image: url(./icons/alic.png)"></button>       
+<div class="pagination">
+  <div class="pagination-line">
+    <div class="pagination-indicator"></div>
+  </div>
 </div>
-   <div class="player">
-    <button class="df-button" onclick="playrn()" style="background-image: url(./icons/rn.png)"></button> 
-    <button class="df-button" onclick="playmxn()" style="background-image: url(./icons/mxn.png)"></button>
-    <button class="df-button" onclick="playimf()" style="background-image: url(./icons/imf.png)"></button>
-</div>
- <div class="player">
-    <button class="df-button" onclick="playbbc1()" style="background-image: url(./icons/bbc1.png)"></button> 
-    <button class="df-button" onclick="playbbc1x()" style="background-image: url(./icons/bbc1x.png)"></button>
-    <button class="df-button" onclick="playbbc6()" style="background-image: url(./icons/bbc6.png)"></button>
-</div>
- </div>
      <div id="recordedTime"></div>
      <div id="programName">Loading...长时间看到此消息则表示浏览器不支持</div>
      <div id="songInfo"></div>
