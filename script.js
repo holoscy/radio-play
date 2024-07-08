@@ -562,10 +562,6 @@ function play(url, title, cover) {
     hls.on(Hls.Events.ERROR, function (event, data) {
       if (data.fatal) {
         switch (data.type) {
-          case Hls.ErrorTypes.NETWORK_ERROR:
-            console.error(`Network error (${data.details}), trying to recover`);
-            handleNetworkError(`网络错误 (${data.details})，尝试恢复播放`);
-            break;
           case Hls.ErrorTypes.MEDIA_ERROR:
             console.error('Media error, attempting to recover');
             hls.recoverMediaError();
@@ -758,14 +754,11 @@ closeButton2.addEventListener('click', function () {
 	function playalic() {
 	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc1269/hls.m3u8", "Alice 95.5",iheart,'alic','1269');
 	}
-	function playbbc1() {
-	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d320000.norewind.m3u8", "BBC Radio 1",bbc,'0','bbc_radio_one');
+	function playbbc1() {	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d320000.norewind.m3u8", "BBC Radio 1",bbc,'0','bbc_radio_one');
 	}
-	function playbbc1x() {
-	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_1xtra/bbc_1xtra.isml/bbc_1xtra-audio%3d320000.norewind.m3u8", "BBC Radio 1Xtra",bbc,'0','bbc_1xtra');
+	function playbbc1x() {	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_1xtra/bbc_1xtra.isml/bbc_1xtra-audio%3d320000.norewind.m3u8", "BBC Radio 1Xtra",bbc,'0','bbc_1xtra');
 	}
-	function playbbc6() {
-	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d320000.norewind.m3u8", "BBC Radio 6 Music",bbc,'0','bbc_6music');
+	function playbbc6() {	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d320000.norewind.m3u8", "BBC Radio 6 Music",bbc,'0','bbc_6music');
 	}
     function updateTitle(newTitle) {
   document.title = newTitle;
@@ -901,34 +894,7 @@ function loadings() {
 			isRecording = true;  
 		}
 	}
-	 function showPage() {
-			var rpage1 = document.getElementById('rpage1');
-			var rpage2 = document.getElementById('rpage2');
 
-			if (rpage1.classList.contains('fadeIn')) {
-				 rpage1.classList.remove('fadeIn');
-				rpage1.classList.add('fadeOut');
-
-				rpage2.classList.remove('fadeOut');
-				rpage2.classList.add('fadeIn');
-				
-				setTimeout(function () {
-					rpage1.style.display = 'none';
-					rpage2.style.display = 'block';
-				}, 300);  
-			} else {
-				 rpage2.classList.remove('fadeIn');
-				rpage2.classList.add('fadeOut');
-
-				rpage1.classList.remove('fadeOut');
-				rpage1.classList.add('fadeIn');
-
-				setTimeout(function () {
-					rpage2.style.display = 'none';
-					rpage1.style.display = 'block';
-				}, 300); 
-			}
-		}
 	const contentContainer = document.getElementById("content-container");
 	const toggleButton = document.getElementById("toggleButton");
 
@@ -973,6 +939,22 @@ function loadings() {
 	});
 	
 	document.addEventListener("DOMContentLoaded", function() { 
+ const radioButtons = document.querySelectorAll('.radio-button');
+  radioButtons.forEach(button => {
+    const iconDiv = button.querySelector('.radio-icon');
+    if (iconDiv && button.dataset.image) {
+      iconDiv.style.backgroundImage = `url(${button.dataset.image})`;
+    }
+  });
+  const pages = document.querySelectorAll('.rpage');
+    pages.forEach((page, index) => {
+        if (index === 0) {
+            page.classList.remove('inactive');
+        } else {
+            page.classList.add('inactive');
+        }
+    });
+    updatePaginationButtons(1);
 		const openMenuButton = document.getElementById("openMenuButton");
 		const menu = document.getElementById("menu");
 		const menuContent = document.getElementById("menuContent");
@@ -2702,13 +2684,81 @@ function closeSongList() {
     document.getElementById('songListContainer').style.display = 'none';
     document.getElementById('songListFrame').src = '';
 }
+function changePage(newPageNum) {
+    const pages = document.querySelectorAll('.rpage');
+    const currentPage = document.querySelector('.rpage:not(.inactive)');
+    const newPage = document.getElementById(`rpage${newPageNum}`);
+    const paginationLine = document.querySelector('.pagination-line');
+
+    if (currentPage === newPage) return; 
+
+    if (currentPage) {
+        currentPage.classList.add('fadeOut');
+        currentPage.addEventListener('animationend', function handler() {
+            this.classList.add('inactive');
+            this.classList.remove('fadeOut');
+            this.removeEventListener('animationend', handler);
+            showNewPage(newPage);
+        }, { once: true });
+    } else {
+        showNewPage(newPage);
+    }
+
+    updatePaginationIndicator(newPageNum);
+}
+
+function showNewPage(page) {
+    page.classList.remove('inactive');
+    page.classList.add('fadeIn');
+    page.addEventListener('animationend', function handler() {
+        this.classList.remove('fadeIn');
+        this.removeEventListener('animationend', handler);
+    }, { once: true });
+}
+
+function updatePaginationIndicator(pageNum) {
+    const paginationLine = document.querySelector('.pagination-line');
+    if (pageNum === 2) {
+        paginationLine.classList.add('page-two');
+    } else {
+        paginationLine.classList.remove('page-two');
+    }
+}
+
+function initPagination() {
+    const paginationLine = document.querySelector('.pagination-line');
+    paginationLine.addEventListener('click', function(event) {
+        const clickPosition = event.offsetX;
+        const lineWidth = this.offsetWidth;
+        if (clickPosition < lineWidth / 2) {
+            changePage(1);
+        } else {
+            changePage(2);
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', initPagination);		
+
+function updatePaginationButtons(activePageNum) {
+    const buttons = document.querySelectorAll('.pagination button');
+    buttons.forEach((button, index) => {
+        if (index + 1 === activePageNum) {
+            button.classList.add('active');
+        } else {
+            button.classList.remove('active');
+        }
+    });
+}
 function updateProgramName(channel) {
     const programNameElement = document.getElementById("programName");
     const currentProgram = getCurrentProgram(channel);
     programNameElement.innerHTML = `
         ON AIR NOW <br> 
         ${currentProgram}
-        <button onclick="openSongList()"> <img src="./icons/list.svg" style="width:20px;padding:none;";></button>
+        <a href="javascript:void(0);" onclick="openSongList()"> 
+            <img src="./icons/list.svg" style="width:20px;padding:none;top:4px;left:4px;position: relative">
+        </a>
     `;
 }
 updateProgramName(currentChannel);
