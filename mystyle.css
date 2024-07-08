@@ -17,18 +17,18 @@ body{height:100%;min-height: 100vh;}
 .item-center {display: none;height: 0;
   width: 0;}
 
-.item-left {flex: 1 1 100%;max-width:450px；box-sizing: border-box;
+.item-left {flex: 1 1 100%;max-width:1000px；box-sizing: border-box;
   height: 100%;
   width: 100%;  
 }       
-.item-right {flex: 1 1 100%;max-width:450px；box-sizing: border-box;  height: 100%; width: 100%; }
+.item-right {flex: 1 1 100%;max-width:1000px；box-sizing: border-box;  height: 100%; width: 100%; }
 @media screen and (min-width: 768px) {	 
 .app{height: 100%;}
 .ite {flex: 1;padding: 10px;}
 .item-left {
-  height: 100%;width: 100%;order: 1;flex: 0 0 30%;margin:0 3% auto auto;max-width: 500px}
+  height: 100%;width: 100%;order: 1;flex: 0 0 30%;margin:0 3% auto auto;max-width: 1000px}
 .item-center {order: 2;flex: 0 0 5%;}
-.item-right { height: 100%;width: 100%;order: 3;flex: 0 0 50%;margin:0 auto auto 3%;max-width: 800px;display: flex;
+.item-right { height: 100%;width: 100%;order: 3;flex: 0 0 50%;margin:0 auto auto 3%;max-width: 1800px;display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;}
@@ -109,30 +109,10 @@ body{height:100%;min-height: 100vh;}
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
 }
 
- .rpage {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-
-        .rpage1 {
-            display: block;
-        }
-
-        .fadeIn {
-            opacity: 1 !important;
-        }
-
-        .fadeOut {
-            opacity: 0 !important;
-        }
-button.switch{width:30px;height:35px; margin-right:auto;margin-left:0;
-padding:0;
-}
 button.sha{width:30px;height:35px; margin-left:0;margin-right:5px;
 padding:0;
 }
-button.playBut {padding:0;width:30px;height:35px; margin-left:0;margin-right:5px;margin-bottom:11px;
+button.playBut {padding:0;width:30px;height:35px; margin-left:0;margin-right:auto;margin-bottom:11px;
     transition: all 0.5s ease;
 }
 button.rec {padding:0;width:30px;height:35px; margin-left:auto; margin-right:0;
@@ -175,9 +155,9 @@ button.rec {padding:0;width:30px;height:35px; margin-left:auto; margin-right:0;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80%;
+    width: 90%;
     max-width: 600px;
-    height: 80%;
+    height: 80vh;
     background-color: #f9f4ef;
     border: 1px solid #ddd;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -202,7 +182,7 @@ button.rec {padding:0;width:30px;height:35px; margin-left:auto; margin-right:0;
 {margin-left: 8px;display:inline-block;background:center no-repeat;  position: relative;width: 20px;top: 4px;transition: 1s;}
 .playlist_item__netease img {width: 20px;position: relative;top: 4px;margin-left: 2px;transition: 1s;}
 .playlist_item__spotify img {width: 16px;position: relative;top: 2px;margin-left: 2px;transition: 1s;}
-.playlist_item__dl img {width: 18px;position: relative;top: 3px;margin-left: 2px;transition: 1s;}
+.playlist_item__dl img {width: 18px;position: relative;top: 3px;margin-left: 3px;transition: 1s;}
 p{color:black;font-size: 12px;font-weight: bold;margin-bottom:0;margin-top:5px; text-align:center;white-space: nowrap;  overflow: hidden;  
 text-overflow: clip;transition: 1s; }	
 
@@ -544,7 +524,7 @@ body.loading::after {
 }
 
 #savedC {
-    max-height: 350px;  
+    max-height: 490px;  
     overflow-y: hidden;  
 }
 
@@ -728,7 +708,137 @@ width: 70%;}
     opacity: 0;  
     pointer-events: none; 
 }
+#radio-container {
+  max-width: 1000px;
+  margin-bottom:0 auto;padding: 10px;margin-bottom:20px;
+}
 
+.radio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 10px; 
+}
+
+.radio-button {width:100%;
+  background-color: transparent;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 5px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  position: relative;
+  overflow: hidden;
+}
+.radio-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;opacity:0.3;
+  background-color: var(--main-color);
+  transform: scale(0);
+  transition: transform 0.3s ease;
+  border-radius: 10px;
+}
+
+.radio-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.radio-button:hover::before {
+  transform: scale(1);
+}
+
+.radio-button:hover .radio-icon {
+  transform: scale(1.1);
+}
+
+.radio-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 10px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 10%;
+  transition: all 0.3s ease;
+}
+
+.radio-name {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 10px;
+  transition: color 0.3s ease;
+}
+
+.rpage {
+    display: block;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.rpage.inactive {
+    display: none;
+    opacity: 0;
+}
+
+.fadeIn {
+    animation: fadeInAnimation 0.3s ease-in-out forwards;
+}
+
+.fadeOut {
+    animation: fadeOutAnimation 0.3s ease-in-out forwards;
+}
+
+@keyframes fadeInAnimation {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOutAnimation {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.pagination {
+  text-align: center;
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+.pagination-line {
+  width: 100px;
+  height: 4px;
+  background-color: #e0e0e0;
+  border-radius: 2px;
+  position: relative;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.pagination-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  background-color: var(--main-color);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.pagination-line.page-two .pagination-indicator {
+  left: 50%;
+}
 .link-button {
   width: 80px;
   height: 40px;
