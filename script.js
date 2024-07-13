@@ -12,9 +12,6 @@
             console.log('Service Worker registration failed:', error);
         });
 }
-function themeWindow(titleColor) {
-	document.querySelector("meta[name=theme-color]").setAttribute('content', titleColor);
-  }
 
 			var radio = null;
 			var player = radio;
@@ -360,7 +357,7 @@ function themeWindow(titleColor) {
 			}
 
 	 function renderItem(data) {
-	var img = data['cover'] ? 'background-image:url(' + data['cover'] + '); background-size: 100%;' : 'background-image:url(./icons/def.png); background-size: 100%;';
+	var img = data['cover'] ? 'background-image:url(' + data['cover'] + '); background-size: 100%;' : 'background-image:url(./icons/def.svg); background-size: 100%;';
 		var result = document.createElement('li');
 		var logo = document.createElement('span');
 		var info = document.createElement('span');
@@ -966,44 +963,15 @@ function loadings() {
 		const savedContent = document.getElementById("savedContent");
 		const closeMenuButton = document.getElementById("closeMenuButton");  
 		
-			var selectElement = document.getElementById("src_select");
-		var playlistTitleContainer = document.getElementById("playlist_title_container");
-		var previousPlaylistTitleContainer = document.getElementById("previous_playlist_title_container");
 		var select = document.getElementById("src_select");
 		var previousPlaylistWrapper = document.getElementById("previous_playlist_wrapper");   
-			playlistTitleContainer.style.display = "none";
-			previousPlaylistTitleContainer.style.display = "none";
-			selectElement.addEventListener("change", function() {
-			 
-			if (selectElement.value === '') {
-				if (playlistTitleContainer) {
-					playlistTitleContainer.style.display = "none";
-				}
-				if (previousPlaylistTitleContainer) {
-					previousPlaylistTitleContainer.style.display = "none"; // Hide
-				}
-			} else {
-				if (playlistTitleContainer) {
-					playlistTitleContainer.style.display = "block";
-				}
-				if (previousPlaylistTitleContainer) {
-					previousPlaylistTitleContainer.style.display = "block"; // Show
-				}
-			}
-		});
-
 		select.addEventListener("change", function () {
 			if (select.value === '') {
-				if (playlist_title_container) {
-					playlist_title_container.style.display = "none";
-				}
+
 				if (previousPlaylistWrapper) {
 					previousPlaylistWrapper.style.display = "none"; // Hide
 				}
 			} else {
-				if (playlist_title_container) {
-					playlist_title_container.style.display = "block";
-				}
 				if (previousPlaylistWrapper) {
 					previousPlaylistWrapper.style.display = "block"; // Show
 				}
@@ -2669,20 +2637,31 @@ function openSongList() {
     const songListContainer = document.getElementById('songListContainer');
     const songListFrame = document.getElementById('songListFrame');
     
-     if (/^\d+$/.test(ihId)) {
+    if (/^\d+$/.test(ihId)) {
         songListFrame.src = `ihsi.html?streamId=${ihId}`;
-        songListContainer.style.display = 'block';
     } else if (/bbc/i.test(ihId)) {
         songListFrame.src = `bbcsi.html?streamId=${ihId}`;
-        songListContainer.style.display = 'block';
     } else {
         console.log('Invalid stream ID format. SongList not available.');
         return;
     }
+    
+    songListContainer.style.display = 'block';
+    songListContainer.style.transform = 'translate(-50%, -50%) scale(0.9)';
+    setTimeout(() => {
+        songListContainer.classList.add('active');
+    }, 10);
 }
+
 function closeSongList() {
-    document.getElementById('songListContainer').style.display = 'none';
-    document.getElementById('songListFrame').src = '';
+    const songListContainer = document.getElementById('songListContainer');
+    songListContainer.classList.remove('active');
+    songListContainer.style.transform = 'translate(-50%, -50%) scale(0.9)';
+    
+    setTimeout(() => {
+        songListContainer.style.display = 'none';
+        document.getElementById('songListFrame').src = '';
+    }, 300);
 }
 function changePage(newPageNum) {
     const pages = document.querySelectorAll('.rpage');
