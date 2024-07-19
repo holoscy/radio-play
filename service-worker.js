@@ -1,6 +1,6 @@
-importScripts('https://cdn.bootcdn.net/ajax/libs/workbox-sw/7.0.0/workbox-sw.min.js');
+importScripts('https://cdnjs.cloudflare.com/ajax/libs/workbox-sw/7.0.0/workbox-sw.js');
 
-const version = 'v0.5';
+const version = 'v0.51';
 
 if (workbox) {
     workbox.routing.registerRoute(
