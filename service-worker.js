@@ -1,6 +1,6 @@
-importScripts('https://cdnjs.cloudflare.com/ajax/libs/workbox-sw/7.0.0/workbox-sw.js');
+importScripts('https://cdnjs.cloudflare.com/ajax/libs/workbox-sw/7.0.0/workbox-sw.min.js');
 
-const version = 'v0.51';
+const version = 'v0.52';
 
 if (workbox) {
     workbox.routing.registerRoute(
