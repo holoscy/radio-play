@@ -5,6 +5,4 @@ yAudio player from https://github.com/ZHOUYUANN/yAudio
 https://github.com/huangsuming/iptv 
 https://github.com/hououinkami/AppleTV 
 https://github.com/goolguy007/radioer
-![image](https://github.com/darkduck9/radio-play/blob/dev/4readme/1.png)
-![image](https://github.com/darkduck9/radio-play/blob/dev/4readme/2.png)
-![image](https://github.com/darkduck9/radio-play/blob/dev/4readme/3.png)
+https://github.com/suxuang/myIPTV
