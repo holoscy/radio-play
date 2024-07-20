@@ -937,21 +937,28 @@ function loadings() {
 	
 	document.addEventListener("DOMContentLoaded", function() { 
  const radioButtons = document.querySelectorAll('.radio-button');
-  radioButtons.forEach(button => {
-    const iconDiv = button.querySelector('.radio-icon');
-    if (iconDiv && button.dataset.image) {
-      iconDiv.style.backgroundImage = `url(${button.dataset.image})`;
-    }
-  });
-  const pages = document.querySelectorAll('.rpage');
+    radioButtons.forEach(button => {
+        const iconDiv = button.querySelector('.radio-icon');
+        if (iconDiv && button.dataset.image) {
+            iconDiv.style.backgroundImage = `url(${button.dataset.image})`;
+        }
+    });
+    const lastViewedPage = localStorage.getItem('lastViewedPage');
+    const initialPage = lastViewedPage ? parseInt(lastViewedPage) : 1;
+
+    const pages = document.querySelectorAll('.rpage');
     pages.forEach((page, index) => {
-        if (index === 0) {
+        if (index + 1 === initialPage) {
             page.classList.remove('inactive');
         } else {
             page.classList.add('inactive');
         }
     });
-    updatePaginationButtons(1);
+
+    updatePaginationButtons(initialPage);
+    updatePaginationIndicator(initialPage);
+
+    initPagination();
 		const openMenuButton = document.getElementById("openMenuButton");
 		const menu = document.getElementById("menu");
 		const menuContent = document.getElementById("menuContent");
@@ -2668,9 +2675,7 @@ function changePage(newPageNum) {
     const currentPage = document.querySelector('.rpage:not(.inactive)');
     const newPage = document.getElementById(`rpage${newPageNum}`);
     const paginationLine = document.querySelector('.pagination-line');
-
     if (currentPage === newPage) return; 
-
     if (currentPage) {
         currentPage.classList.add('fadeOut');
         currentPage.addEventListener('animationend', function handler() {
@@ -2682,8 +2687,9 @@ function changePage(newPageNum) {
     } else {
         showNewPage(newPage);
     }
-
     updatePaginationIndicator(newPageNum);
+    updatePaginationButtons(newPageNum);
+    localStorage.setItem('lastViewedPage', newPageNum);
 }
 
 function showNewPage(page) {
@@ -2717,8 +2723,6 @@ function initPagination() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', initPagination);		
-
 function updatePaginationButtons(activePageNum) {
     const buttons = document.querySelectorAll('.pagination button');
     buttons.forEach((button, index) => {
@@ -2729,6 +2733,7 @@ function updatePaginationButtons(activePageNum) {
         }
     });
 }
+
 function updateProgramName(channel) {
     const programNameElement = document.getElementById("programName");
     const currentProgram = getCurrentProgram(channel);
