@@ -2,7 +2,7 @@ importScripts('https://cdnjs.cloudflare.com/ajax/libs/workbox-sw/7.0.0/workbox-s
 
 const versions = {
     images: 'v0.52',
-    js: 'v0.53',
+    js: 'v0.54',
     css: 'v0.52'
 };
 
@@ -62,9 +62,15 @@ self.addEventListener('activate', event => {
     event.waitUntil(
         caches.keys().then(cacheNames => {
             return Promise.all(
-                cacheNames.filter(cacheName => {
-                    return !Object.values(versions).some(version => cacheName.endsWith(version));
-                }).map(cacheName => caches.delete(cacheName))
+                cacheNames.map(cacheName => {
+                    for (const [resourceType, version] of Object.entries(versions)) {
+                        const cachePrefix = `${resourceType}-cache-`;
+                        if (cacheName.startsWith(cachePrefix) && cacheName !== `${cachePrefix}${version}`) {
+                            console.log(`Deleting old cache: ${cacheName}`);
+                            return caches.delete(cacheName);
+                        }
+                    }
+                }).filter(Boolean) 
             );
         })
     );
