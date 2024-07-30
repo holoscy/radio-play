@@ -31,7 +31,7 @@ body{margin:0;padding:0;background-position:center;background-repeat: no-repeat;
   border-bottom: none;
 }
 
-.playlist_item__logo {-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;
+.playlist_item__logo {-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;  z-index: 2;
   width: 50px;
   height: 50px;
   border-radius: 8px;
@@ -41,17 +41,17 @@ body{margin:0;padding:0;background-position:center;background-repeat: no-repeat;
   background-repeat: no-repeat;
 }
 
-.playlist_item__info {
+.playlist_item__info {  z-index: 2;
   flex-grow: 1;
 }
 
-.playlist_item__song {
+.playlist_item__song {  z-index: 2;
   margin: 0;
   font-size: 16px;
   font-weight: bold;
 }
 
-.playlist_item__singer{  font-weight: bold;
+.playlist_item__singer{  font-weight: bold;  z-index: 2;
   margin: 5px 0 0;
   font-size: 14px;
 }
@@ -67,7 +67,7 @@ body{margin:0;padding:0;background-position:center;background-repeat: no-repeat;
   right: 0;
   bottom: 0;opacity: 0.2;
   background-color:  var(--main-color);
-  z-index: -1;
+  z-index: 1;
 }
 .playlist_item:hover::before {
   content: "";
@@ -78,7 +78,7 @@ body{margin:0;padding:0;background-position:center;background-repeat: no-repeat;
   bottom: 0;
   background-color: var(--main-color);
   opacity: 0.6; 
-  z-index: -1;
+  z-index: 1;
 }
 
 html{display: flex;
