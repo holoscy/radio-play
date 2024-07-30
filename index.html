@@ -8,6 +8,7 @@
    <title>HITFM Player</title>
   <link rel="shortcut icon" type="image/png" href="icons/hit.png"></script>
   <link rel="manifest" href="manifest.json"></script>
+  <meta id = "theme__color" name = "theme-color" content = "#fff" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.1/hls.min.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.0/axios.min.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/workbox-sw/7.0.0/workbox-sw.min.js" crossorigin="anonymous"></script>
@@ -193,7 +194,8 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
         <label for="opacity2">透明度</label><input type="range" id="opacity2" min="0" max="1" step="0.01" value="1"><br>
         <label for="bg-color3">网页背景色</label><input type="color" id="bg-color3" value="#ffffff"><br>
         <label for="opacity3">网页透明度</label><input type="range" id="opacity3" min="0" max="1" step="0.01" value="1"><br>
-        <label for="main-color">主要颜色</label><input type="color" id="main-color" value="#a1a1f0"><br>
+        <label for="main-color">强调色</label><input type="color" id="main-color" value="#a1a1f0"><br>
+        <label for="theme-color">标题/状态栏颜色</label><input type="color" id="theme-color" value="#ffffff"><br>
         <label for="dfex">默认播放方式</label>
         <select id="dfex">
         <option value="新标签页">新标签页</option>
@@ -235,7 +237,7 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
 <a href="https://greasyfork.org/zh-CN/scripts/470185" >云听网页节目HD下载</a><br>
      <p class="t"> 自定义数据及添加的电台数据使用本地存储 <br>备份的数据包括1.自定义设置<br>和2.添加到主页的电台数据</p><hr><p class="t">自定义电台<br>部分电台有地域限制或ipv6<br>国外电台使用代理更流畅<br>部分浏览器安全限制，'不能'<br>在https下访问http的内容。解决方法<br>1.把http改为https<br>(部分链接只支持http，注意关闭浏览器的<br>http自动升级为https功能）
 <br>2. PC对当前网站设置允许http不安全内容<br>手机浏览器修改flags选项中的<br> Insecure origins treated as secure</p><hr><p class="t">报错的链接会使用默认方式打开<br>若使用新标签页，电脑浏览器需要安装<br>hls播放扩展插件：<br><a href="https://chrome.google.com/webstore/detail/native-mpeg-dash-%2B-hls-pl/cjfbmleiaobegagekpmlhmaadepdeedn">chrome</a>/<a href="https://addons.mozilla.org/en-US/firefox/addon/native-mpeg-dash-hls-playback/">mozilla</a> addons<br>专业播放器若无法调用，<br>参考<a href="https://greasyfork.org/zh-CN/scripts/444056-play-with-mpv">此脚本</a>设置URL Protocol</p><hr><p class="t">直播源使用m3u格式<br>比如项目: <a href="https://m3u.ibert.me/">iptv-sources
-</a><br>推荐播放源1<a href="https://m3u.ibert.me/y_g.m3u">@YanG-1989</a><br>播放源2(地方台):<a href="https://huangsuming.github.io/iptv/list/tvlist.txt">@huangsuming</a><br>播放源3(广播):<a href="http://live.cooltv.top/tv.php">@goolguy007</a><br>播放源4<a href="https://m3u.ibert.me/ycl_iptv.m3u">@YueChan</a></p><hr> <p class="t">yAudio音频播放器来自<a href="https://github.com/ZHOUYUANN/yAudio" > @ZHOUYUANN </a></p><hr><p class="t">网易云音乐推荐脚本</p>
+</a><br>播放源1<a href="https://m3u.ibert.me/ycl_iptv.m3u">@YueChan</a><br>推荐播放源2<a href="https://m3u.ibert.me/y_g.m3u">@YanG-1989</a><br>播放源3(地方台):<a href="https://huangsuming.github.io/iptv/list/tvlist.txt">@huangsuming</a><br>播放源4(广播):<a href="http://live.cooltv.top/tv.php">@goolguy007</a><br>播放源5<a href="https://mirror.ghproxy.com/https://raw.githubusercontent.com/suxuang/myIPTV/main/ipv6.m3u">@suxuang</a></p><hr> <p class="t">yAudio音频播放器来自<a href="https://github.com/ZHOUYUANN/yAudio" > @ZHOUYUANN </a></p><hr><p class="t">网易云音乐推荐脚本</p>
 <a href="https://greasyfork.org/zh-CN/scripts/406054" >1.显示完整歌单</a><a href="https://greasyfork.org/zh-CN/scripts/453804" >2.MyFreeMP3扩展</a><a href="https://greasyfork.org/zh-CN/scripts/33046" >3.直接下载</a><a href="https://greasyfork.org/zh-CN/scripts/406821" >4.主题:扁平风格</a><br>
         <button id="about-btn">关于</button>
     </div>

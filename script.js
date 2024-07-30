@@ -2471,6 +2471,26 @@ submenuPopup.addEventListener("click", function(e) {
 	  const b = parseInt(hex.substring(4, 6), 16);
 	  return `${r}, ${g}, ${b}`;
 	}
+	const themeColorMeta = document.getElementById('theme__color');
+	const themeColorInput = document.getElementById('theme-color');
+	const defaultColor = '#ffffff';
+	const savedColor2 = localStorage.getItem('themeColor') || defaultColor;
+	function applyColor(color) {
+	  themeColorMeta.setAttribute('content', color);
+	  themeColorInput.value = color;
+	}
+	applyColor(savedColor2);
+	themeColorInput.addEventListener('change', (event) => {
+	  const newColor = event.target.value;
+	  applyColor(newColor);
+	  localStorage.setItem('themeColor', newColor);
+	});
+	window.addEventListener('load', () => {
+	  const savedColor2 = localStorage.getItem('themeColor');
+	  if (savedColor2) {
+		applyColor(savedColor2);
+	  }
+	});
 	function backupLocalStorage() {
 		  var backgroundImage = localStorage.getItem("backgroundImage");
 		  var bgPosition = localStorage.getItem("bgPosition");
@@ -2488,7 +2508,7 @@ submenuPopup.addEventListener("click", function(e) {
 		  var opacity3 = localStorage.getItem("opacity3");
 		  var blurLevel = localStorage.getItem("blurLevel");
 		  var savedColor = localStorage.getItem("mainColor");
-
+		  var savedColor2 = localStorage.getItem("themeColor");
 		  var backupData = {
 			backgroundImage: backgroundImage,
 			bgPosition: bgPosition,
@@ -2506,6 +2526,7 @@ submenuPopup.addEventListener("click", function(e) {
 			opacity3: opacity3,
 			blurLevel: blurLevel,
 			savedColor: savedColor,
+			savedColor2: savedColor2,
 		   };
 		   var savedData = JSON.parse(localStorage.getItem("savedData")) || [];
 		  backupData.savedData = savedData;
@@ -2562,6 +2583,7 @@ submenuPopup.addEventListener("click", function(e) {
 		  localStorage.setItem("opacity3", backupData.opacity3);
 		  localStorage.setItem("blurLevel", backupData.blurLevel);
 		  localStorage.setItem("mainColor", backupData.savedColor);
+		  localStorage.setItem("themeColor", backupData.savedColor2);
 		   var savedData = backupData.savedData || [];
 		  localStorage.setItem("savedData", JSON.stringify(savedData));
 		  const notification = document.createElement('div');
