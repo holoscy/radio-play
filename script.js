@@ -2471,26 +2471,31 @@ submenuPopup.addEventListener("click", function(e) {
 	  const b = parseInt(hex.substring(4, 6), 16);
 	  return `${r}, ${g}, ${b}`;
 	}
-	const themeColorMeta = document.getElementById('theme__color');
-	const themeColorInput = document.getElementById('theme-color');
-	const defaultColor = '#ffffff';
-	const savedColor2 = localStorage.getItem('themeColor') || defaultColor;
-	function applyColor(color) {
-	  themeColorMeta.setAttribute('content', color);
-	  themeColorInput.value = color;
-	}
-	applyColor(savedColor2);
-	themeColorInput.addEventListener('change', (event) => {
-	  const newColor = event.target.value;
-	  applyColor(newColor);
-	  localStorage.setItem('themeColor', newColor);
-	});
-	window.addEventListener('load', () => {
-	  const savedColor2 = localStorage.getItem('themeColor');
-	  if (savedColor2) {
-		applyColor(savedColor2);
-	  }
-	});
+	const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+const appleStatusBarMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+const themeColorInput = document.getElementById('theme-color');
+const defaultColor = '#ffffff';
+const savedColor2 = localStorage.getItem('themeColor') || defaultColor;
+
+function applyColor(color) {
+    themeColorMeta.setAttribute('content', color);
+    appleStatusBarMeta.setAttribute('content', color);
+    themeColorInput.value = color;
+}
+
+applyColor(savedColor2);
+themeColorInput.addEventListener('change', (event) => {
+    const newColor = event.target.value;
+    applyColor(newColor);
+    localStorage.setItem('themeColor', newColor);
+});
+
+window.addEventListener('load', () => {
+    const savedColor2 = localStorage.getItem('themeColor');
+    if (savedColor2) {
+        applyColor(savedColor2);
+    }
+});
 	function backupLocalStorage() {
 		  var backgroundImage = localStorage.getItem("backgroundImage");
 		  var bgPosition = localStorage.getItem("bgPosition");

@@ -25,6 +25,7 @@
      "purpose":"maskable"
 }],
 "start_url": "/radio-play/",
+"theme_color": "#ffffff",
 "background_color":"black",
 "display":"standalone",
 "orientation":"portrait",
