@@ -144,6 +144,9 @@ body{height:100%;min-height: 100vh;}
   height: 85%;  
  overflow-y: auto; 
 }
+.loader{ 
+font-size: 3rem;
+}
 }
 
 #tavr-container{max-width:500px;
@@ -203,6 +206,9 @@ body{height:100%;min-height: 100vh;}
   .playlist_item__singer {
     font-size: 12px;
   }
+  .loader{ 
+font-size: 10vw; 
+  max-font-size: 3rem;}
 }
 #programName {text-align: center;font-weight: bold; margin-bottom:1em;}
 #songInfo {text-align: center; margin-bottom:1em;}
@@ -501,7 +507,6 @@ input[type="range"].volume-level::-webkit-slider-thumb {filter: none !important;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: -1;
-  font-size: 3rem;
   font-variant: small-caps;
   font-weight: 900;
   background: conic-gradient(#dff2ae 0 25%, #f0a1a0 25% 50%, #efeff2 50% 75%, #69a6f9 75%);
