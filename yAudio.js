@@ -692,16 +692,18 @@ if (!originalPic.includes("param=300y300")) {
     clearTimeout(currentRequest);
   }     
   desiredOption.selected = true;
-   const mediaMetadata = new MediaMetadata({
-            title: this.music.title,
-            artist: this.music.author,
-            artwork: [{
-                src: this.music.pic,
-                sizes: '300x300',
-                type: 'image/jpg'
-            }]
-        });
-        navigator.mediaSession.metadata = mediaMetadata;      
+   if ('mediaSession' in navigator && 'MediaMetadata' in window) {
+    const mediaMetadata = new MediaMetadata({
+        title: this.music.title,
+        artist: this.music.author,
+        artwork: [{
+            src: this.music.pic,
+            sizes: '300x300',
+            type: 'image/jpg'
+        }]
+    });
+    navigator.mediaSession.metadata = mediaMetadata;
+}    
         function getCurrentTime() {
           var proBarWidth =
             (self.audio.currentTime / self.audio.duration) * width

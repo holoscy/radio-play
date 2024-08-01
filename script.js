@@ -161,79 +161,56 @@
 
 				return Number(button.dataset['paused']);
 			};
+var currentData;
+const tavr = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRH-LIEQnJciIUI-0nzHzsfJlRiYA3X95exVMjZE3SJsytCBoHZ082B813yVhGEXfXqCiI&usqp=CAU';
 
-	var currentData;  
-	const tavr = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRH-LIEQnJciIUI-0nzHzsfJlRiYA3X95exVMjZE3SJsytCBoHZ082B813yVhGEXfXqCiI&usqp=CAU'        
-	function setCurrentData(data) {
-		currentData = data;
-	  
-		if (currentData.cover) {
-			mediaMetadata.title = currentData.song;
-			mediaMetadata.artist = currentData.singer;
-			mediaMetadata.artwork = [{
-				src: currentData.cover,
-				sizes: '500x500',
-				type: 'image/jpg'
-			}];
-		} else {
-		   mediaMetadata.title = currentData.song;
-			mediaMetadata.artist = currentData.singer;
-			mediaMetadata.artwork = [{
-				src: tavr,
-				sizes: '200x200',
-				type: 'image/png'
-			}];
-		}
-
-		navigator.mediaSession.metadata = mediaMetadata;
-	}
-
-	var mediaMetadata = new MediaMetadata({
-		title: '',
-		artist: '',
-		artwork: []
-	});
+function setCurrentData(data) {
+    currentData = data;
+    updateMediaMetadata();
+}
+function updateMediaMetadata() {
+    if ('mediaSession' in navigator && 'MediaMetadata' in window && currentData) {
+        var mediaMetadata = new MediaMetadata({
+            title: currentData.song || '',
+            artist: currentData.singer || '',
+            artwork: [{
+                src: currentData.cover || tavr,
+                sizes: currentData.cover ? '500x500' : '200x200',
+                type: currentData.cover ? 'image/jpg' : 'image/png'
+            }]
+        });
+        navigator.mediaSession.metadata = mediaMetadata;
+    }
+}
 
 	function playAudio() {
-		  audio.pause();
-		loadings();
-		var srcSelect = document.getElementById('src_select');
-		var value = JSON.parse(srcSelect['value']);		
-		updateTitle(value['name']);
-		radio.src = value['src'];
-		radio.addEventListener('stalled', stalledHandler);
+    audio.pause();
+    loadings();
+    var srcSelect = document.getElementById('src_select');
+    var value = JSON.parse(srcSelect['value']);     
+    updateTitle(value['name']);
+    radio.src = value['src'];
+    radio.addEventListener('stalled', stalledHandler);
+    
+    if ('mediaSession' in navigator && 'MediaMetadata' in window) {
+        updateMediaMetadata(); 
+   
+        var observer = new MutationObserver(function (mutationsList) {
+            if (radio.paused) {
+                observer.disconnect();
+            } else {
+                updateMediaMetadata();
+            }
+        });
+        var observerOptions = { childList: true, subtree: true };
+        observer.observe(currentList, observerOptions);
+    }
 
-		navigator.mediaSession.metadata = mediaMetadata;
-	   
-		var observer = new MutationObserver(function (mutationsList) {
-			if (radio.paused) {
-				observer.disconnect();
-			} else {
-		 if (currentData.cover) {
-					mediaMetadata.artwork = [{
-						src: currentData.cover,
-						sizes: '500x500',
-						type: 'image/jpg'
-					}];
-				} else {         
-						mediaMetadata.artwork = [{
-							src: tavr,
-							sizes: '200x200',
-							type: 'image/png'
-						}];                
-				}
-			  navigator.mediaSession.metadata = mediaMetadata;
-			}
-		});
-
-		var observerOptions = { childList: true, subtree: true };
-		observer.observe(currentList, observerOptions);
-
-		if (currentHls) {
-			currentHls.destroy(); // Destroy the previous HLS instance if it exists
-		}
-		radio.play();
-	}
+    if (currentHls) {
+        currentHls.destroy();
+    }
+    radio.play();
+}
 
 			function stopAudio() {
 				if (radio) {
@@ -469,7 +446,7 @@
 
 function play(url, title, cover) {
   loadings();
-  if (url && cover) {
+  if (url && cover && 'mediaSession' in navigator && 'MediaMetadata' in window) {
     navigator.mediaSession.metadata = new MediaMetadata({
       title: title,
       artist: 'HITFM Player',
@@ -480,34 +457,27 @@ function play(url, title, cover) {
       }]
     });
   }
-
   const songInfoDiv = document.getElementById('songInfo');
   songInfoDiv.style.display = 'none';
   desiredOption.selected = true;
   audio.pause();
-
   if (currentHls) {
     currentHls.destroy();
   }
   if (currentRequest !== null) {
     clearTimeout(currentRequest);
   }
-
   if (Hls.isSupported()) {
     const hls = new Hls();
     currentHls = hls;
-
     hls.loadSource(url);
     hls.attachMedia(video);
-
     hls.on(Hls.Events.FRAG_PARSING_METADATA, function (event, data) {
       if (data) {
         if (data.frag.title.includes("url=")) {
           const titleMatch = data.frag.title.match(/title="([^"]*)"/);
           const artistMatch = data.frag.title.match(/artist="([^"]*)"/);
-
           songInfoDiv.style.display = 'block';
-
           let songInfo = "";
           if (artistMatch && artistMatch[1].trim() !== "") {
             songInfo += artistMatch[1].trim();
@@ -520,30 +490,32 @@ function play(url, title, cover) {
           }
           songInfoDiv.textContent = songInfo;
           addLinksToSongInfo(songInfo);
-
-          navigator.mediaSession.metadata = new MediaMetadata({
-            title: titleMatch ? titleMatch[1].trim() : '',
-            artist: artistMatch ? artistMatch[1].trim() : '',
-            artwork: [{
-              src: cover,
-              sizes: '200x200',
-              type: 'image/png'
-            }]
-          });
+          if ('mediaSession' in navigator && 'MediaMetadata' in window) {
+            navigator.mediaSession.metadata = new MediaMetadata({
+              title: titleMatch ? titleMatch[1].trim() : '',
+              artist: artistMatch ? artistMatch[1].trim() : '',
+              artwork: [{
+                src: cover,
+                sizes: '200x200',
+                type: 'image/png'
+              }]
+            });
+          }
         } else {
           songInfoDiv.style.display = 'block';
           songInfoDiv.textContent = data.frag.title;
           addLinksToSongInfo(data.frag.title);
-
-          navigator.mediaSession.metadata = new MediaMetadata({
-            title: data.frag.title,
-            artist: 'HITFM Player',
-            artwork: [{
-              src: cover,
-              sizes: '200x200',
-              type: 'image/png'
-            }]
-          });
+          if ('mediaSession' in navigator && 'MediaMetadata' in window) {
+            navigator.mediaSession.metadata = new MediaMetadata({
+              title: data.frag.title,
+              artist: 'HITFM Player',
+              artwork: [{
+                src: cover,
+                sizes: '200x200',
+                type: 'image/png'
+              }]
+            });
+          }
         }
       }
     });
@@ -1964,15 +1936,17 @@ async function parseM3UFromTextarea() {
 					if (playPromise !== undefined) {
 						playPromise.then(_ => {
 							document.body.classList.remove('loading');
-							navigator.mediaSession.metadata = new MediaMetadata({
-								title: title,
-								artist: 'HITFM Player',
-								artwork : [{
-				src:cover,
-				sizes: '300x300',
-				type: 'image/jpg'
-			}]
-							});
+							if ('mediaSession' in navigator && 'MediaMetadata' in window) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+        title: title,
+        artist: 'HITFM Player',
+        artwork: [{
+            src: cover,
+            sizes: '300x300',
+            type: 'image/jpg'
+        }]
+    });
+}
 						}).catch(error => {//302跳转非直链m3u8无法使用hls.js播放
 						 const notification = document.createElement('div');
 		notification.className = 'notification';
