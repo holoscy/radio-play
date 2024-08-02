@@ -2426,50 +2426,108 @@ submenuPopup.addEventListener("click", function(e) {
 	  divElementTop.style.backgroundColor = `rgba(${hexToRgb(colorInput3.value)}, ${opacity2})`;
 	  localStorage.setItem('opacity2', opacity2);
 	});
-	colorInput4.addEventListener('input', function() {
-	  const opacity3 = opacityInput4.value;
-	  divElementWeb.style.backgroundColor = `rgba(${hexToRgb(colorInput4.value)}, ${opacity3})`;
-	  localStorage.setItem('bg-color3', colorInput4.value);
-	});
 
-	opacityInput4.addEventListener('input', function() {
-	  const opacity3 = opacityInput4.value;
-	  divElementWeb.style.backgroundColor = `rgba(${hexToRgb(colorInput4.value)}, ${opacity3})`;
-	  localStorage.setItem('opacity3', opacity3);
-	});
-	// 辅助函数：将十六进制颜色值转换为RGB颜色值
-	function hexToRgb(hex) {
-	  hex = hex.replace('#', '');
-	  const r = parseInt(hex.substring(0, 2), 16);
-	  const g = parseInt(hex.substring(2, 4), 16);
-	  const b = parseInt(hex.substring(4, 6), 16);
-	  return `${r}, ${g}, ${b}`;
-	}
-	const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 const appleStatusBarMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
 const themeColorInput = document.getElementById('theme-color');
-const defaultColor = '#ffffff';
-const savedColor2 = localStorage.getItem('themeColor') || defaultColor;
+const syncColorsCheckbox = document.getElementById('sync-colors');
+const defaultColor = '#ffffffff';
 
-function applyColor(color) {
+function applyThemeColor(color) {
     themeColorMeta.setAttribute('content', color);
-    appleStatusBarMeta.setAttribute('content', color);
+    document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]').setAttribute('content', 'default');
+    setTimeout(() => {
+        document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]').setAttribute('content', color);
+    }, 20);
     themeColorInput.value = color;
 }
 
-applyColor(savedColor2);
+function loadSavedColors() {
+    const savedThemeColor = localStorage.getItem('themeColor') || defaultColor;
+    const savedBgColor = localStorage.getItem('bg-color3') || defaultColor;
+    const syncColors = localStorage.getItem('syncColors') === 'true';
+    const savedOpacity = localStorage.getItem('opacity3') || '1';
+
+    colorInput4.value = savedBgColor;
+    opacityInput4.value = savedOpacity;
+
+    const rgbaColor = `rgba(${hexToRgb(savedBgColor)}, ${savedOpacity})`;
+    const hexColorWithOpacity = rgbaToHex(rgbaColor);
+    applyThemeColor(syncColors ? hexColorWithOpacity : savedThemeColor);
+
+    syncColorsCheckbox.checked = syncColors;
+    updateThemeColorState();
+}
+
+function updateThemeColorState() {
+    themeColorInput.disabled = syncColorsCheckbox.checked;
+    if (syncColorsCheckbox.checked) {
+        const opacity3 = opacityInput4.value;
+        const rgbaColor = `rgba(${hexToRgb(colorInput4.value)}, ${opacity3})`;
+        const hexColorWithOpacity = rgbaToHex(rgbaColor);
+        applyThemeColor(hexColorWithOpacity);
+    }
+}
+
+colorInput4.addEventListener('input', function() {
+    const opacity3 = opacityInput4.value;
+    const rgbaColor = `rgba(${hexToRgb(colorInput4.value)}, ${opacity3})`;
+    const hexColorWithOpacity = rgbaToHex(rgbaColor);
+    divElementWeb.style.backgroundColor = rgbaColor;
+    localStorage.setItem('bg-color3', colorInput4.value);
+    localStorage.setItem('opacity3', opacity3);
+
+    if (syncColorsCheckbox.checked) {
+        applyThemeColor(hexColorWithOpacity);
+    }
+});
+
+opacityInput4.addEventListener('input', function() {
+    const opacity3 = opacityInput4.value;
+    const rgbaColor = `rgba(${hexToRgb(colorInput4.value)}, ${opacity3})`;
+    const hexColorWithOpacity = rgbaToHex(rgbaColor);
+    divElementWeb.style.backgroundColor = rgbaColor;
+    localStorage.setItem('opacity3', opacity3);
+
+    if (syncColorsCheckbox.checked) {
+        applyThemeColor(hexColorWithOpacity);
+    }
+});
+
 themeColorInput.addEventListener('change', (event) => {
     const newColor = event.target.value;
-    applyColor(newColor);
+    applyThemeColor(newColor);
     localStorage.setItem('themeColor', newColor);
 });
 
-window.addEventListener('load', () => {
-    const savedColor2 = localStorage.getItem('themeColor');
-    if (savedColor2) {
-        applyColor(savedColor2);
+syncColorsCheckbox.addEventListener('change', () => {
+    updateThemeColorState();
+    localStorage.setItem('syncColors', syncColorsCheckbox.checked);
+    if (syncColorsCheckbox.checked) {
+        const opacity3 = opacityInput4.value;
+        const rgbaColor = `rgba(${hexToRgb(colorInput4.value)}, ${opacity3})`;
+        const hexColorWithOpacity = rgbaToHex(rgbaColor);
+        applyThemeColor(hexColorWithOpacity);
     }
 });
+
+window.addEventListener('load', loadSavedColors);
+
+function hexToRgb(hex) {
+    const bigint = parseInt(hex.slice(1), 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return `${r}, ${g}, ${b}`;
+}
+
+function rgbaToHex(rgba) {
+    const [r, g, b, a] = rgba.match(/\d+/g).map(Number);
+    const alpha = Math.round(a * 255).toString(16).padStart(2, '0').toUpperCase();
+    const hexColor = `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()}`;
+    return `${hexColor}${alpha}`;
+}
+
 	function backupLocalStorage() {
 		  var backgroundImage = localStorage.getItem("backgroundImage");
 		  var bgPosition = localStorage.getItem("bgPosition");
