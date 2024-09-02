@@ -524,80 +524,83 @@ function play(url, title, cover) {
       video.play();
     });
 
-    let retryCount = 0;
-    const maxRetries = 2;
-    const retryDelay = 3000; // 3 seconds
+function isIgnorableError(errorDetails) {
+  const ignorableErrors = [
+    Hls.ErrorDetails.BUFFER_APPEND_ERROR,
+    Hls.ErrorDetails.bufferStalledError,
+    Hls.ErrorDetails.internalException,
+    //其他需要忽略的错误类型
+  ];
+  return ignorableErrors.includes(errorDetails);
+}
 
-    hls.on(Hls.Events.ERROR, function (event, data) {
-      if (data.fatal) {
-        switch (data.type) {
-          case Hls.ErrorTypes.MEDIA_ERROR:
-            console.error('Media error, attempting to recover');
-            hls.recoverMediaError();
-            break;
-          default:
-            console.error(`An unrecoverable error (${data.details}) occurred, stopping load`);
-            handleUnrecoverableError(`不可恢复的错误 (${data.details})，停止加载`);
-            break;
-        }
+hls.on(Hls.Events.ERROR, function (event, data) {
+  if (isIgnorableError(data.details)) {
+    console.warn(`Ignorable error occurred: ${data.details}`);
+    return;
+  }
+
+  if (data.fatal) {
+    switch (data.type) {
+      case Hls.ErrorTypes.NETWORK_ERROR:
+        console.error('Network error occurred');
+        handleUnrecoverableError(` (${data.details})，尝试默认方式`);
+        break;
+      default:
+        console.error(`An unrecoverable error (${data.details}) occurred, stopping load`);
+        handleUnrecoverableError(`不可恢复的错误 (${data.details})，停止加载`);
+        break;
+    }
+  } else {
+    console.error(`Unhandled error occurred: ${data.details}`);
+  }
+});
+
+function handleNetworkError(errorDetails) {
+  if (navigator.onLine) {
+    showNotification('网络错误，尝试重新加载');
+    hls.startLoad(); 
+    
+    setTimeout(() => {
+      if (hls.networkDetails && hls.networkDetails.status !== 200) {
+        handleUnrecoverableError(`网络错误 (${errorDetails})，无法重新加载`);
       }
-    });
-
-    function handleNetworkError(message) {
-      const notification = document.createElement('div');
-      notification.className = 'notification';
-      notification.textContent = message;
-      document.body.appendChild(notification);
-      setTimeout(() => {
-        document.body.removeChild(notification);
-      }, 2000);
-
-      if (navigator.onLine) {
-        if (retryCount < maxRetries) {
-          retryCount++;
-          console.log(`Retry attempt ${retryCount} of ${maxRetries}`);
-          setTimeout(() => {
-            hls.startLoad(); // Try to reload the media
-          }, retryDelay);
-        } else {
-          handleUnrecoverableError(`重试次数超过上限，停止加载`);
-        }
-      } else {
-          handleUnrecoverableError(`离线状态，等待网络重新连接...`);
-        window.addEventListener('online', handleNetworkReconnect);
+    }, 5000);
+  } else {
+    showNotification('离线状态，等待网络重新连接...');
+    window.addEventListener('online', handleNetworkReconnect);
+    
+    setTimeout(() => {
+      if (!navigator.onLine) {
+        handleUnrecoverableError(`网络错误 (${errorDetails})，无法重新连接`);
+        window.removeEventListener('online', handleNetworkReconnect);
       }
-    }
+    }, 30000);
+  }
+}
 
-    function handleNetworkReconnect() {
-      handleNetworkError(`网络已重新连接，尝试重新加载媒体`);
-      window.removeEventListener('online', handleNetworkReconnect);
-      hls.startLoad();
-    }
+function handleNetworkReconnect() {
+  showNotification('网络已重新连接，尝试重新加载媒体');
+  window.removeEventListener('online', handleNetworkReconnect);
+  hls.startLoad();
+}
 
-    function handleUnrecoverableError(message) {
-     const notification = document.createElement('div');
-      notification.className = 'notification';
-      notification.textContent = message;
-      document.body.appendChild(notification);
-      setTimeout(() => {
-        document.body.removeChild(notification);
-      }, 2000);
-      hls.stopLoad();
-      document.body.classList.remove('loading');
-      window.openLink(title, url);
-    }
+function handleUnrecoverableError(message) {
+  showNotification(message);
+  hls.stopLoad();
+  document.body.classList.remove('loading');
+  window.openLink(title, url);
+}
 
-    // To reset retryCount on successful load
-    hls.on(Hls.Events.MANIFEST_PARSED, function () {
-      retryCount = 0;
-    });
-    hls.on(Hls.Events.LEVEL_LOADED, function () {
-      retryCount = 0;
-    });
-    hls.on(Hls.Events.FRAG_LOADED, function () {
-      retryCount = 0;
-    });
-
+function showNotification(message) {
+  const notification = document.createElement('div');
+  notification.className = 'notification';
+  notification.textContent = message;
+  document.body.appendChild(notification);
+  setTimeout(() => {
+    document.body.removeChild(notification);
+  }, 2000);
+}
   } else {
     alert('只有m3u8能触发播放，其他格式需要在自定义电台创建按钮播放');
   }
