@@ -69,13 +69,13 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
         <div class="radio-icon"></div>
         <span class="radio-name">Hit FM 官网</span>
       </div>
-      <div class="radio-button" onclick="playHitFM2()" data-image="./icons/hitfmany.png">
-        <div class="radio-icon"></div>
-        <span class="radio-name">Hit FM 广州</span>
-      </div>
       <div class="radio-button" onclick="playHitFM3()" data-image="./icons/hitfmany.png">
         <div class="radio-icon"></div>
         <span class="radio-name">Hit FM 北京</span>
+        </div>  
+       <div class="radio-button" onclick="playhitn()" data-image="./icons/hitn.webp">
+        <div class="radio-icon"></div>
+        <span class="radio-name">Hit Nation</span>
         </div>
       <div class="radio-button" onclick="playev()" data-image="./icons/evo.webp">
         <div class="radio-icon"></div>
@@ -85,10 +85,10 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
         <div class="radio-icon"></div>
         <span class="radio-name">AT40</span>
       </div>
-      <div class="radio-button" onclick="playhitn()" data-image="./icons/hitn.webp">
+      <div class="radio-button" onclick="playwgc()" data-image="./icons/wgc.webp">
         <div class="radio-icon"></div>
-        <span class="radio-name">Hit Nation</span>
-        </div>
+        <span class="radio-name">107.5 WGCI</span>
+      </div> 
               <div class="radio-button" onclick="playic()" data-image="./icons/ic.webp">
         <div class="radio-icon"></div>
         <span class="radio-name">iHeartCountry</span>
@@ -97,10 +97,10 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
         <div class="radio-icon"></div>
         <span class="radio-name">iHeartRadio POP</span>
       </div>
-      <div class="radio-button" onclick="playcf()" data-image="./icons/ihc.webp">
+     <div class="radio-button" onclick="playimf()" data-image="./icons/imf.webp">
         <div class="radio-icon"></div>
-        <span class="radio-name">iHeartRadio Café</span>
-      </div>
+        <span class="radio-name">iHeartRadio Music Festival</span>
+      </div>  
       <!-- 添加其他按钮，格式类似 -->
     </div>
   </div>
@@ -118,7 +118,9 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
           <div class="radio-button" onclick="playalic()" data-image="./icons/alic.webp">
         <div class="radio-icon"></div>
         <span class="radio-name">Alice 95.5</span>
-      </div>      <div class="radio-button" onclick="playrn()" data-image="./icons/rn.webp">
+      </div>   
+    
+         <div class="radio-button" onclick="playrn()" data-image="./icons/rn.webp">
         <div class="radio-icon"></div>
         <span class="radio-name">Rock Nation</span>
       </div>
@@ -126,10 +128,7 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
         <div class="radio-icon"></div>
         <span class="radio-name">Mix Nation</span>
       </div> 
-          <div class="radio-button" onclick="playimf()" data-image="./icons/imf.webp">
-        <div class="radio-icon"></div>
-        <span class="radio-name">iHeartRadio Music Festival</span>
-      </div>      <div class="radio-button" onclick="playbbc1()" data-image="./icons/bbc1.svg">
+            <div class="radio-button" onclick="playbbc1()" data-image="./icons/bbc1.svg">
         <div class="radio-icon"></div>
         <span class="radio-name">BBC Radio 1</span>
       </div>
@@ -137,12 +136,17 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
         <div class="radio-icon"></div>
         <span class="radio-name">BBC Radio 1Xtra</span>
       </div> 
+      <div class="radio-button" onclick="playbbc1d()" data-image="./icons/bbc1d.svg">
+        <div class="radio-icon"></div>
+        <span class="radio-name">BBC Radio 1 Dance</span>
+      </div>
           <div class="radio-button" onclick="playbbc6()" data-image="./icons/bbc6.svg">
         <div class="radio-icon"></div>
         <span class="radio-name">BBC Radio 6 Music</span>
       </div>
       <!-- 添加其他按钮，格式类似 -->
     </div></div>
+    
  
 </div>
 
@@ -240,7 +244,7 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
      <div class="page about">
      <p class="t"> 自定义数据及添加的电台数据使用本地存储 <br>备份的数据包括1.自定义设置<br>和2.添加到主页的电台数据</p><hr><p class="t">自定义电台<br>部分电台有地域限制或ipv6<br>国外电台使用代理更流畅<br>部分浏览器安全限制，'不能'<br>在https下访问http的内容。解决方法<br>1.把http改为https<br>(部分链接只支持http，注意关闭浏览器的<br>http自动升级为https功能）或在本地打开
 <br>2. PC对当前网站设置允许http不安全内容<br>手机浏览器修改flags选项中的<br> Insecure origins treated as secure</p><hr><p class="t">报错的链接会使用默认方式打开<br>若使用新标签页，电脑浏览器需要安装<br>hls播放扩展插件：<br><a href="https://chrome.google.com/webstore/detail/native-mpeg-dash-%2B-hls-pl/cjfbmleiaobegagekpmlhmaadepdeedn">chrome</a>/<a href="https://addons.mozilla.org/en-US/firefox/addon/native-mpeg-dash-hls-playback/">mozilla</a> addons<br>专业播放器若无法调用，<br>参考<a href="https://greasyfork.org/zh-CN/scripts/444056-play-with-mpv">此脚本</a>设置URL Protocol</p><hr><p class="t">直播源使用m3u格式<br>比如项目: <a href="https://m3u.ibert.me/">iptv-sources
-</a><br>播放源1<a href="https://m3u.ibert.me/ycl_iptv.m3u">@YueChan</a><br>推荐播放源2<a href="https://m3u.ibert.me/y_g.m3u">@YanG-1989</a><br>播放源3(地方台):<a href="https://huangsuming.github.io/iptv/list/tvlist.txt">@huangsuming</a><br>播放源4(广播):<a href="http://live.cooltv.top/tv.php">@goolguy007</a><br>播放源5<a href="https://mirror.ghproxy.com/https://raw.githubusercontent.com/suxuang/myIPTV/main/ipv6.m3u">@suxuang</a></p><hr> <p class="t">yAudio音频播放器来自<a href="https://github.com/ZHOUYUANN/yAudio" > @ZHOUYUANN </a></p><hr><p class="t">网易云音乐推荐脚本</p>
+</a><br>播放源1<a href="https://raw.githubusercontent.com/YueChan/Live/refs/heads/main/APTV.m3u">@YueChan</a><br>播放源2<a href="https://m3u.ibert.me/y_g.m3u">@YanG-1989</a><br>播放源3(地方台):<a href="https://huangsuming.github.io/iptv/list/tvlist.txt">@huangsuming</a><br>推荐播放源4<a href="https://raw.githubusercontent.com/suxuang/myIPTV/main/ipv6.m3u">@suxuang</a><br>广播网站:<a href="https://cooltv.top">@goolguy007</a></p><hr> <p class="t">yAudio音频播放器来自<a href="https://github.com/ZHOUYUANN/yAudio" > @ZHOUYUANN </a></p><hr><p class="t">网易云音乐推荐脚本</p>
 <a href="https://greasyfork.org/zh-CN/scripts/406054" >1.显示完整歌单</a><a href="https://greasyfork.org/zh-CN/scripts/453804" >2.MyFreeMP3扩展</a><a href="https://greasyfork.org/zh-CN/scripts/33046" >3.直接下载</a><a href="https://greasyfork.org/zh-CN/scripts/406821" >4.主题:扁平风格</a><br><a href="https://greasyfork.org/zh-CN/scripts/470185" >云听网页节目HD下载</a><br>
         <button id="about-btn">关于</button>
     </div>
