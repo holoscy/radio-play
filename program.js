@@ -414,23 +414,50 @@ const programSchedule = {//UTC+08:00
 			]
 			},
 
-'cf':   {
+'wgc':   {
 		TuesdayToThursday: [			  
-	          { start: "00:00:00", end: "23:59:59", name: "Mellow Classic Rock" },
-	          		  
+	          { start: "00:00:00", end: "01:00:00", name: "The WGCI Morning Show" },
+	          { start: "01:00:00", end: "05:00:00", name: "Way Up With Angela Yee" },
+			  { start: "05:00:00", end: "09:00:00", name: "Tone Kapone" },
+			  { start: "09:00:00", end: "15:00:00", name: "Lil Cuz" },
+			  { start: "15:00:00", end: "21:00:00", name: "Shay Diddy" },
+			  { start: "21:00:00", end: "23:59:59", name: "The WGCI Morning Show" },
 			],
 			  Monday: [			  
-	       { start: "00:00:00", end: "23:59:59", name: "Mellow Classic Rock" },
-	          
+	          { start: "00:00:00", end: "05:00:00", name: "Dani D" },
+	          { start: "05:00:00", end: "09:00:00", name: "Trey White"},
+			  { start: "09:00:00", end: "13:00:00", name: "Hot Rod" },
+			  { start: "13:00:00", end: "17:00:00", name: "Jamal Smallz" },
+			  { start: "17:00:00", end: "21:00:00", name: "Shay Diddy" },
+			  { start: "21:00:00", end: "23:59:59", name: "The WGCI Morning Show" },			  	
 		],	  
 			  Friday: [			  
-	         { start: "00:00:00", end: "23:59:59", name: "Mellow Classic Rock." },	 
+	          { start: "00:00:00", end: "01:00:00", name: "The WGCI Morning Show" },
+	          { start: "01:00:00", end: "02:00:00", name: "Sisanie" },
+			  { start: "02:00:00", end: "06:00:00", name: "Gabby Diaz" },
+			  { start: "06:00:00", end: "10:00:00", name: "JoJo Wright" },
+			  { start: "10:00:00", end: "13:00:00", name: "EJ" },
+			  { start: "15:00:00", end: "21:00:00", name: "Shay Diddy" },
+			  { start: "21:00:00", end: "23:59:59", name: "The WGCI Morning Show" }			 
 			],
 			Saturday: [			  
-	         { start: "00:00:00", end: "23:59:59", name: "Mellow Classic Rock" },
+	          { start: "00:00:00", end: "01:00:00", name: "The WGCI Morning Show" },
+	          { start: "01:00:00", end: "05:00:00", name: "Way Up With Angela Yee" },
+			  { start: "05:00:00", end: "09:00:00", name: "Tone Kapone" },
+			  { start: "09:00:00", end: "13:00:00", name: "Lil Cuz" },
+			  { start: "13:00:00", end: "16:00:00", name: "Jamal Smallz" },
+			  { start: "16:00:00", end: "22:00:00", name: "Shay Diddy" },
+			  { start: "22:00:00", end: "23:59:59", name: "The Breakfast Club" },
 			],
 			Sunday: [			  
-	          { start: "00:00:00", end: "23:59:59", name: "Mellow Classic Rock" }, 
+	          { start: "00:00:00", end: "01:00:00", name: "The Breakfast Club" },
+	          { start: "01:00:00", end: "05:00:00", name: "Dani D" },
+			  { start: "05:00:00", end: "09:00:00", name: "KeKe" },
+			  { start: "09:00:00", end: "13:00:00", name: "Hot Rod" },
+			  { start: "13:00:00", end: "16:00:00", name: "Jamal Smallz" },
+			  { start: "16:00:00", end: "21:00:00", name: "Shay Diddy" },
+			  { start: "21:00:00", end: "23:00:00", name: "Chicago's #1 for Hip-Hop & R&B" },
+			  { start: "23:00:00", end: "23:59:59", name: "Dani D" },
 			]
 			},
 '0':   {
@@ -451,6 +478,5 @@ const programSchedule = {//UTC+08:00
 			Sunday: [			  
 	          { start: "00:00:00", end: "23:59:59", name: " " }, 
 			]
-			},
-		
+			},	
 	  };
