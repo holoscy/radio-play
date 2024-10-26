@@ -1,4 +1,13 @@
-body{margin:0;padding:0;background-position:center;background-repeat: no-repeat;background-size: cover;transition: 1s;}body.mobile.app{width:100% ;margin:0}*{font-family:system-ui, -apple-system, Arial, sans-serif}option{font-family:inherit}.mobile .volume-level,audio{display:none!important}.control{transition: 0.5s;},select{cursor:pointer}button{border:none;font-weight: bold;width:50px;height:50px;display:inline-block;margin:auto;background:none center no-repeat;-webkit-background-size:20px 20px;background-size:20px}.player{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-box-align:stretch;-webkit-align-items:stretch;-ms-flex-align:stretch;align-items:stretch;margin-bottom:15px;text-align: center;}.player_title{margin:0 auto 15px auto;text-align:center; -webkit-app-region: drag;}.playlist_wrapper {
+body{margin:0;padding:0;background-position:center;background-repeat: no-repeat;background-size: cover;transition: 1s;}
+body.no-transition {
+  transition: none !important;
+}
+body.mobile.app{width:100% ;margin:0}*{font-family:system-ui, -apple-system, Arial, sans-serif}option{font-family:inherit}.mobile .volume-level,audio{display:none!important}.control{transition: 0.5s;},select{cursor:pointer}button{border-radius: 10px;border:none;font-weight: bold;width:50px;height:50px;display:inline-block;margin:auto;background:none center no-repeat;-webkit-background-size:20px 20px;background-size:20px}button:hover {border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+}.dark button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.player{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-box-align:stretch;-webkit-align-items:stretch;-ms-flex-align:stretch;align-items:stretch;margin-bottom:15px;text-align: center;}.player_title{margin:0 auto 15px auto;text-align:center; -webkit-app-region: drag;}.playlist_wrapper {
   max-width: 600px;
   margin: 20px auto;
   background-color:transparent;
@@ -422,17 +431,17 @@ input[type="range"].volume-level::-webkit-slider-thumb {filter: none !important;
 .date input{ border: none;height:20px;  border-radius:3px;
   border-bottom: 2px solid var(--main-color) ;
   padding: 3px 5px;
-  background-color: transparent;
+background-color: rgba(255, 255, 255, 0.7);
   width: 30%;}
  #searchInput{ border: none;height:20px; border-radius:3px;
   border-bottom: 2px solid var(--main-color) ;
   padding: 3px 5px;
-  background-color: transparent;
+background-color: rgba(255, 255, 255, 0.7);
   width: 30%;}
 .date{display:flex;justify-content:center;align-items:center;margin-bottom:10px;}
  .station_select{display:block;width:200px;height:35px;margin:0 auto 15px auto;text-align:center; border: none;
   border-bottom: 3px solid var(--main-color) ;
-  border-radius: 5px;  background-color:transparent;font-size: 16px;color:var(--main-color);font-weight: bold;
+  border-radius: 5px;  background-color:transparent;color:var(--main-color);font-size: 16px;font-weight: bold;
   }
 .top{display:flex;align-items:center;}
 .submenu {
@@ -486,8 +495,71 @@ input[type="range"].volume-level::-webkit-slider-thumb {filter: none !important;
     transition: opacity 0.2s linear;
 }
 
-#darkModeButton{margin:5px;width:20px;height:20px;} #toggle-menu-btn{margin:5px;padding:0;width:20px;height:20px}
-.menu-container {
+#darkModeButton {margin:5px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+#darkModeButton:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.dark #darkModeButton:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+#darkModeButton .theme-icon {
+  width: 24px;
+  height: 24px;
+  fill: #000;
+  transition: fill 0.3s;
+}
+
+@media (prefers-color-scheme: light) {
+  body:not(.dark) #darkModeButton[data-mode="auto"] .theme-icon {
+    fill: #000;
+  }
+}
+
+#toggle-menu-btn {margin:5px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+#toggle-menu-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.dark #toggle-menu-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#toggle-menu-btn .menu-icon {
+  width: 24px;
+  height: 24px;
+  fill: #000; 
+  transition: fill 0.3s;
+}
+
+@media (prefers-color-scheme: light) {
+  body:not(.dark) #toggle-menu-btn .menu-icon {
+    fill: #000;
+  }
+}
+
+.menu-container {flex-direction: column;
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -909,7 +981,6 @@ width: 70%;}
   font-size: 14px;
   font-weight: bold;
   margin-top: 10px;
-  transition: color 0.3s ease;
 }
 
 .rpage {
