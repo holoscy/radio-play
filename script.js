@@ -2299,13 +2299,13 @@ function updateButtonText() {
 }
   
   updateButtonText();
-const themeMode = localStorage.getItem('themeMode');
-if (themeMode === 'default') {
-  localStorage.setItem('themeMode', 'light');
-}
+
 	});
 	//dom end
-
+const themeMode = localStorage.getItem('themeMode');
+if (themeMode === 'default') {
+  localStorage.setItem("themeMode", 'light');
+}
 			   function goToWebpage() {
 	  const url = "https://space.bilibili.com/1090328045/video"
 	 window.location.href = url;
