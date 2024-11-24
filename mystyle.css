@@ -220,7 +220,74 @@ font-size: 10vw;
   max-font-size: 3rem;}
 }
 #programName {text-align: center;font-weight: bold; margin-bottom:1em;}
-#songInfo {text-align: center; margin-bottom:1em;}
+.player-container {margin-bottom:1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0 16px;
+}
+
+#songInfo {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1em;
+    height: auto;
+    gap: 15px;
+    max-width: 90%; 
+    min-width: 30%; 
+}
+
+.song-cover {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    background-size: cover;
+    background-position: center;
+}
+
+.song-details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.song-text {
+    line-height: 1.4;
+}
+
+.links-container {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.music-link {
+    display: flex;
+    align-items: center;
+    user-select: none;
+}
+
+.music-link img {
+    width: 20px;
+    transition: opacity 0.2s;
+}
+
+.music-link:hover img {
+    opacity: 0.8;
+}
+
+@media (max-width: 480px) {
+    #songInfo {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    
+    .links-container {
+        gap: 8px;
+    }
+}
 #recordedTime{display: none;text-align: center; margin-bottom:1em;}
 :root {--main-color:#8092d7;
   --background-color: #fff;  
@@ -380,8 +447,8 @@ font-size: 10vw;
 .playlist_item__video img
 {margin-left: 8px;display:inline-block;background:center no-repeat;  position: relative;width: 20px;top: 4px;transition: 1s;}
 .playlist_item__netease img {width: 20px;position: relative;top: 4px;margin-left: 2px;transition: 1s;}
-.playlist_item__spotify img {width: 16px;position: relative;top: 2px;margin-left: 2px;transition: 1s;}
-.playlist_item__dl img {width: 18px;position: relative;top: 3px;margin-left: 3px;transition: 1s;}
+.playlist_item__spotify img {width: 16px;position: relative;top: 4px;margin-left: 2px;transition: 1s;}
+.playlist_item__dl img {width: 18px;position: relative;top: 4px;margin-left: 3px;transition: 1s;}
 p{color:black;font-size: 12px;font-weight: bold;margin-bottom:0;margin-top:5px; text-align:center;white-space: nowrap;  overflow: hidden;  
 text-overflow: clip;transition: 1s; }	
 
