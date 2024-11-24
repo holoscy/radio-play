@@ -260,12 +260,13 @@ function updateMediaMetadata() {
 		if (!eventEnabled) {
 			return; // 如果事件被禁用，则不执行任何操作
 		}
-
+   
 		eventEnabled = false;
 		var self = this;
 		var value = JSON.parse(self['value']);
 		document.body.classList.remove('loading');
-
+        isCurrentlyPolling = false;
+        CurrentlyPolling = false; 
 		if (currentRequest !== null) {
 			 clearTimeout(currentRequest);
 		}
