@@ -689,7 +689,7 @@ function addLinksToSongInfo(songtext, detailsContainer) {
             alt: 'NetEase Logo'
         },
         {
-            class: 'playlist_item__spotify',
+            class: 'playlist_item__spot',
             url: `${document.body.classList.contains('mobile')
                 ? 'https://open.spotify.com/search/results/'
                 : 'https://open.spotify.com/search/'}${encodeURIComponent(songtext)}`,
@@ -697,7 +697,7 @@ function addLinksToSongInfo(songtext, detailsContainer) {
             alt: 'Spotify Logo'
         },
         {
-            class: 'playlist_item__dl',
+            class: 'playlist_item__dlo',
             url: `https://tool.liumingye.cn/music/#/search/D/song/${encodeURIComponent(songtext.replace(/\//g, ''))}`,
             icon: './icons/dl.svg',
             alt: 'dl Logo'
