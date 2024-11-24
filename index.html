@@ -176,8 +176,9 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
 </div>
      <div id="recordedTime"></div>
      <div id="programName">Loading...长时间看到此消息则表示浏览器不支持</div>
-     <div id="songInfo"></div>
-
+<div class="player-container">
+    <div id="songInfo"></div>
+</div>
 <div id="content-container">       
     <div class="date"><button class="s-button" onclick="goToWebpage3()" role="button"><span class="text">往期</span></button>
 <input type="date" name="datepicker" id="datePicker">  <input type="text" id="searchInput" placeholder="歌曲名"><button class="s-button" onclick="gotoURL()" role="button"><span class="text">搜索</span></button>   
@@ -223,6 +224,7 @@ stroke-width: 2px;}</style></defs><rect class="cls-1" x="1" y="1" width="24" hei
         <label for="main-color">强调色</label><input type="color" id="main-color" value="#a1a1f0"><br>
         <label for="theme-color">标题/状态栏颜色</label><input type="color" id="theme-color" value="#ffffff"><br>
         <label for="sync-colors"><input type="checkbox" id="sync-colors">标题栏与网页背景色一致</label><br>
+        <label for="apiinfo"><input type="checkbox" id="apiinfo">iHeartRadio/BBC实时封面(科学上网)</label><br>
         <label for="dfex">默认播放方式</label>
         <select id="dfex">
         <option value="新标签页">新标签页</option>
