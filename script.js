@@ -453,8 +453,311 @@ function updateMediaMetadata() {
 	var selectElement = document.getElementById("src_select");
 
 	var desiredOption = selectElement.querySelector("option[value='']");
+let useApiInfo = localStorage.getItem('useApiInfo') === 'true';
+const apiCheckbox = document.getElementById('apiinfo');
 
-function play(url, title, cover) {
+if (apiCheckbox) {
+    apiCheckbox.checked = useApiInfo;
+    apiCheckbox.addEventListener('change', (e) => {
+        useApiInfo = e.target.checked;
+        localStorage.setItem('useApiInfo', useApiInfo);
+    });
+}
+let lastTpid = null;
+let currentUpdateTimer = null;
+let isCurrentlyPolling = false;
+let CurrentlyPolling = false;
+async function fetchAndUpdateTrackInfo(id, cover, songInfoDiv) { 
+    if (!isCurrentlyPolling) {
+        return;
+    }
+    try {
+        const response = await fetch(`https://us.api.iheart.com/api/v3/live-meta/stream/${id}/currentTrackMeta`);
+        if (response.ok && isCurrentlyPolling) {
+            if (response.status === 204) {
+                currentUpdateTimer = setTimeout(() => {
+                    fetchAndUpdateTrackInfo(id, cover, songInfoDiv);
+                }, 30000);
+                return;
+            }
+
+            const trackData = await response.json();
+            
+            updateSongInfo(songInfoDiv, {
+                title: trackData.title || '',
+                artist: trackData.artist || '',
+                cover: trackData.imagePath || cover
+            });
+
+            if (trackData.endTime && trackData.startTime) {
+                const startTime = dayjs(trackData.startTime).valueOf();
+                const endTime = dayjs(trackData.endTime).valueOf();
+                const now = dayjs().valueOf();
+                
+                let timeUntilNext = endTime - now;
+
+                if (timeUntilNext <= 0 || timeUntilNext < 1000) {
+                    timeUntilNext = 10000;
+                }
+
+                if (currentUpdateTimer) {
+                    clearTimeout(currentUpdateTimer);
+                }
+                
+                currentUpdateTimer = setTimeout(() => {
+                    fetchAndUpdateTrackInfo(id, cover, songInfoDiv);
+                }, timeUntilNext);
+            } else {
+                currentUpdateTimer = setTimeout(() => {
+                    fetchAndUpdateTrackInfo(id, cover, songInfoDiv);
+                }, 10000);
+            }
+        } else {
+            currentUpdateTimer = setTimeout(() => {
+                fetchAndUpdateTrackInfo(id, cover, songInfoDiv);
+            }, 10000);
+        }
+    } catch (error) {
+        console.error('Error fetching track metadata:', error);
+        currentUpdateTimer = setTimeout(() => {
+            fetchAndUpdateTrackInfo(id, cover, songInfoDiv);
+        }, 10000);
+    }
+}
+
+const corsProxyUrl = 'https://tezworker.chatgpt-api.workers.dev/?';
+let bbcUpdateTimer = null;
+
+async function fetchBBCTrackInfo(id, cover, songInfoDiv) {
+    const apiUrl = `https://rms.api.bbc.co.uk/v2/services/${id}/segments/latest?experience=domestic&offset=0&limit=1`;
+    const proxiedUrl = corsProxyUrl + encodeURIComponent(apiUrl);
+    if (!CurrentlyPolling) {
+        return;
+    }
+    try {
+        const response = await fetch(proxiedUrl);
+        if (response.ok&&CurrentlyPolling) {
+            const data = await response.json();
+            if (data.data && data.data.length > 0) {
+                const segment = data.data[0];
+                const artist = segment.titles.primary || 'Artist';
+                const title = segment.titles.secondary || 'Title';
+                const imageUrl = segment.image_url ? segment.image_url.replace('{recipe}', '320x320') : cover;
+
+                updateSongInfo(songInfoDiv, {
+                    title,
+                    artist,
+                    cover: imageUrl
+                });
+
+     const nowPlaying = segment.offset.now_playing || false;
+                let nextUpdateInterval = nowPlaying ? 60 : 30;
+                if (bbcUpdateTimer) {
+                    clearTimeout(bbcUpdateTimer);
+                }
+
+                bbcUpdateTimer = setTimeout(() => {
+                    fetchBBCTrackInfo(id, cover, songInfoDiv);
+                }, nextUpdateInterval * 1000);
+            } else {
+                console.warn('No track data found in BBC API response. Retrying in 20 seconds.');
+                scheduleBBCRetry(id, cover, songInfoDiv, 30);
+            }
+        } else {
+            console.error('Failed to fetch BBC track data:', response.status);
+            scheduleBBCRetry(id, cover, songInfoDiv, 30);
+        }
+    } catch (error) {
+        console.error('Error fetching BBC track metadata:', error);
+        scheduleBBCRetry(id, cover, songInfoDiv, 30);
+    }
+}
+
+function scheduleBBCRetry(id, cover, songInfoDiv, interval = 30) {
+    if (bbcUpdateTimer) {
+        clearTimeout(bbcUpdateTimer);
+    }
+    bbcUpdateTimer = setTimeout(() => {
+        fetchBBCTrackInfo(id, cover, songInfoDiv);
+    }, interval * 1000);
+}
+function innerInfo(data, cover, songInfoDiv) {
+    if (!data || data.frag.title.includes("adContext") || data.frag.title.includes("text=\"")) {
+        return;
+    }
+
+    if (!data.frag.title.includes("url=")) {
+        updateSongInfo(songInfoDiv, {
+            title: data.frag.title,
+            artist: '',
+            cover
+        });
+        return;
+    }
+
+    const titleMatch = data.frag.title.match(/title="([^"]*)"/);
+    const artistMatch = data.frag.title.match(/artist="([^"]*)"/);
+    const tpid = extractTPID(data.frag.title);
+
+    if (!tpid || tpid === "0") {
+        handleNonTPIDSong(titleMatch, artistMatch, cover, songInfoDiv);
+        return;
+    }
+
+    if (lastTpid !== tpid) {
+        handleTPIDSong(tpid, titleMatch, artistMatch, cover, songInfoDiv);
+    }
+}
+
+function extractTPID(title) {
+    const tpidPart = title.split('TPID=')[1];
+    if (!tpidPart) return null;
+    
+    const numbersOnly = tpidPart.match(/\d+/);
+    return numbersOnly ? numbersOnly[0] : null;
+}
+
+function handleNonTPIDSong(titleMatch, artistMatch, cover, songInfoDiv) {
+    const programInfo = titleMatch?.[1]?.trim() || "";
+    const artistInfo = artistMatch?.[1]?.trim() || "";
+
+    if (!programInfo) {
+        songInfoDiv.style.display = 'none';
+        return;
+    }
+
+    updateSongInfo(songInfoDiv, {
+        title: programInfo,
+        artist: artistInfo,
+        cover
+    });
+}
+
+function handleTPIDSong(tpid, titleMatch, artistMatch, cover, songInfoDiv) {
+    lastTpid = tpid;
+    const title = titleMatch?.[1].trim() || '';
+    const artist = artistMatch?.[1].trim() || '';
+    
+    updateSongInfo(songInfoDiv, { title, artist, cover });
+
+    if (useApiInfo) {
+        apiInfo(tpid, songInfoDiv, { title, artist, cover });
+    }
+}
+
+function updateSongInfo(songInfoDiv, { title, artist, cover }) {
+    songInfoDiv.innerHTML = '';
+    songInfoDiv.style.display = 'flex';
+
+    const coverElement = document.createElement('div');
+    coverElement.className = 'song-cover';
+    coverElement.style.backgroundImage = `url('${cover}')`;
+
+    const detailsContainer = document.createElement('div');
+    detailsContainer.className = 'song-details';
+
+    const textElement = document.createElement('div');
+    textElement.className = 'song-text';
+    textElement.textContent = artist ? `${artist} - ${title}` : title;
+
+    detailsContainer.appendChild(textElement);
+
+    songInfoDiv.appendChild(coverElement);
+    songInfoDiv.appendChild(detailsContainer);
+  let songtext = textElement.textContent;
+    addLinksToSongInfo(songtext, detailsContainer);
+    updateMediaSession(title, artist || "HITFM Player", cover);
+}
+
+function addLinksToSongInfo(songtext, detailsContainer) {
+    const linksContainer = document.createElement('div');
+    linksContainer.className = 'links-container';
+
+    const links = [
+        {
+            class: 'playlist_item__video',
+            url: `https://www.youtube.com/results?search_query=${encodeURIComponent(songtext)}`,
+            icon: './icons/youtube.svg',
+            alt: 'YouTube Logo'
+        },
+        {
+            class: 'playlist_item__netease',
+            url: document.body.classList.contains('mobile')
+                ? 'https://y.music.163.com/m/m/'
+                : `https://music.163.com/#/search/m/?s=${encodeURIComponent(songtext)}`,
+            icon: './icons/netease.svg',
+            alt: 'NetEase Logo'
+        },
+        {
+            class: 'playlist_item__spot',
+            url: `${document.body.classList.contains('mobile')
+                ? 'https://open.spotify.com/search/results/'
+                : 'https://open.spotify.com/search/'}${encodeURIComponent(songtext)}`,
+            icon: './icons/spotify.svg',
+            alt: 'Spotify Logo'
+        },
+        {
+            class: 'playlist_item__dlo',
+            url: `https://tool.liumingye.cn/music/#/search/D/song/${encodeURIComponent(songtext.replace(/\//g, ''))}`,
+            icon: './icons/dl.svg',
+            alt: 'dl Logo'
+        }
+    ];
+
+    links.forEach(link => {
+        const anchor = document.createElement('a');
+        anchor.className = `music-link ${link.class}`;
+        anchor.target = '_blank';
+        anchor.href = link.url;
+        anchor.innerHTML = `<img src="${link.icon}" alt="${link.alt}">`;
+        linksContainer.appendChild(anchor);
+    });
+
+    detailsContainer.appendChild(linksContainer);
+}
+
+async function apiInfo(trackId, songInfoDiv, fallbackInfo) {
+    try {
+        const response = await fetch(
+            `https://us.api.iheart.com/api/v1/catalog/getTrackByTrackId?trackId=${trackId}`
+        );
+
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+
+        const { track } = await response.json();
+        if (!track) throw new Error('No track data found in API response');
+
+        const songData = {
+            title: track.title || fallbackInfo.title,
+            artist: track.artist || fallbackInfo.artist,
+            cover: track.imagePath || fallbackInfo.cover
+        };
+        updateSongInfo(songInfoDiv, songData);
+        
+        const coverElement = songInfoDiv.querySelector('.song-info-cover');
+        if (coverElement && track.imagePath) {
+            coverElement.classList.add('song-info-cover-api');
+        }
+
+    } catch (error) {
+        console.error('Error fetching or parsing track info:', error);
+    }
+}
+function updateMediaSession(title, artist, cover) {
+  if ('mediaSession' in navigator && 'MediaMetadata' in window) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: title,
+      artist: artist,
+      artwork: [{
+        src: cover,
+        sizes: '200x200',
+        type: 'image/png'
+      }]
+    });
+  }
+}
+
+function play(url,title,cover,id,mark) {
   loadings();
   if (url && cover && 'mediaSession' in navigator && 'MediaMetadata' in window) {
     navigator.mediaSession.metadata = new MediaMetadata({
@@ -471,6 +774,8 @@ function play(url, title, cover) {
   songInfoDiv.style.display = 'none';
   desiredOption.selected = true;
   audio.pause();
+  isCurrentlyPolling = false;
+  CurrentlyPolling = false; 
   if (currentHls) {
     currentHls.destroy();
   }
@@ -482,54 +787,18 @@ function play(url, title, cover) {
     currentHls = hls;
     hls.loadSource(url);
     hls.attachMedia(video);
-    hls.on(Hls.Events.FRAG_PARSING_METADATA, function (event, data) {
-      if (data) {
-        if (data.frag.title.includes("url=")) {
-          const titleMatch = data.frag.title.match(/title="([^"]*)"/);
-          const artistMatch = data.frag.title.match(/artist="([^"]*)"/);
-          songInfoDiv.style.display = 'block';
-          let songInfo = "";
-          if (artistMatch && artistMatch[1].trim() !== "") {
-            songInfo += artistMatch[1].trim();
-          }
-          if (titleMatch && titleMatch[1].trim() !== "") {
-            if (songInfo !== "") {
-              songInfo += " - ";
-            }
-            songInfo += titleMatch[1].trim();
-          }
-          songInfoDiv.textContent = songInfo;
-          addLinksToSongInfo(songInfo);
-          if ('mediaSession' in navigator && 'MediaMetadata' in window) {
-            navigator.mediaSession.metadata = new MediaMetadata({
-              title: titleMatch ? titleMatch[1].trim() : '',
-              artist: artistMatch ? artistMatch[1].trim() : '',
-              artwork: [{
-                src: cover,
-                sizes: '200x200',
-                type: 'image/png'
-              }]
-            });
-          }
-        } else {
-          songInfoDiv.style.display = 'block';
-          songInfoDiv.textContent = data.frag.title;
-          addLinksToSongInfo(data.frag.title);
-          if ('mediaSession' in navigator && 'MediaMetadata' in window) {
-            navigator.mediaSession.metadata = new MediaMetadata({
-              title: data.frag.title,
-              artist: 'HITFM Player',
-              artwork: [{
-                src: cover,
-                sizes: '200x200',
-                type: 'image/png'
-              }]
-            });
-          }
-        }
-      }
-    });
 
+   if (mark === 2 && useApiInfo) {
+        isCurrentlyPolling = true;
+        fetchAndUpdateTrackInfo(id, cover, songInfoDiv);
+    } else if (mark === 3 && useApiInfo) {
+         CurrentlyPolling = true;
+        fetchBBCTrackInfo(id, cover, songInfoDiv);
+    } else {
+        hls.on(Hls.Events.FRAG_PARSING_METADATA, (event, data) => {
+            innerInfo(data, cover, songInfoDiv);
+        });
+    }
     hls.on(Hls.Events.MANIFEST_PARSED, function () {
       video.play();
     });
@@ -649,101 +918,59 @@ closeButton2.addEventListener('click', function () {
 });
 
 
-	function addLinksToSongInfo(title) {
-	  const songInfoDiv = document.getElementById('songInfo');
-
-	  const youtubeLink = document.createElement('a');
-	  youtubeLink.classList.add('playlist_item__video');
-	  youtubeLink.target = '_blank';
-	  youtubeLink.href = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(title);
-	  youtubeLink.style.userSelect = 'none';
-	  youtubeLink.innerHTML = '<img src="./icons/youtube.svg" alt="YouTube Logo">';
-	  songInfoDiv.appendChild(youtubeLink);
-
-	  const neteaseLink = document.createElement('a');
-	  neteaseLink.className = 'playlist_item__netease';
-	  neteaseLink.target = '_blank';
-	  neteaseLink.href = (document.body.classList.contains('mobile')
-    ? 'https://y.music.163.com/m/'
-    : 'https://music.163.com/#/search/m/?s='+ encodeURIComponent(title)) ;
-	  neteaseLink.style.userSelect = 'none';
-	  neteaseLink.innerHTML = '<img src="./icons/netease.svg" alt="NetEase Logo">';
-	  songInfoDiv.appendChild(neteaseLink);
-
-	  const spotifyLink = document.createElement('a');
-	  spotifyLink.className = 'playlist_item__spotify';
-	  spotifyLink.target = '_blank';
-spotifyLink.href = (document.body.classList.contains('mobile')
-    ? 'https://open.spotify.com/search/results/'
-    : 'https://open.spotify.com/search/')
-    + encodeURIComponent(title);
-      spotifyLink.style.userSelect = 'none';
-	  spotifyLink.innerHTML = '<img src="./icons/spotify.svg" alt="Spotify Logo">';
-	  songInfoDiv.appendChild(spotifyLink);
-	  const dlLink = document.createElement('a');
-	  dlLink.className = 'playlist_item__dl';
-	  dlLink.target = '_blank'; 
-	  let netitle = title.replace(/\//g, '');
-      let baURL = "https://tool.liumingye.cn/music/#/search/D/song/";
-      let fiURL = baURL + encodeURIComponent(netitle);
-	  dlLink.href = fiURL;
-	  dlLink.style.userSelect = 'none';
-	  dlLink.innerHTML = '<img src="./icons/dl.svg" alt="dl Logo">';
-	  songInfoDiv.appendChild(dlLink);
-	}
 	let currentChannel = 'hitfm';
 	function playHitFM1() {
-	  setPlaybackInfo("https://sk.cri.cn/887.m3u8", "HITFM 劲曲调频",hitfm,'hitfm');
+	  setPlaybackInfo("https://sk.cri.cn/887.m3u8", "HITFM 劲曲调频",hitfm,'hitfm',0);
 	}
 
 	function playHitFM3() {
-	  setPlaybackInfo("https://satellitepull.cnr.cn/live/wxgjlxyy/playlist.m3u8", "HITFM 北京",hitfm,'hitfm');
+	  setPlaybackInfo("https://satellitepull.cnr.cn/live/wxgjlxyy/playlist.m3u8", "HITFM 北京",hitfm,'hitfm',0);
 	}
 
 	function playev() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc5953/hls.m3u8", "Evolution",iheart,'ev','5953');
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc5953/hls.m3u8", "Evolution",iheart,'ev','5953',1);
 	}
 
 	function playAT40() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4802/hls.m3u8", "American Top 40",iheart,'at40','4802');
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4802/hls.m3u8", "American Top 40",iheart,'at40','4802',2);
 	}
 	function playZ100() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc1469/hls.m3u8", "Z100",iheart,'z100','1469');
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc1469/hls.m3u8", "Z100",iheart,'z100','1469',1);
 	}
 	function playic() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4418/hls.m3u8", "iHeartCountry",iheart,'ic','4418');
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4418/hls.m3u8", "iHeartCountry",iheart,'ic','4418',1);
 	}
 	function playip() {
-	  setPlaybackInfo("https://playerservices.streamtheworld.com/api/livestream-redirect/ACIR31_S01AAC.m3u8", "iHeartRadio POP",iheart,'ip','8167');
+	  setPlaybackInfo("https://playerservices.streamtheworld.com/api/livestream-redirect/ACIR31_S01AAC.m3u8", "iHeartRadio POP",iheart,'ip','8167',2);
 	}
 	function playhitn() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4422/hls.m3u8", "Hit Nation",iheart,'hitn','4422');
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4422/hls.m3u8", "Hit Nation",iheart,'hitn','4422',1);
 	}
 	function playimf() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc5158/hls.m3u8", "iHeartRadio Music Festival",iheart,'imf','5158');
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc5158/hls.m3u8", "iHeartRadio Music Festival",iheart,'imf','5158',1);
 	}
 	function playrn() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4443/hls.m3u8", "Rock Nation",iheart,'rn','4443');
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4443/hls.m3u8", "Rock Nation",iheart,'rn','4443',1);
 	}
 	function playkiis() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc185/hls.m3u8", "102.7 KIIS-FM",iheart,'kiis','185');
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc185/hls.m3u8", "102.7 KIIS-FM",iheart,'kiis','185',1);
 	}
 	 function playmxn() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4776/hls.m3u8", "Mix Nation",iheart,'mxn','4776');
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc4776/hls.m3u8", "Mix Nation",iheart,'mxn','4776',2);
 	}
 	function playalic() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc1269/hls.m3u8", "Alice 95.5",iheart,'alic','1269');
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc1269/hls.m3u8", "Alice 95.5",iheart,'alic','1269',1);
 	}
 	function playwgc() {
-	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc841/hls.m3u8", "107.5 WGCI Chicago",iheart,'wgc','841');
+	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc841/hls.m3u8", "107.5 WGCI Chicago",iheart,'wgc','841',1);
 	}
-	function playbbc1() {	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d320000.norewind.m3u8", "BBC Radio 1",bbc,'0','bbc_radio_one');
+	function playbbc1() {	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d320000.norewind.m3u8", "BBC Radio 1",bbc,'0','bbc_radio_one',3);
 	}
-	function playbbc1x() {	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_1xtra/bbc_1xtra.isml/bbc_1xtra-audio%3d320000.norewind.m3u8", "BBC Radio 1Xtra",bbc,'0','bbc_1xtra');
+	function playbbc1x() {	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_1xtra/bbc_1xtra.isml/bbc_1xtra-audio%3d320000.norewind.m3u8", "BBC Radio 1Xtra",bbc,'0','bbc_1xtra',3);
 	}
-	function playbbc1d() {	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_one_dance/bbc_radio_one_dance.isml/bbc_radio_one_dance-audio=320000.m3u8", "BBC Radio 1 Dance",bbc,'0','bbc_radio_one_dance');
+	function playbbc1d() {	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_one_dance/bbc_radio_one_dance.isml/bbc_radio_one_dance-audio=320000.m3u8", "BBC Radio 1 Dance",bbc,'0','bbc_radio_one_dance',3);
 	}
-	function playbbc6() {	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d320000.norewind.m3u8", "BBC Radio 6 Music",bbc,'0','bbc_6music');
+	function playbbc6() {	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d320000.norewind.m3u8", "BBC Radio 6 Music",bbc,'0','bbc_6music',3);
 	}
     function updateTitle(newTitle) {
   document.title = newTitle;
@@ -762,11 +989,11 @@ function loadings() {
     }, 12000);
 }
  let ihId;
-	function setPlaybackInfo(url,title,cover,channel,id) {
+	function setPlaybackInfo(url,title,cover,channel,id,mark) {
 	 loadings();
 	  inputUrl.value = url;
 	  updateTitle(title);
-	  play(url,title,cover);
+	  play(url,title,cover,id,mark);
 	  currentChannel = channel;
 	  updateProgramName(currentChannel);
 	  ihId = id;
