@@ -259,7 +259,7 @@ font-size: 10vw;
 
 .links-container {
     display: flex;
-    gap: 12px;
+    gap: 6px;
     align-items: center;
 }
 
@@ -446,9 +446,11 @@ font-size: 10vw;
 }
 .playlist_item__video img
 {margin-left: 8px;display:inline-block;background:center no-repeat;  position: relative;width: 20px;top: 4px;transition: 1s;}
-.playlist_item__netease img {width: 20px;position: relative;top: 4px;margin-left: 2px;transition: 1s;}
-.playlist_item__spotify img {width: 16px;position: relative;top: 4px;margin-left: 2px;transition: 1s;}
-.playlist_item__dl img {width: 18px;position: relative;top: 4px;margin-left: 3px;transition: 1s;}
+.playlist_item__netease img {width: 20px;position: relative;top: 4px;margin-left: 6px;transition: 1s;}
+.playlist_item__spotify img {width: 16px;position: relative;top: 2px;margin-left: 6px;transition: 1s;}
+.playlist_item__spot img {width: 16px;position: relative;top: 4px;margin-left: 2px;transition: 1s;}
+.playlist_item__dl img {width: 18px;position: relative;top: 3px;margin-left: 6px;transition: 1s;}
+.playlist_item__dlo img {width: 18px;position: relative;top: 4px;margin-left: 3px;transition: 1s;}
 p{color:black;font-size: 12px;font-weight: bold;margin-bottom:0;margin-top:5px; text-align:center;white-space: nowrap;  overflow: hidden;  
 text-overflow: clip;transition: 1s; }	
 
