@@ -1827,20 +1827,29 @@ async function parseM3UFromTextarea() {
 				const title = name;
 				updateTitle(title);
 				window.open(link, "_blank");}
-				
+	
+	function compress(str) {
+    return btoa(String.fromCharCode(...pako.gzip(str)));
+};
+
+let app_name = null;
+
 	function pot(name,link){
-	url = 'potplayer://' + link;
-	window.location.href = url;
+	app_name = 'PotPlayer';
+    args = [`"${link}"`, `--force-media-title="${name}"`];
+	window.open(`ush://${app_name}?${compress(args.join(' '))}`, '_self');			
 	appTitle.textContent = name;
 	}
 	function vlc(name,link){
-	url = 'vlc://' + link;
-	window.location.href = url;
-	appTitle.textContent = name;
+	app_name = 'VLC';
+    args = [`"${link}"`, `--force-media-title="${name}"`];
+	window.open(`ush://${app_name}?${compress(args.join(' '))}`, '_self');			
+    appTitle.textContent = name;
 	}
 	function mpv(name,link){
-	url = 'mpv://"' + link + '"';
-	window.location.href = url;
+	app_name = 'MPV';
+    args = [`"${link}"`, `--force-media-title="${name}"`];
+	window.open(`ush://${app_name}?${compress(args.join(' '))}`, '_self');			
 	appTitle.textContent = name;
 	}
 			const dfselect = document.getElementById('dfex');
