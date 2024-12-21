@@ -1,6 +1,6 @@
 {"name":"HITFM Player",
 "short_name":"HITFM",
-"id":"/radio-play/",
+"id":"/",
 "icons":[{
      "src":"./icons/hitfmany.png",
      "sizes":"512x512",
@@ -24,7 +24,7 @@
      "type":"image/png",
      "purpose":"maskable"
 }],
-"start_url": "/radio-play/",
+"start_url": "/",
 "theme_color": "#ffffff",
 "background_color":"black",
 "display":"standalone",
