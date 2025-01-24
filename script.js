@@ -1840,9 +1840,10 @@ let app_name = null;
 	window.open(`ush://${app_name}?${compress(args.join(' '))}`, '_self');			
 	appTitle.textContent = name;
 	}
-	function vlc(name,link){
-	    window.open(link, "_blank");
-		
+        function vlc(name,link){
+		app_name = 'VLC';
+		args = [`"${link}"`, `--force-media-title="${name}"`];
+		window.open(`ush://${app_name}?${compress(args.join(' '))}`, '_self');	
     appTitle.textContent = name;
 	}
 	function mpv(name,link){
