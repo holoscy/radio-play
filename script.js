@@ -965,13 +965,13 @@ closeButton2.addEventListener('click', function () {
 	function playwgc() {
 	  setPlaybackInfo("https://stream.revma.ihrhls.com/zc841/hls.m3u8", "107.5 WGCI Chicago",iheart,'wgc','841',1);
 	}
-	function playbbc1() {	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d320000.norewind.m3u8", "BBC Radio 1",bbc,'0','bbc_radio_one',3);
+	function playbbc1() {	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_01505109/live/ww/bbc_radio_one/bbc_radio_one.isml/bbc_radio_one-audio%3d320000.norewind.m3u8", "BBC Radio 1",bbc,'0','bbc_radio_one',3);
 	}
 	function playbbc1x() {	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_1xtra/bbc_1xtra.isml/bbc_1xtra-audio%3d320000.norewind.m3u8", "BBC Radio 1Xtra",bbc,'0','bbc_1xtra',3);
 	}
-	function playbbc1d() {	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_one_dance/bbc_radio_one_dance.isml/bbc_radio_one_dance-audio=320000.m3u8", "BBC Radio 1 Dance",bbc,'0','bbc_radio_one_dance',3);
+	function playbbc1d() {	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_62063831/live/ww/bbc_radio_one_dance/bbc_radio_one_dance.isml/bbc_radio_one_dance-audio%3d320000.norewind.m3u8", "BBC Radio 1 Dance",bbc,'0','bbc_radio_one_dance',3);
 	}
-	function playbbc6() {	  setPlaybackInfo("https://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d320000.norewind.m3u8", "BBC Radio 6 Music",bbc,'0','bbc_6music',3);
+	function playbbc6() {	  setPlaybackInfo("https://as-hls-ww.live.cf.md.bbci.co.uk/pool_81827798/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d320000.norewind.m3u8", "BBC Radio 6 Music",bbc,'0','bbc_6music',3);
 	}
     function updateTitle(newTitle) {
   document.title = newTitle;
@@ -1840,10 +1840,10 @@ let app_name = null;
 	window.open(`ush://${app_name}?${compress(args.join(' '))}`, '_self');			
 	appTitle.textContent = name;
 	}
-	function vlc(name,link){
-	app_name = 'VLC';
-    args = [`"${link}"`, `--force-media-title="${name}"`];
-	window.open(`ush://${app_name}?${compress(args.join(' '))}`, '_self');			
+        function vlc(name,link){
+		app_name = 'VLC';
+		args = [`"${link}"`, `--force-media-title="${name}"`];
+		window.open(`ush://${app_name}?${compress(args.join(' '))}`, '_self');	
     appTitle.textContent = name;
 	}
 	function mpv(name,link){
